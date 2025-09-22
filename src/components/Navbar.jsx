@@ -110,7 +110,7 @@ export default function Navbar() {
     { name: "Rooms", link: "/rooms" },
     { name: "Dining", link: "/dining" },
     { name: "Banquets", link: "/banquets" },
-    { name: "Weddings", link: "/weddings" },
+    { name: "Services", link: "/services" },
     { name: "Career", link: "/career" },
     { name: "Gallery", link: "/gallery" },
     { name: "Contact", link: "/contact" },
