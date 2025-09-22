@@ -7,28 +7,29 @@ import "swiper/css/pagination";
 export default function Hero() {
   const slides = [
     {
-      image: "/images/slider-3.jpg",
-      title: "Explore & Enjoy With City Park Resort",
+      image: "/images/slider1.jpg",
+      title: "Explore & Enjoy With Resort",
     },
     {
-      image: "/images/slider-3.jpg",
+      image: "/images/slider2.jpg",
       title: "Luxury Banquets for Every Need",
     },
     {
-      image: "/images/slider-3.jpg",
+      image: "/images/slider3.jpg",
       title: "Resort for Corporate",
     },
   ];
 
   return (
-    <section className="w-full h-[80vh] relative">
+    <section className="w-full h-screen relative overflow-hidden">
+      {/* Background Swiper */}
       <Swiper
         modules={[Autoplay, Pagination, EffectFade]}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
         effect="fade"
         loop
-        className="h-full"
+        className="absolute inset-0 h-full w-full"
       >
         {slides.map((slide, idx) => (
           <SwiperSlide key={idx}>
@@ -36,7 +37,7 @@ export default function Hero() {
               <img
                 src={slide.image}
                 alt={slide.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full fixed top-0 left-0"
               />
               {/* Caption */}
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
@@ -48,9 +49,6 @@ export default function Hero() {
           </SwiperSlide>
         ))}
       </Swiper>
-      
     </section>
   );
 }
-
-
