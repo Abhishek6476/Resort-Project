@@ -5,6 +5,7 @@ import About from "./pages/About";
 import Rooms from "./pages/Rooms";
 import Contact from "./pages/Contact";
 import Reviews from "./pages/Reviews";
+import Reserve from "./pages/Reserve";
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/reviews" element={<Reviews />} />
+            <Route path="/reserve" element={<Reserve />} />
+
 
           {/* baaki pages yaha add karte */}
         </Routes>
