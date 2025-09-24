@@ -6,7 +6,10 @@ import Rooms from "./pages/Rooms";
 import Contact from "./pages/Contact";
 import Reviews from "./pages/Reviews";
 import Reserve from "./pages/Reserve";
-
+import GrandBallRoom from "./pages/Services/Venue/GrandBallRoom";
+import EliteBallRoom from "./pages/Services/Venue/EliteBallRoom";
+import RoyalBallRoom from "./pages/Services/Venue/RoyalBallRoom";
+import CorporateMeetings from "./pages/Services/CorparoteEvent/CorporateMeetings";
 function App() {
   return (
     <Router>
@@ -17,10 +20,13 @@ function App() {
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/reviews" element={<Reviews />} />
-            <Route path="/reserve" element={<Reserve />} />
+          <Route path="/reserve" element={<Reserve />} />
+          <Route path="/Services/venue/grand" element={<GrandBallRoom />} />
+          <Route path="/Services/venue/elite" element={<EliteBallRoom />} />
+          <Route path="/Services/venue/royal" element={<RoyalBallRoom />} />
+          <Route path="/Services/corporate/meeting" element={<CorporateMeetings/>} />
 
-
-          {/* baaki pages yaha add karte */}
+         
         </Routes>
       </MainLayout>
     </Router>
@@ -28,3 +34,4 @@ function App() {
 }
 
 export default App;
+

@@ -119,10 +119,6 @@
 // }
 
 
-
-
-
-
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 
@@ -149,27 +145,27 @@ export default function Navbar() {
         {
           name: "Venue",
           subDropdown: [
-            { name: "Grand Ball Room", link: "/banquets/venue/grand" },
-            { name: "Elite Ball Room", link: "/banquets/venue/elite" },
-            { name: "Royal Ball Room", link: "/banquets/venue/royal" },
-            { name: "Crystal Ball Room", link: "/banquets/venue/crystal" },
-            { name: "Board Room", link: "/banquets/venue/board" },
+            { name: "Grand Ball Room", link: "/Services/venue/grand" },
+            { name: "Elite Ball Room", link: "/Services/venue/elite" },
+            { name: "Royal Ball Room", link: "/Services/venue/royal" },
+            // { name: "Crystal Ball Room", link: "/Services/venue/crystal" },
+            // { name: "Board Room", link: "/Services/venue/board" },
           ],
         },
         {
           name: "Corporate Event",
           subDropdown: [
-            { name: "Meeting", link: "/banquets/corporate/meeting" },
-            { name: "Conference", link: "/banquets/corporate/conference" },
-            { name: "Seminar", link: "/banquets/corporate/seminar" },
+            { name: "Meeting", link: "/Services/corporate/meeting" },
+            { name: "Conference", link: "/Services/corporate/conference" },
+            { name: "Seminar", link: "/Services/corporate/seminar" },
           ],
         },
         {
           name: "Social Event",
           subDropdown: [
-            { name: "Engagement", link: "/banquets/social/engagement" },
-            { name: "Mehndi & Cocktail", link: "/banquets/social/mehndi" },
-            { name: "Wedding Reception", link: "/banquets/social/reception" },
+            { name: "Engagement", link: "/Services/social/engagement" },
+            { name: "Mehndi & Cocktail", link: "/Services/social/mehndi" },
+            { name: "Wedding Reception", link: "/Services/social/reception" },
           ],
         },
       ],
