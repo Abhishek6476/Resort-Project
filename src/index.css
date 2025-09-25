@@ -8,3 +8,20 @@
 .animate-fadeIn {
   animation: fadeIn 1s ease-in-out;
 }
+
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;  
+  line-height: 1.7; 
+  margin-bottom: 1rem; 
+  color: #444;
+} */

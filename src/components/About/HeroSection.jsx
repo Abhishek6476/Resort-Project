@@ -22,7 +22,7 @@ export default function AboutHero() {
               Home
             </a>
           </li>
-          <li>/</li>
+          <li> &gt;</li>
           <li className="text-gray-200">About Us</li>
         </ul>
       </div>

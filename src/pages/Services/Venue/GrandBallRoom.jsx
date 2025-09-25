@@ -2,7 +2,7 @@ import { useState } from "react";
 import ModalForm from "../../../components/ModalForm";
 
 // Hero Image
-import heroImg from "../../../assets/grand1.jpg";
+import heroImg from "../../../assets/grand5.jpg";
 
 // Gallery Images
 import img1 from "../../../assets/grand2.jpg";
