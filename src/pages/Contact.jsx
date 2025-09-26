@@ -32,6 +32,10 @@ const ContactUs = () => {
         &nbsp;&gt;&nbsp;
         <span className="text-xl text-white">Contact Us</span>
       </p>
+      {/* <p className="text-lg text-white text-lg">
+  Home <span className="">&gt;</span> Contact Us
+</p> */}
+
     </div>
   </div>
 </div>

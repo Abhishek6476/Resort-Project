@@ -15,6 +15,11 @@ import Seminar from "./pages/Services/CorparoteEvent/Seminar";
 import Dining from "./pages/Dining";
 import Career from "./pages/Career";
 import Gallery from "./pages/Gallery";
+import Engagement from './pages/Services/SocialEvent/Engagement';
+
+import MehndiCocktail from "./pages/Services/SocialEvent/MehndiCocktail";
+
+
 
 function App() {
   return (
@@ -33,6 +38,7 @@ function App() {
           <Route path="/Services/venue/grand" element={<GrandBallRoom />} />
           <Route path="/Services/venue/elite" element={<EliteBallRoom />} />
           <Route path="/Services/venue/royal" element={<RoyalBallRoom />} />
+         
           <Route
             path="/Services/corporate/meeting"
             element={<CorporateMeetings />}
@@ -42,6 +48,12 @@ function App() {
             element={<Conference />}
           />
           <Route path="/Services/corporate/seminar" element={<Seminar />} />
+          <Route path="/Services/Social/Engagement" element={<Engagement />} />
+          {/* <Route path="/Services/Social/Mehndi" element={<MehndiCocktail />} /> */}
+
+          <Route path="/Services/Social/Mehndi" element={<MehndiCocktail />} />
+
+
         </Routes>
       </MainLayout>
     </Router>
