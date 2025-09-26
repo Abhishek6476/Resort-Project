@@ -57,7 +57,7 @@ export default function RoomsSection() {
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">
                   {room.title}
                 </h3>
-                <p className="text-yellow-600 font-semibold mb-3">{room.price}</p>
+                <p className="text-Gray-600 font-semibold mb-3">{room.price}</p>
                 <p className="text-gray-600 mb-4">{room.desc}</p>
 
                 {/* Book Now Button */}
@@ -75,3 +75,5 @@ export default function RoomsSection() {
     </section>
   );
 }
+
+

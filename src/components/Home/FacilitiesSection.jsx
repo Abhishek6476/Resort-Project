@@ -72,14 +72,14 @@ export default function FacilitiesSection() {
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-12">
+        {/* <div className="text-center mt-12">
           <a
             href="/rooms"
             className="bg-blue-800 text-white px-8 py-3 rounded-full hover:bg-blue-900 transition"
           >
             Explore More
           </a>
-        </div>
+        </div> */}
       </div>
     </section>
   );

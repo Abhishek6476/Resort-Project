@@ -15,12 +15,13 @@ export default function AboutHero() {
         {/* Breadcrumb */}
         <ul className="flex justify-center space-x-3 text-sm md:text-base">
           <li>
-            <a
+            {/* <a
               href="/"
               className="hover:underline hover:text-gray-200 transition"
             >
               Home
-            </a>
+            </a> */}
+            Home
           </li>
           <li> &gt;</li>
           <li className="text-gray-200">About Us</li>

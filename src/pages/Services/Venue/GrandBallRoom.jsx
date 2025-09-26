@@ -229,18 +229,59 @@ export default function GrandBallRoom() {
       {isOpen && <ModalForm onClose={() => setIsOpen(false)} />}
 
       {/* Image Modal */}
+           {/* Image Modal */}
       {selectedImg && (
         <div
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
           onClick={() => setSelectedImg(null)}
         >
+          {/* Prev Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              const currentIndex = gallery.indexOf(selectedImg);
+              const prevIndex =
+                (currentIndex - 1 + gallery.length) % gallery.length;
+              setSelectedImg(gallery[prevIndex]);
+            }}
+            className="absolute left-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full hover:bg-black/70"
+          >
+            ‹
+          </button>
+
+          {/* Image */}
           <img
             src={selectedImg}
-            alt="Enlarged"
-            className="max-w-3xl max-h-[80vh] rounded-lg shadow-lg"
+            alt="Preview"
+            className="max-h-[90%] max-w-[90%] rounded-lg shadow-lg"
           />
+
+          {/* Next Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              const currentIndex = gallery.indexOf(selectedImg);
+              const nextIndex = (currentIndex + 1) % gallery.length;
+              setSelectedImg(gallery[nextIndex]);
+            }}
+            className="absolute right-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full hover:bg-black/70"
+          >
+            ›
+          </button>
+
+          {/* Close Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedImg(null);
+            }}
+            className="absolute top-6 right-6 bg-black/50 px-3 py-1 rounded-full text-white text-2xl"
+          >
+            ✖
+          </button>
         </div>
       )}
+
     </div>
   );
 }

@@ -228,18 +228,58 @@ export default function RoyalBallRoom() {
       {isOpen && <ModalForm onClose={() => setIsOpen(false)} />}
 
       {/* Image Modal (same as GrandBallRoom) */}
-      {selectedImage && (
-        <div
-          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
-          onClick={() => setSelectedImage(null)}
-        >
-          <img
-            src={selectedImage}
-            alt="Large Preview"
-            className="max-w-4xl max-h-[80vh] w-full object-contain rounded-lg shadow-lg"
-          />
-        </div>
-      )}
+     {selectedImage && (
+  <div
+    className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+    onClick={() => setSelectedImage(null)}
+  >
+    {/* Prev Button */}
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        const currentIndex = gallery.indexOf(selectedImage);
+        const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
+        setSelectedImage(gallery[prevIndex]);
+      }}
+      className="absolute left-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full hover:bg-black/70"
+    >
+      ‹
+    </button>
+
+    {/* Image */}
+    <img
+      src={selectedImage}
+      alt="Large Preview"
+      className="max-w-4xl max-h-[80vh] w-full object-contain rounded-lg shadow-lg"
+      onClick={(e) => e.stopPropagation()}
+    />
+
+    {/* Next Button */}
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        const currentIndex = gallery.indexOf(selectedImage);
+        const nextIndex = (currentIndex + 1) % gallery.length;
+        setSelectedImage(gallery[nextIndex]);
+      }}
+      className="absolute right-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full hover:bg-black/70"
+    >
+      ›
+    </button>
+
+    {/* Close Button */}
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        setSelectedImage(null);
+      }}
+      className="absolute top-6 right-6 bg-black/50 px-3 py-1 rounded-full text-white text-2xl"
+    >
+      ✖
+    </button>
+  </div>
+)}
+
     </div>
   );
 }

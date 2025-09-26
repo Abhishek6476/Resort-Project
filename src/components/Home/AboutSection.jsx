@@ -42,7 +42,7 @@ export default function AboutSection() {
               <span className="text-black">✔</span> Fine Dining
             </li>
             <li className="flex items-center space-x-2">
-              <span className="text-black">✔</span> Spa & Wellness
+              <span className="text-black">✔</span> Corporate Event
             </li>
           </ul>
 

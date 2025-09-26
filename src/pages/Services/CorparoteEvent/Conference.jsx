@@ -1,21 +1,23 @@
+
 import { useState } from "react";
 import ModalForm from "../../../components/ModalForm";
 
 // Hero Image
 import heroImg from "../../../assets/meeting3.jpg";
-import aboutImg from "../../../assets/meeting4.jpg";
+import aboutImg from "../../../assets/conference1.jpg";
 
 // Gallery Images
-import img1 from "../../../assets/meeting5.jpg";
-import img2 from "../../../assets/meeting6.jpg";
-import img3 from "../../../assets/meeting7.jpg";
-import img4 from "../../../assets/meeting8.jpg";
-import img5 from "../../../assets/meeting9.jpg";
-import img6 from "../../../assets/meeting10.jpg";
+import img1 from "../../../assets/conference2.jpg";
+import img2 from "../../../assets/conference3.jpg";
+import img3 from "../../../assets/conference4.jpg";
+import img4 from "../../../assets/conference1.jpg";
+import img5 from "../../../assets/conference2.jpg";
+import img6 from "../../../assets/conference3.jpg";
 
 export default function Conference() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImg, setSelectedImg] = useState(null);
+  const [activeFAQ, setActiveFAQ] = useState(null); // for FAQ toggle
 
   const gallery = [img1, img2, img3, img4, img5, img6];
 
@@ -26,6 +28,26 @@ export default function Conference() {
     "High-Speed Connectivity",
     "On-Site Catering",
     "Professional Support",
+  ];
+
+  // FAQs Data
+  const faqs = [
+    {
+      q: "What is the seating capacity of your conference halls?",
+      a: "Our halls can accommodate from 50 to 500 guests depending on the setup.",
+    },
+    {
+      q: "Do you provide audio-visual equipment?",
+      a: "Yes, we provide state-of-the-art audio-visual equipment including projectors, mics, and sound systems.",
+    },
+    {
+      q: "Is catering service available?",
+      a: "Yes, we offer on-site catering with customizable menu options.",
+    },
+    {
+      q: "Can the seating arrangements be customized?",
+      a: "Absolutely, we provide flexible seating options like theater, classroom, or cluster style.",
+    },
   ];
 
   return (
@@ -113,6 +135,42 @@ export default function Conference() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="py-16 container mx-auto px-6 lg:px-12">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+            Frequently Asked <span className="text-blue-800">Questions</span>
+          </h2>
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            Find answers to common queries about our conference facilities.
+          </p>
+        </div>
+
+        <div className="max-w-3xl mx-auto space-y-4">
+          {faqs.map((item, idx) => (
+            <div
+              key={idx}
+              className="border rounded-lg shadow-sm bg-white"
+            >
+              <button
+                className="w-full text-left px-6 py-4 flex justify-between items-center font-medium text-gray-800"
+                onClick={() =>
+                  setActiveFAQ(activeFAQ === idx ? null : idx)
+                }
+              >
+                {item.q}
+                <span className="text-blue-800">
+                  {activeFAQ === idx ? "−" : "+"}
+                </span>
+              </button>
+              {activeFAQ === idx && (
+                <div className="px-6 pb-4 text-gray-600">{item.a}</div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Modal Form */}
       {isOpen && <ModalForm onClose={() => setIsOpen(false)} />}
 
@@ -122,11 +180,39 @@ export default function Conference() {
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
           onClick={() => setSelectedImg(null)}
         >
+          {/* Prev Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              const currentIndex = gallery.indexOf(selectedImg);
+              const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
+              setSelectedImg(gallery[prevIndex]);
+            }}
+            className="absolute left-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full hover:bg-black/70"
+          >
+            ‹
+          </button>
+
+          {/* Image */}
           <img
             src={selectedImg}
             alt="Enlarged"
             className="max-w-3xl max-h-[80vh] rounded-lg shadow-lg"
+            onClick={(e) => e.stopPropagation()}
           />
+
+          {/* Next Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              const currentIndex = gallery.indexOf(selectedImg);
+              const nextIndex = (currentIndex + 1) % gallery.length;
+              setSelectedImg(gallery[nextIndex]);
+            }}
+            className="absolute right-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full hover:bg-black/70"
+          >
+            ›
+          </button>
         </div>
       )}
     </div>

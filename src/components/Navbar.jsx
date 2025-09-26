@@ -121,6 +121,8 @@
 
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
+import logoImg from "../assets/logo1.png";
+
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -184,11 +186,16 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
-        <a href="/" className="text-2xl font-bold">
-          <span className={`${scrolled ? "text-blue-800" : "text-white"}`}>
-            Resort
-          </span>
-        </a>
+        <a href="/" className="flex items-center gap-2">
+  <img
+    src={logoImg}
+    alt="Resort Logo"
+    className="h-10 w-auto" 
+  />
+  <span className={`${scrolled ? "text-blue-800" : "text-white"} text-xl font-bold`}>
+    Resort
+  </span>
+</a>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6 relative">

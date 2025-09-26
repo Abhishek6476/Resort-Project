@@ -1,21 +1,23 @@
+
 import { useState } from "react";
 import ModalForm from "../../../components/ModalForm";
 
 // Hero Image
-import heroImg from "../../../assets/meeting3.jpg";
+import heroImg from "../../../assets/seminar1.jpg";
 import aboutImg from "../../../assets/meeting6.jpg";
 
 // Gallery Images
-import img1 from "../../../assets/meeting5.jpg";
-import img2 from "../../../assets/meeting6.jpg";
-import img3 from "../../../assets/meeting7.jpg";
-import img4 from "../../../assets/meeting8.jpg";
-import img5 from "../../../assets/meeting9.jpg";
-import img6 from "../../../assets/meeting10.jpg";
+import img1 from "../../../assets/seminar4.jpg";
+import img2 from "../../../assets/seminar2.jpg";
+import img3 from "../../../assets/seminar1.jpg";
+import img4 from "../../../assets/seminar3.jpg";
+import img5 from "../../../assets/seminar4.jpg";
+import img6 from "../../../assets/seminar1.jpg";
 
 export default function Seminar() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImg, setSelectedImg] = useState(null);
+  const [activeFAQ, setActiveFAQ] = useState(null);
 
   const gallery = [img1, img2, img3, img4, img5, img6];
 
@@ -26,6 +28,26 @@ export default function Seminar() {
     "High-Speed Internet Connectivity",
     "Catering & Refreshments",
     "Dedicated Event Assistance",
+  ];
+
+  // FAQs Data
+  const faqs = [
+    {
+      q: "What is the seating capacity of your seminar halls?",
+      a: "Our seminar halls can accommodate groups ranging from 30 to 300 participants.",
+    },
+    {
+      q: "Do you provide projectors and audio systems?",
+      a: "Yes, we provide high-quality projectors, microphones, and sound systems for seminars.",
+    },
+    {
+      q: "Is Wi-Fi available during seminars?",
+      a: "Yes, we offer high-speed internet connectivity for all participants.",
+    },
+    {
+      q: "Do you provide catering services?",
+      a: "Yes, catering and refreshment services are available on request.",
+    },
   ];
 
   return (
@@ -114,6 +136,42 @@ export default function Seminar() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="py-16 container mx-auto px-6 lg:px-12">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+            Frequently Asked <span className="text-blue-800">Questions</span>
+          </h2>
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            Find answers to common queries about our seminar facilities.
+          </p>
+        </div>
+
+        <div className="max-w-3xl mx-auto space-y-4">
+          {faqs.map((item, idx) => (
+            <div
+              key={idx}
+              className="border rounded-lg shadow-sm bg-white"
+            >
+              <button
+                className="w-full text-left px-6 py-4 flex justify-between items-center font-medium text-gray-800"
+                onClick={() =>
+                  setActiveFAQ(activeFAQ === idx ? null : idx)
+                }
+              >
+                {item.q}
+                <span className="text-blue-800">
+                  {activeFAQ === idx ? "−" : "+"}
+                </span>
+              </button>
+              {activeFAQ === idx && (
+                <div className="px-6 pb-4 text-gray-600">{item.a}</div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Modal Form */}
       {isOpen && <ModalForm onClose={() => setIsOpen(false)} />}
 
@@ -123,11 +181,50 @@ export default function Seminar() {
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
           onClick={() => setSelectedImg(null)}
         >
+          {/* Prev Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              const currentIndex = gallery.indexOf(selectedImg);
+              const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
+              setSelectedImg(gallery[prevIndex]);
+            }}
+            className="absolute left-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full hover:bg-black/70"
+          >
+            ‹
+          </button>
+
+          {/* Image */}
           <img
             src={selectedImg}
             alt="Enlarged"
             className="max-w-3xl max-h-[80vh] rounded-lg shadow-lg"
+            onClick={(e) => e.stopPropagation()}
           />
+
+          {/* Next Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              const currentIndex = gallery.indexOf(selectedImg);
+              const nextIndex = (currentIndex + 1) % gallery.length;
+              setSelectedImg(gallery[nextIndex]);
+            }}
+            className="absolute right-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full hover:bg-black/70"
+          >
+            ›
+          </button>
+
+          {/* Close Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedImg(null);
+            }}
+            className="absolute top-6 right-6 bg-black/50 px-3 py-1 rounded-full text-white text-2xl"
+          >
+            ✖
+          </button>
         </div>
       )}
     </div>

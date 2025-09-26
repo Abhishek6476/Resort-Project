@@ -1,34 +1,32 @@
-
 import React, { useState } from "react";
 
 const Career = () => {
- const jobs = [
-  {
-    title: "Front Desk Associate",
-    location: "Noida, India",
-    type: "Full-Time",
-    description:
-      "Responsible for welcoming guests, managing check-ins/check-outs, and ensuring excellent customer service.",
-    img: "https://plus.unsplash.com/premium_photo-1661558563494-60cbd006c068?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8aG90ZWwlMjBjaGVjayUyMGlufGVufDB8fDB8fHww",
-  },
-  {
-    title: "Housekeeping Staff",
-    location: "Noida, India",
-    type: "Full-Time",
-    description:
-      "Maintain cleanliness and hygiene in guest rooms and public areas, ensuring high standards of hospitality.",
-    img: "https://plus.unsplash.com/premium_photo-1667520405114-47d3677f966e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8aG91c2VrZWVwaW5nJTIwc3RhZmZ8ZW58MHx8MHx8fDA%3D", // Image 2
-  },
-  {
-    title: "Executive Chef",
-    location: "Noida, India",
-    type: "Full-Time",
-    description:
-      "Plan menus, supervise kitchen staff, and deliver exceptional dining experiences to our guests.",
-    img: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092", // Image 3
-  },
-];
-
+  const jobs = [
+    {
+      title: "Front Desk Associate",
+      location: "Noida, India",
+      type: "Full-Time",
+      description:
+        "Responsible for welcoming guests, managing check-ins/check-outs, and ensuring excellent customer service.",
+      img: "https://plus.unsplash.com/premium_photo-1661558563494-60cbd006c068?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8aG90ZWwlMjBjaGVjayUyMGlufGVufDB8fDB8fHww",
+    },
+    {
+      title: "Housekeeping Staff",
+      location: "Noida, India",
+      type: "Full-Time",
+      description:
+        "Maintain cleanliness and hygiene in guest rooms and public areas, ensuring high standards of hospitality.",
+      img: "https://plus.unsplash.com/premium_photo-1667520405114-47d3677f966e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8aG91c2VrZWVwaW5nJTIwc3RhZmZ8ZW58MHx8MHx8fDA%3D", // Image 2
+    },
+    {
+      title: "Executive Chef",
+      location: "Noida, India",
+      type: "Full-Time",
+      description:
+        "Plan menus, supervise kitchen staff, and deliver exceptional dining experiences to our guests.",
+      img: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092", // Image 3
+    },
+  ];
 
   const [formData, setFormData] = useState({
     name: "",
@@ -71,7 +69,9 @@ const Career = () => {
         />
         <div className="absolute inset-0 flex items-center justify-center text-center px-6 sm:px-16">
           <div className="text-white">
-            <h1 className="text-5xl font-bold mb-2">Job Opportunity At Resort</h1>
+            <h1 className="text-5xl font-bold mb-2">
+              Job Opportunity At Resort
+            </h1>
             <p className="text-lg">
               <span className="text-white">Home</span> &gt; Career
             </p>
@@ -81,49 +81,50 @@ const Career = () => {
 
       {/* Intro */}
       <section className="py-12 px-6 max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800">Work With Us</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+          Work With Us
+        </h2>
         <p className="mt-4 text-gray-600 max-w-3xl mx-auto">
-          We believe in teamwork, creativity, and hospitality excellence. Whether
-          it’s a grand wedding, a corporate meeting, or a private event, our staff
-          plays a key role in delivering memorable experiences.
+          We believe in teamwork, creativity, and hospitality excellence.
+          Whether it’s a grand wedding, a corporate meeting, or a private event,
+          our staff plays a key role in delivering memorable experiences.
         </p>
       </section>
 
       {/* Job Categories */}
-      
-     <section className="py-12 px-6 max-w-6xl mx-auto">
-  <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
-    Current Openings
-  </h2>
 
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="py-12 px-6 max-w-6xl mx-auto">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
+          Current Openings
+        </h2>
 
-        
-  {jobs.map((job, index) => (
-    <div
-      key={index}
-      className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition"
-    >
-      <img
-        src={job.img}
-        alt={job.title}
-        className="h-52 w-full object-cover"
-      />
-      <div className="p-6">
-        <h3 className="text-xl font-semibold text-gray-800">{job.title}</h3>
-        <p className="text-sm text-gray-600 mb-2">
-          {job.location} • {job.type}
-        </p>
-        <p className="text-gray-600">{job.description}</p>
-        <button className="mt-4 bg-blue-800 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded-md transition">
-          Apply Now
-        </button>
-      </div>
-    </div>
-  ))}
-    </div>
-</section>
-
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {jobs.map((job, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition"
+            >
+              <img
+                src={job.img}
+                alt={job.title}
+                className="h-52 w-full object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-800">
+                  {job.title}
+                </h3>
+                <p className="text-sm text-gray-600 mb-2">
+                  {job.location} • {job.type}
+                </p>
+                <p className="text-gray-600">{job.description}</p>
+                <button className="mt-4 bg-blue-800 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded-md transition">
+                  Apply Now
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Why Join Us */}
       <section className="py-16 bg-yellow-50 px-6 text-center">
@@ -147,7 +148,9 @@ const Career = () => {
               key={idx}
               className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition"
             >
-              <h3 className="text-xl font-semibold text-gray-800">{item.title}</h3>
+              <h3 className="text-xl font-semibold text-gray-800">
+                {item.title}
+              </h3>
               <p className="mt-3 text-gray-600">{item.desc}</p>
             </div>
           ))}
@@ -164,7 +167,9 @@ const Career = () => {
           className="max-w-2xl mx-auto bg-gray-50 p-8 rounded-2xl shadow-md space-y-6"
         >
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Full Name</label>
+            <label className="block text-gray-700 font-medium mb-2">
+              Full Name
+            </label>
             <input
               type="text"
               name="name"
@@ -176,7 +181,9 @@ const Career = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Email</label>
+            <label className="block text-gray-700 font-medium mb-2">
+              Email
+            </label>
             <input
               type="email"
               name="email"
@@ -188,7 +195,9 @@ const Career = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Phone Number</label>
+            <label className="block text-gray-700 font-medium mb-2">
+              Phone Number
+            </label>
             <input
               type="tel"
               name="phone"
@@ -200,7 +209,9 @@ const Career = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Position Applied For</label>
+            <label className="block text-gray-700 font-medium mb-2">
+              Position Applied For
+            </label>
             <select
               name="position"
               value={formData.position}
@@ -217,7 +228,9 @@ const Career = () => {
             </select>
           </div>
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Upload Resume</label>
+            <label className="block text-gray-700 font-medium mb-2">
+              Upload Resume
+            </label>
             <input
               type="file"
               name="resume"
@@ -240,3 +253,6 @@ const Career = () => {
 };
 
 export default Career;
+
+
+

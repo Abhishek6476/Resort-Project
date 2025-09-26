@@ -49,17 +49,17 @@ export default function DiningSection() {
           {/* Buttons */}
           <div className="flex space-x-4">
             <a
-              href="/menu"
+              href="/dining"
               className="bg-blue-800 text-white px-6 py-3 rounded-full hover:bg-blue-900 transition"
             >
               Explore Menu
             </a>
-            <a
+            {/* <a
               href="/reserve"
               className="bg-blue-800 text-white px-6 py-3 rounded-full hover:bg-blue-900 transition"
             >
               Reserve a Table
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

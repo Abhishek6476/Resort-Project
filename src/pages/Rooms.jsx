@@ -327,7 +327,6 @@
 
 // export default Rooms;
 
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -638,16 +637,74 @@ const Rooms = () => {
       )}
 
       {/* Full Screen Image Preview */}
+
       {previewImage && (
         <div
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
           onClick={closeImage}
         >
+          {/* Prev Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              const currentIndex = [
+                room1,
+                room2,
+                room3,
+                room4,
+                room5,
+                room6,
+                room7,
+                room8,
+                room9,
+              ].indexOf(previewImage);
+              const prevIndex = (currentIndex - 1 + 9) % 9; // wrap around
+              setPreviewImage(
+                [room1, room2, room3, room4, room5, room6, room7, room8, room9][
+                  prevIndex
+                ]
+              );
+            }}
+            className="absolute left-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full hover:bg-black/70"
+          >
+            ‹
+          </button>
+
+          {/* Image */}
           <img
             src={previewImage}
             alt="Preview"
             className="max-h-[90%] max-w-[90%] rounded-lg shadow-lg"
           />
+
+          {/* Next Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              const currentIndex = [
+                room1,
+                room2,
+                room3,
+                room4,
+                room5,
+                room6,
+                room7,
+                room8,
+                room9,
+              ].indexOf(previewImage);
+              const nextIndex = (currentIndex + 1) % 9; // wrap around
+              setPreviewImage(
+                [room1, room2, room3, room4, room5, room6, room7, room8, room9][
+                  nextIndex
+                ]
+              );
+            }}
+            className="absolute right-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full hover:bg-black/70"
+          >
+            ›
+          </button>
+
+          {/* Close Button */}
           <button
             onClick={closeImage}
             className="absolute top-6 right-6 bg-black/50 px-3 py-1 rounded-full text-white text-2xl"
