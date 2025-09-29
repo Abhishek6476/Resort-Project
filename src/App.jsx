@@ -17,7 +17,7 @@ import Career from "./pages/Career";
 import Gallery from "./pages/Gallery";
 import Engagement from './pages/Services/SocialEvent/Engagement';
 
-import MehndiCocktail from "./pages/Services/SocialEvent/MehndiCocktail";
+import Mehndi from "./pages/Services/SocialEvent/Mehndi";
 
 
 
@@ -49,9 +49,8 @@ function App() {
           />
           <Route path="/Services/corporate/seminar" element={<Seminar />} />
           <Route path="/Services/Social/Engagement" element={<Engagement />} />
-          {/* <Route path="/Services/Social/Mehndi" element={<MehndiCocktail />} /> */}
-
-          <Route path="/Services/Social/Mehndi" element={<MehndiCocktail />} />
+         
+          <Route path="/Services/Social/Mehndi" element={<Mehndi />} />
 
 
         </Routes>

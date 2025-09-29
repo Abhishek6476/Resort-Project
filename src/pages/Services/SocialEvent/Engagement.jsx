@@ -33,19 +33,19 @@ export default function Engagement() {
     {
       title: "Silver Package",
     
-      features: ["Basic Decorations", "Catering for 50 Guests", "Music System"],
+      features: ["Basic Decorations", "Catering for 100 Guests", "Music System"],
       img: pack1,
     },
     {
       title: "Gold Package",
     
-      features: ["Premium Decorations", "Catering for 100 Guests", "DJ & Music"],
+      features: ["Premium Decorations", "Catering for 200 Guests", "DJ & Music"],
       img: pack2,
     },
     {
       title: "Platinum Package",
     
-      features: ["Luxury Decorations", "Catering for 200 Guests", "Full Event Coordination"],
+      features: ["Luxury Decorations", "Catering for 500 Guests", "Full Event Coordination"],
       img: img3,
     },
   ];
