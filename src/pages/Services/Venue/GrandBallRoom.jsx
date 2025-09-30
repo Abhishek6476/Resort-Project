@@ -229,7 +229,6 @@ export default function GrandBallRoom() {
       {isOpen && <ModalForm onClose={() => setIsOpen(false)} />}
 
       {/* Image Modal */}
-           {/* Image Modal */}
       {selectedImg && (
         <div
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"

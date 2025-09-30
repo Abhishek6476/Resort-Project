@@ -166,7 +166,7 @@ export default function Navbar() {
           name: "Social Event",
           subDropdown: [
             { name: "Engagement", link: "/Services/social/engagement" },
-            { name: "Mehndi & Cocktail", link: "/Services/social/mehndi" },
+            { name: "Mehndi", link: "/Services/social/mehndi" },
             { name: "Wedding Reception", link: "/Services/social/reception" },
           ],
         },
@@ -271,7 +271,7 @@ export default function Navbar() {
         {/* Book Now button */}
         <div className="hidden md:block">
           <a
-            href="/booking"
+            href="/Rooms"
             className={`px-5 py-2 rounded-full transition ${
               scrolled
                 ? "bg-blue-800 text-white hover:bg-blue-900"

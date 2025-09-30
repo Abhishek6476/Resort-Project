@@ -24,17 +24,17 @@ export default function CTASection() {
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
-            href="/booking"
+            href="/contact"
             className="bg-blue-800 text-white px-8 py-3 rounded-full hover:bg-blue-900 transition"
           >
-            Book Now
+           Contact Us
           </a>
-          <a
+          {/* <a
             href="/contact"
             className="bg-white text-blue-800 px-8 py-3 rounded-full hover:bg-gray-200 transition"
           >
             Contact Us
-          </a>
+          </a> */}
         </div>
       </div>
     </section>

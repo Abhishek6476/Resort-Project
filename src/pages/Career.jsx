@@ -1,3 +1,4 @@
+import { div } from "framer-motion/client";
 import React, { useState } from "react";
 
 const Career = () => {
@@ -253,6 +254,4 @@ const Career = () => {
 };
 
 export default Career;
-
-
 
