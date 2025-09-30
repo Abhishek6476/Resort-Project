@@ -9,24 +9,15 @@ import img1 from "../../../assets/mehndi1.jpg";
 import img2 from "../../../assets/mehndi2.jpg";
 import img3 from "../../../assets/mehndi3.jpg";
 import img4 from "../../../assets/mehndi4.jpg";
-import img5 from "../../../assets/mehndi5.jpg";
 import img6 from "../../../assets/mehndi6.jpg";
-import img7 from "../../../assets/mehndi7.jpg";
-import img8 from "../../../assets/mehndi8.jpg";
-import img9 from "../../../assets/mehndi9.jpg";
-import img10 from "../../../assets/mehndi10.jpg";
-import img11 from "../../../assets/mehndi11.jpg";
 import img12 from "../../../assets/mehndi12.jpg";
-import img13 from "../../../assets/mehndi13.jpg";
-import img14 from "../../../assets/mehndi14.jpg";
-import img15 from "../../../assets/mehndi15.jpg";
 
-import pack1 from "../../../assets/pack1.jpg";
-import pack2 from "../../../assets/pack2.jpg";
-import pack3 from "../../../assets/pack3.jpg";
+import pack1 from "../../../assets/mehndip1.jpg";
+import pack2 from "../../../assets/mehndip2.jpg";
+import pack3 from "../../../assets/mehndip3.jpg";
 
 export default function Mehndi() {
- const gallery = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15];
+ const gallery = [img1, img2, img3, img4, img6, img12];
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImg, setSelectedImg] = useState(null);
@@ -52,7 +43,7 @@ export default function Mehndi() {
     {
       title: "Platinum Package",
        img: pack3,
-      features: ["Live Band", "Signature Cocktails", "Gourmet Dining", " Catering for 200 Guests"],
+      features: ["Live Band & Music", "Signature Cocktails", "Gourmet Dining", " Catering for 200 Guests"],
     },
   ];
 
@@ -106,18 +97,13 @@ export default function Mehndi() {
 ];
 
 
-  // const testimonials = [
-  //   { name: "Riya & Anuj", text: "A vibrant and joyful Mehndi setup, we loved it!" },
-  //   { name: "Priya & Karan", text: "Everything from decor to music was perfect." },
-  //   { name: "Sneha & Raj", text: "Our guests still talk about the mehndi celebration!" },
-  // ];
 
   return (
     <div className="w-full">
       {/* Banner */}
       <section className="relative w-full h-[60vh] overflow-hidden">
         <img src={bannerimg} alt="Mehndi" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-black/10 flex flex-col items-center justify-center text-center text-white px-4">
+        <div className="absolute inset-0 bg-black/20 flex flex-col items-center justify-center text-center text-white px-4">
           <h1 className="text-5xl font-bold text-center">Mehndi</h1>
           <p className="mt-4 text-lg max-w-2xl">
             Celebrate your Mehndi with music, color, and unforgettable traditions
@@ -125,15 +111,18 @@ export default function Mehndi() {
         </div>
       </section>
 
-      {/* About */}
-   <section className="pt-16  bg-gray-50">
-      {/* Text Section */}
-      <div className="container mx-auto px-6 text-justify">
-        <h2 className="text-4xl font-bold text-gray-700 mb-6 text-center">
-         Mehndi
+   {/* About */}
+<section className="pt-16 bg-gray-50">
+  <div className="container mx-auto px-6">
+    <div className="flex flex-col lg:flex-row items-start gap-10">
+
+      {/* Left Text Section */}
+      <div className="lg:w-5/12 flex flex-col justify-start">
+        <h2 className="text-4xl font-bold text-gray-700 mb-6">
+          Mehndi & Cocktail
         </h2>
 
-        <p className="text-gray-700 leading-[28px] max-w-full mx-auto mb-5">
+        <p className="text-gray-700 leading-[28px] mb-5 text-justify">
           The Mehndi ceremony is one of the most vibrant and cherished
           pre-wedding rituals, celebrated with joyful music, colorful décor, and
           heartfelt traditions. It’s a time when the bride’s hands and feet are
@@ -141,7 +130,7 @@ export default function Mehndi() {
           prosperity for the journey ahead.
         </p>
 
-        <p className="text-gray-700 leading-[28px] max-w-full mx-auto mb-8 text-justify">
+        <p className="text-gray-700 leading-[28px] text-justify">
           At our Mehndi events, we craft an atmosphere that beautifully blends
           cultural heritage with a modern twist — where traditional songs and
           laughter fill the air, and every detail is curated to reflect your
@@ -154,112 +143,127 @@ export default function Mehndi() {
           signature drinks, and curated bites — all coming together to set the
           perfect tone for the days to come.
         </p>
+
+        {/* Get Quote Button */}
+        <div className="mt-8">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="bg-blue-800 text-white text-base font-medium py-3 px-8 rounded-lg hover:bg-blue-900 transition duration-300"
+          >
+            Get Quote
+          </button>
+        </div>
       </div>
 
-      {/* Gallery Section */}
-            <div className="container mx-auto px-6 mt-12 text-center">
-        <h3 className="text-3xl font-semibold text-gray-800 mb-8">Gallery</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      {/* Right Gallery Section */}
+      <div className="lg:w-7/12 flex flex-col justify-start">
+        <div className="grid grid-cols-2 gap-4">
           {gallery.map((img, i) => (
             <div
               key={i}
               onClick={() => setSelectedIndex(i)}
-              className="overflow-hidden rounded-xl cursor-pointer shadow-md hover:shadow-lg transition-shadow"
+              className="overflow-hidden rounded-xl cursor-pointer hover:shadow-lg transition-shadow"
             >
               <img
                 src={img}
                 alt={`Gallery ${i}`}
-                className="w-full h-80 object-cover hover:scale-110 transition-transform duration-500"
+                className="w-full h-54 object-cover hover:scale-110 transition-transform duration-500"
               />
             </div>
           ))}
         </div>
       </div>
+    </div>
+  </div>
 
-      {/* Modal Section */}
-      {selectedIndex !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
-          {/* Close */}
-          <button
-            onClick={handleClose}
-            className="absolute top-6 right-6 text-white text-3xl font-bold hover:text-blue-800"
-          >
-            ✖
-          </button>
+  {/* Modal Section */}
+  {selectedIndex !== null && (
+    <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
+      {/* Close */}
+      <button
+        onClick={handleClose}
+        className="absolute top-6 right-6 text-white text-3xl font-bold hover:text-blue-800"
+      >
+        ✖
+      </button>
 
-          {/* Prev */}
-          <button
-            onClick={handlePrev}
-            className="absolute left-6 text-white text-4xl font-bold hover:text-gray-400"
-          >
-             ‹
-          </button>
+      {/* Prev */}
+      <button
+        onClick={handlePrev}
+        className="absolute left-6 text-white text-4xl font-bold hover:text-gray-400"
+      >
+        ‹
+      </button>
 
-          {/* Image */}
+      {/* Image */}
+      <img
+        src={gallery[selectedIndex]}
+        alt="Selected"
+        className="max-h-[80vh] max-w-[90vw] rounded-lg shadow-lg transition-transform duration-500"
+      />
+
+      {/* Next */}
+      <button
+        onClick={handleNext}
+        className="absolute right-6 text-white text-4xl font-bold hover:text-gray-400"
+      >
+        ›
+      </button>
+    </div>
+  )}
+</section>
+
+
+
+
+
+ {/* Packages */}
+<section className="pt-16 pb-16 bg-white">
+  <div className="container mx-auto px-6 text-center">
+    <h2 className="text-3xl font-bold text-gray-700 mb-12">
+      Mehndi Packages
+    </h2>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center">
+      {packages.map((pkg, i) => (
+        <div
+          key={i}
+          className="bg-gray-50 shadow-lg rounded-2xl p-6 hover:shadow-2xl w-full max-w-sm flex flex-col items-center"
+        >
+          {/* Package Image */}
           <img
-            src={gallery[selectedIndex]}
-            alt="Selected"
-            className="max-h-[80vh] max-w-[90vw] rounded-lg shadow-lg transition-transform duration-500"
+            src={pkg.img}
+            className="w-full h-48 object-cover rounded-xl mb-6"
+            alt={pkg.title}
           />
 
-          {/* Next */}
-          <button
-            onClick={handleNext}
-            className="absolute right-6 text-white text-4xl font-bold hover:text-gray-400"
-          >
-            ›
-          </button>
-        </div>
+          {/* Package Title */}
+          <h3 className="text-xl font-semibold text-blue-800 mb-6">
+            {pkg.title}
+          </h3>
 
-      )}
-    </section>
-
-
-
-      {/* Packages */}
-      <section className="pt-16 bg-white">
-      <div className="container mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold text-gray-700 mb-10">
-          Mehndi Packages
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center">
-          {packages.map((pkg, i) => (
-            <div
-              key={i}
-              className="bg-gray-50 shadow-lg rounded-2xl p-6 hover:shadow-2xl w-full max-w-sm flex flex-col items-center"
-            >
-              <img
-                src={pkg.img}
-                className="w-full h-48 object-cover rounded-xl mb-4"
-                alt={pkg.title}
-              />
-              <h3 className="text-xl font-semibold text-blue-800 mb-6">
-                {pkg.title}
-              </h3>
-
-              {/* Features list */}
-              <ul className="flex flex-col items-center text-gray-700 w-full">
+              <ul className="flex flex-col items-left text-gray-700 space-y-3">
                 {pkg.features.map((f, j) => (
-                  <li key={j}
-                    className="flex items-center mb-3 justify-center"
-                  >
+                  <li key={j} className="flex items-center">
                     {getIcon(f)}
-                    <span>{f}</span>
+                    <span className="ml-3">{f}</span>
                   </li>
                 ))}
               </ul>
-            </div>
-          ))}
+
+         
         </div>
-      </div>
-    </section>
+      ))}
+    </div>
+  </div>
+</section>
 
 
       {/* Timeline */}
       <section className="pt-16 pb-4 bg-gradient-to-b from-blue-50 via-white to-blue-50">
       <div className="container mx-auto px-6 max-w-6xl">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-blue-800 mb-16 tracking-widest drop-shadow-md">
-          Mehndi & Cocktail Timeline
+        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-grey-800 mb-16 tracking-widest drop-shadow-md">
+          Mehndi Ceremony  Timeline
         </h2>
 
         <div className="relative">
@@ -309,7 +313,7 @@ export default function Mehndi() {
                     </div>
                   </div>
 
-                  {/* Content Card */}
+                  {/* Content Card */} 
                   <div
                     className={`bg-white border border-blue-200 shadow-xl rounded-2xl p-6 md:p-8 max-w-md w-full text-center hover:shadow-blue-400 transition-shadow duration-300
                     ${isLeft ? "md:ml-12 md:mr-0" : "md:mr-12 md:ml-0"}`}
@@ -334,7 +338,7 @@ export default function Mehndi() {
 <section className="py-16 container mx-auto px-6 lg:px-12">
   <div className="text-center mb-12">
     <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
-      Mehndi Amenities & <span className="text-blue-800">Facilities</span>
+      Services & <span className="text-blue-800">Facilities</span>
     </h2>
     <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
       Everything you need to celebrate a colorful, joyous, and memorable Mehndi event.
@@ -385,30 +389,9 @@ export default function Mehndi() {
   </div>
 </section>
 
-      {/* Testimonials */}
-      {/* <section className="py-16 container mx-auto px-6">
-        <h2 className="text-3xl text-center font-bold text-blue-800 mb-10">What Our Guests Say</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
-              className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition"
-            >
-              <FaUserCircle className="text-blue-500 text-6xl mx-auto mb-3" />
-              <FaQuoteLeft className="text-blue-400 text-2xl mx-auto mb-3" />
-              <p className="italic text-gray-700 mb-4">"{t.text}"</p>
-              <div className="flex justify-center text-yellow-400 mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <FaStar key={i} />
-                ))}
-              </div>
-              <h4 className="font-semibold text-blue-700">{t.name}</h4>
-            </div>
-          ))}
-        </div>
-      </section> */}
-
-      {isOpen && <ModalForm onClose={() => setIsOpen(false)} />}
+      
+ {/* Modal Form */}
+     {isOpen && <ModalForm onClose={() => setIsOpen(false)} />}
       {selectedImg && (
         <div
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
@@ -417,6 +400,6 @@ export default function Mehndi() {
           <img src={selectedImg} className="max-w-3xl rounded-lg shadow-lg" />
         </div>
       )}
-    </div>
+    </div> 
   );
 }

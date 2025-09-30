@@ -1,11 +1,11 @@
 
-// 100 work
-
 import { useState } from "react";
 import ModalForm from "../../../components/ModalForm";
 import { FaMusic, FaLightbulb, FaUtensils, FaUsers, FaCar, FaGift , FaConciergeBell,} from "react-icons/fa";
-import { FaQuoteLeft, FaStar, FaUserCircle } from "react-icons/fa";
+import { FaQuoteLeft, FaStar, FaUserCircle, FaHeart } from "react-icons/fa";
 import { FaGlassCheers, FaCamera, FaUserFriends } from "react-icons/fa";
+
+
 
 // Hero Image
 import heroImg from "../../../assets/eng1.jpg";
@@ -27,30 +27,46 @@ export default function Engagement() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImg, setSelectedImg] = useState(null);
 
-  const gallery = [img1, img2, pack3, img4, img5, img6];
+ const [selectedIndex, setSelectedIndex] = useState(null);
+   const handleClose = () => setSelectedIndex(null);
+  const handleNext = () => setSelectedIndex((prev) => (prev + 1) % gallery.length);
+  const handlePrev = () =>
+    setSelectedIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
 
-  const packages = [
+
+  const gallery = [img3, img4, img5, pack3,  img2, img1];
+
+
+ const packages = [
     {
       title: "Silver Package",
-    
-      features: ["Basic Decorations", "Catering for 100 Guests", "Music System"],
       img: pack1,
+      features:["Music System", "Buffet Dinner", "Basic Decorations", "Catering for 100 Guests",  ], 
     },
     {
       title: "Gold Package",
-    
-      features: ["Premium Decorations", "Catering for 200 Guests", "DJ & Music"],
       img: pack2,
+      features: ["DJ & Music", "Candlelight Dinner", "Premium Decorations", "Catering for 200 Guests",  ],
+       
     },
     {
       title: "Platinum Package",
-    
-      features: ["Luxury Decorations", "Catering for 500 Guests", "Full Event Coordination"],
       img: img3,
+      features:["Live Music & DJ", "Gourmet Dining", "Luxury Decorations", "Catering for 500 Guests",  ],
     },
   ];
-
- 
+ // 🎨 Map features to icons
+  const getIcon = (feature) => {
+    const f = feature.toLowerCase();
+    if (f.includes("music") || f.includes("band")) return <FaMusic className="text-blue-600 text-lg" />;
+    if (f.includes("cocktail") || f.includes("drinks") || f.includes("bar")) return <FaGlassCheers className="text-pink-600 text-lg" />;
+    if (f.includes("dinner") || f.includes("dining") || f.includes("buffet")) return <FaUtensils className="text-green-600 text-lg" />;
+    if (f.includes("photo")) return <FaCamera className="text-yellow-600 text-lg" />;
+    if (f.includes("guest") || f.includes("people")) return <FaUsers className="text-purple-600 text-lg" />;
+    if (f.includes("gift") || f.includes("decor")) return <FaGift className="text-red-600 text-lg" />;
+    if (f.includes("light") || f.includes("candle")) return <FaLightbulb className="text-orange-600 text-lg" />;
+    return <FaHeart className="text-blue-500 text-lg" />;
+  };
 
   const timeline = [
   {
@@ -112,26 +128,27 @@ export default function Engagement() {
         </div>
       </section>
 
- {/* About + Gallery Section */}
-<section className="pt-16 bg-gray-50">
+{/* About + Gallery Section */} 
+<section className="pt-16 px-8 bg-gray-50">
   <div className="container mx-auto px-6">
-    <div className="flex flex-col lg:flex-row items-stretch gap-10">
-      
+    <div className="flex flex-col lg:flex-row items-stretch gap-20">
+
       {/* About Section - narrower, clean */}
-      <div className="lg:w-5/12 flex flex-col justify-between p-4">
+      <div className="lg:w-5/12 flex flex-col justify-between h-full">
         <div>
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-700 mb-6 leading-tight">
             Engagement
           </h2>
           <p className="text-gray-700 text-justify leading-[28px] mb-5">
-            Your engagement marks the beginning of a beautiful journey  and there's no better place to begin than in our elegantly designed engagement hall. With a perfect blend of charm and sophistication, we create unforgettable moments tailored to your love story.
+            Your engagement marks the beginning of a beautiful journey and there's no better place to begin than in our elegantly designed engagement hall. With a perfect blend of charm and sophistication, we create unforgettable moments tailored to your love story.
           </p>
           <p className="text-gray-700 text-justify leading-[28px] mb-5">
             Whether you're planning an intimate gathering or a lavish celebration, our venue offers customizable décor, seamless coordination, and a romantic atmosphere that sets the tone for your big day. From floral arrangements to curated menus, our experienced team handles every detail with care.
-          </p>
+          </p><br/><br/>
         </div>
 
-        <div>
+        {/* Button aligned at the bottom */}
+        <div className="mt-4 lg:mt-0">
           <button
             onClick={() => setIsOpen(true)}
             className="bg-blue-800 text-white text-base font-medium py-3 px-8 rounded-lg hover:bg-blue-900 transition duration-300"
@@ -142,7 +159,7 @@ export default function Engagement() {
       </div>
 
       {/* Gallery Section - wider */}
-      <div className="lg:w-7/12 grid grid-cols-2 sm:grid-cols-3 gap-4">
+      {/* <div className="lg:w-7/12 grid grid-cols-2 sm:grid-cols-3 gap-4">
         {gallery.map((img, idx) => (
           <div
             key={idx}
@@ -156,61 +173,113 @@ export default function Engagement() {
             />
           </div>
         ))}
-      </div>
+      </div> */}
 
-    </div>
-  </div>
-</section>
-
-
-
-      {/* Our Engagement Packages*/}
-      <section className="pt-16 bg-gray-50">
-  <div className="container mx-auto px-6 text-center">
-    <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-      Our Engagement Packages
-    </h2>
-    <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
-      Choose a package that fits your dream engagement.
-    </p>
-
-    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {packages.map((pkg, idx) => (
+       <div className="lg:w-7/12 grid grid-cols-2 sm:grid-cols-3 gap-4">
+      {/* Gallery Grid */}
+      {gallery.map((img, idx) => (
         <div
           key={idx}
-          className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition"
+          className="overflow-hidden rounded-lg cursor-pointer"
+          onClick={() => setSelectedIndex(idx)}
         >
           <img
-            src={pkg.img}
-            alt={pkg.title}
-            className="w-full h-48 object-cover"
+            src={img}
+            alt={`Engagement Hall ${idx + 1}`}
+            className="w-full h-60 object-cover hover:scale-110 transition-transform duration-500"
           />
-          <div className="p-6 text-left">
-            {/* Blue Title */}
-            <h3 className="text-xl font-semibold text-blue-800 mb-4">
-              {pkg.title}
-            </h3>
-
-            {/* Features List */}
-            <ul className="text-gray-700 space-y-2">
-              {pkg.features.map((feature, i) => (
-                <li key={i} className="flex items-center gap-2">
-                  <span className="text-blue-600">•</span>
-                  <span className="leading-tight">{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
       ))}
+
+      {/* Modal */}
+      {selectedIndex !== null && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <div className="relative max-w-full w-full px-4">
+            {/* Close Button */}
+            <button
+              onClick={handleClose}
+              className="absolute top-2 right-6 text-white text-3xl font-bold hover:text-gray-300"
+            >
+              ✖
+            </button>
+
+            {/* Image */}
+            <img
+              src={gallery[selectedIndex]}
+              alt="Selected"
+              className="w-full max-h-[80vh] object-contain rounded-lg shadow-lg"
+            />
+
+            {/* Navigation */}
+            <button
+              onClick={handlePrev}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold hover:text-gray-300"
+            >
+              ‹
+            </button>
+            <button
+              onClick={handleNext}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold hover:text-gray-300"
+            >
+              ›
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+
     </div>
   </div>
 </section>
 
+{/* Our Engagement Packages*/}
+      
+<section className="pt-16 px-8 bg-gray-50">
+      <div className="container mx-auto px-6 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+          Our Engagement Packages
+        </h2>
+        <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
+          Choose a package that fits your dream engagement.
+        </p>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {packages.map((pkg, idx) => (
+            <div
+              key={idx}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition flex flex-col items-center text-left"
+            >
+              <img
+                src={pkg.img}
+                alt={pkg.title}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-blue-800 mb-6">
+                  {pkg.title}
+                </h3>
+
+                {/* 🌟 Features Centered with Icons */}
+                <ul className="text-gray-800 flex flex-col items-left gap-3">
+                  {pkg.features.map((feature, i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      {getIcon(feature)}
+                      <span className="leading-tight">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+    </section> 
+
  {/* Event Timeline / Itinerary */}
-<section className="pt-16 bg-gradient-to-b from-gray-50 via-white to-gray-50">
+<section className="pt-16 pb-4 bg-gradient-to-b from-gray-50 via-white to-gray-50">
       <div className="container mx-auto px-6 max-w-6xl">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-blue-900 mb-16 tracking-widest drop-shadow-md">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-grey-800 mb-16 tracking-widest drop-shadow-md">
           Engagement Event Timeline
         </h2>
 
@@ -285,7 +354,7 @@ export default function Engagement() {
     </section>
 
       {/* Amenities / Features */}
-      <section className="pt-16 container mx-auto px-6 lg:px-12">
+      <section className="pt-16 container mx-auto px-8 lg:px-12">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800">Amenities & <span className="text-blue-800">Facilities</span></h2>
           <p className="mt-4 text-gray-600 max-w-2xl mx-auto">All you need for a seamless and memorable engagement celebration.</p>
@@ -312,7 +381,7 @@ export default function Engagement() {
      
   
    {/* Why Choose Us Section */}
-<section className="pt-16 container mx-auto px-6 lg:px-12">
+<section className="pt-16 container mx-auto px-8 lg:px-12">
   {/* Section Heading */}
   <div className="text-center mb-16">
     <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 tracking-tight">
@@ -379,7 +448,7 @@ export default function Engagement() {
 
 
  {/* { Review} */}
-     <section className="py-16 container mx-auto px-6">
+     <section className="py-16 container mx-auto px-8">
   <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
     What Our Guests Say
   </h2>
