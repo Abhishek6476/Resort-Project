@@ -69,7 +69,7 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-yellow-500">
+                  <a href="Dining" className="hover:text-yellow-500">
                     Dining
                   </a>
                 </li>
@@ -98,27 +98,27 @@ const Footer = () => {
               </h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="hover:text-yellow-500">
+                  <a href="/Services/corporate/meeting" className="hover:text-yellow-500">
                     Meeting
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-yellow-500">
+                  <a href="/Services/corporate/conference" className="hover:text-yellow-500">
                     Conference
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-yellow-500">
+                  <a href="/Services/corporate/seminar" className="hover:text-yellow-500">
                     Seminar
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-yellow-500">
+                  <a href="/Services/venue/grand" className="hover:text-yellow-500">
                     Venue
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-yellow-500">
+                  <a href="/Services/social/reception" className="hover:text-yellow-500">
                     Social Events
                   </a>
                 </li>
