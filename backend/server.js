@@ -19,51 +19,30 @@
 
 
 import express from "express";
-import dotenv from "dotenv";
-import nodemailer from "nodemailer";
 import cors from "cors";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import contactRoutes from "./routes/Contact.js";
+import jobRoutes from "./routes/jobApplication.js";
 
 dotenv.config();
 const app = express();
+
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
-// Contact API
-app.post("/api/contact", async (req, res) => {
-  const { name, email, phone, message } = req.body;
+// MongoDB connection
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log(" MongoDB Connected"))
+  .catch((err) => console.log(" MongoDB Error:", err));
 
-  try {
-    // Create Nodemailer transporter
-    const transporter = nodemailer.createTransport({
-      service: "Gmail",
-      auth: {
-        user: process.env.EMAIL_USER, // your Gmail
-        pass: process.env.EMAIL_PASS, // app password
-      },
-    });
+// Routes
+app.use("/api", contactRoutes);
 
-    // Mail options
-    const mailOptions = {
-      from: process.env.EMAIL_USER,   // Gmail sender
-      to: "ravi@gmail.com",           // recipient
-      replyTo: email,                 // user's email
-      subject: "New Contact Form Submission",
-      html: `<h3>New Contact Form</h3>
-             <p><b>Name:</b> ${name}</p>
-             <p><b>Email:</b> ${email}</p>
-             <p><b>Phone:</b> ${phone}</p>
-             <p><b>Message:</b> ${message}</p>`,
-    };
+app.use("/api/job-application", jobRoutes); 
 
-    await transporter.sendMail(mailOptions);
-
-    // Send success response to frontend
-    res.status(200).json({ message: "Form submitted successfully!" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Failed to submit form." });
-  }
-});
-
+// Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
