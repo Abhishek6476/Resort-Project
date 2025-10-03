@@ -21,7 +21,7 @@ export default function Sidebar() {
       name: "Rooms",
       icon: <FaBed />,
       submenu: [
-        { name: "Add Room", path: "/admin/rooms/add" },
+        { name: "Booing Room", path: "/admin/rooms/add" },
         { name: "All Rooms", path: "/admin/rooms/all" },
       ],
     },
