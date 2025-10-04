@@ -21,6 +21,7 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
+import multer from "multer";
 import dotenv from "dotenv";
 import contactRoutes from "./routes/Contact.js";
 import jobRoutes from "./routes/jobApplication.js";
