@@ -7,6 +7,7 @@
  import food from "../assets/food.jpg";
  import event from "../assets/event.jpg";
  import security from "../assets/security.jpg";
+ import resume from "../assets/job_apply1.jpg";
 
  const Career = () => {
   const jobs = [
@@ -69,36 +70,6 @@
   const formRef = useRef(null);
 
 
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  //   email: "",
-  //   phone: "",
-  //   position: "",
-  //   resume: null,
-  // });
-
-  // const handleChange = (e) => {
-  //   const { name, value, files } = e.target;
-  //   if (name === "resume") {
-  //     setFormData({ ...formData, resume: files[0] });
-  //   } else {
-  //     setFormData({ ...formData, [name]: value });
-  //   }
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   alert("Application submitted successfully!");
-  //   setFormData({
-  //     name: "",
-  //     email: "",
-  //     phone: "",
-  //     position: "",
-  //     resume: null,
-  //   });
-  // };
-
-
 const [formData, setFormData] = useState({
   name: "",
   email: "",
@@ -110,6 +81,12 @@ const [status, setStatus] = useState("");
 const [isSending, setIsSending] = useState(false);
 const timeoutRef = useRef(null);
 const fileInputRef = useRef(null);
+const [showPopup, setShowPopup] = useState(false);
+
+
+
+
+
 
 const handleChange = (e) => {
   const { name, value } = e.target;
@@ -139,7 +116,7 @@ const validateForm = () => {
     return false;
   }
 
-  const allowedTypes = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
+  const allowedTypes = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "image/jpeg"];
   if (!allowedTypes.includes(resume.type)) {
     setStatus("Resume must be PDF, DOC or DOCX");
     return false;
@@ -170,17 +147,22 @@ const handleSubmit = async (e) => {
   body.append("position", formData.position);
   body.append("resume", formData.resume);
 
+
+
   try {
-    const res = await fetch("http://localhost:5000/api/apply", {
+    const res = await fetch("http://localhost:5000/api/job-application", {
       method: "POST",
       body,
     });
 
     const data = await res.json();
-    setStatus(data.msg || (res.ok ? "Application submitted!" : "Submission failed"));
+    setStatus(data.msg || (res.ok ? "Application submit Successfully!" : "Submission failed"));
     if (res.ok) {
       setFormData({ name: "", email: "", phone: "", position: "", resume: null });
       if (fileInputRef.current) fileInputRef.current.value = "";
+
+      setShowPopup(true);
+
     }
   } catch (err) {
     console.error(err);
@@ -192,14 +174,12 @@ const handleSubmit = async (e) => {
   }
 };
 
+
 useEffect(() => {
   return () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
   };
 }, []);
-
-
-
 
 
 
@@ -218,7 +198,7 @@ useEffect(() => {
   <div className="relative w-full h-[70vh]">
     {/* Banner Image */}
     <img 
-      src={carrier} 
+      src={resume} 
       alt="Career Banner" 
       className="w-full h-full object-cover"
     />
@@ -279,12 +259,7 @@ useEffect(() => {
                    📍 {job.location} • 💼 {job.type}
                  </p>
                  <p className="text-gray-600 mb-4">{job.description}</p>
-                 {/* <button
-                  onClick={() => handleApplyClick(job.title)}
-                   className="bg-blue-800 text-white font-semibold px-5 py-2 rounded-lg hover:bg-blue-600 transition"
-                 >
-                   Apply Now
-                 </button> */}
+               
               </div>
             </div>
           ))}
@@ -383,28 +358,16 @@ useEffect(() => {
             <label className="block text-gray-700 font-medium mb-2">
                Upload Resume
              </label>
-             {/* <input
-              type="file"
-              name="resume"
-              accept=".pdf,.doc,.docx"
-              onChange={handleChange} */}
+          
               <input
                 ref={fileInputRef}
                 type="file"
                 name="resume"
-                accept=".pdf,.doc,.docx"
+                accept=".pdf,.doc,.docx,.jpg,.jpeg"
                 onChange={handleFileChange}
               required
-              className="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-800 transition"
-            />
+              className="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-800 transition" />
           </div>
-
-           {/* <button
-            type="submit"
-            className="w-full bg-blue-800 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg transition"
-          >
-            Submit Application
-          </button> */}
 
           <button
             type="submit"
@@ -414,26 +377,106 @@ useEffect(() => {
             {isSending ? "Sending..." : "Submit Application"}
           </button>
 
-
           {status && (
-            <p className={`text-sm mt-3 font-medium ${status.toLowerCase().includes("success") || status.toLowerCase().includes("submitted") ? "text-green-600" : "text-red-600"}`}>{status}</p>
+            <p className={`text-sm mt-3 font-medium ${status.toLowerCase().includes("success") || status.toLowerCase().includes("submitted") ? "text-blue-800" : "text-red-600"}`}>{status}</p>
           )}
+          
 
         </form>
       </section>
     
     {/* Application CTA */}
-        <section className="bg-white py-16 px-6 text-center">
+          {/* <section
+          className="relative py-16 px-8 text-center bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${carrier})` }}>
+          <div className="absolute inset-0 bg-black/20"></div>
+
            <h3 className="text-2xl font-semibold text-gray-800 mb-4">Didn’t find your role?</h3>
            <p className="text-gray-600 mb-6">We’re always looking for passionate individuals. Send us your resume and we’ll be in touch!</p>
-          <a
-            href="mailto:careers@resorthotel.com"
+          <a  href="mailto:careers@resorthotel.com"
             className="inline-block bg-blue-800 text-white px-6 py-3 rounded hover:bg-blue-700"
           >
             Send Resume
           </a>
-        </section>
+
+        </section> */}
+
+
+
+
+        {/* Application CTA */}
+<section
+  className="relative py-16 px-8 text-center bg-cover bg-center bg-no-repeat"
+  style={{ backgroundImage: `url(${carrier})` }}
+>
+  {/* Dark Overlay */}
+  <div className="absolute inset-0 bg-black/40"></div>
+
+  {/* Content */}
+  <div className="relative z-10">
+    <h3 className="text-2xl font-semibold text-white mb-4">Didn’t find your role?</h3>
+    <p className="text-gray-200 mb-6">
+      We’re always looking for passionate individuals. Send us your resume and we’ll be in touch!
+    </p>
+
+    {/* Hidden File Input */}
+    <input
+      type="file"
+      ref={fileInputRef}
+      onChange={async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const allowedTypes = [
+          "application/pdf",
+          "application/msword",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          "image/jpeg",
+          "image/png",
+        ];
+
+        if (!allowedTypes.includes(file.type)) {
+          alert(" Only PDF, DOC, DOCX, JPG, PNG files are allowed!");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("resume", file);
+
+        try {
+          const res = await fetch("http://localhost:5000/api/job-application/upload-resume", {
+            method: "POST",
+            body: formData,
+          });
+
+
+          const data = await res.json();
+          if (res.ok) {
+            alert("✅ Resume sent successfully!");
+          } else {
+            alert("❌ Upload failed: " + data.error);
+          }
+        } catch (err) {
+          console.error(err);
+          alert("❌ Server error. Try again later.");
+        }
+      }}
+      accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+      className="hidden"
+    />
+
+    {/* Upload Button */}
+    <button
+      onClick={() => fileInputRef.current.click()}
+      className="inline-block bg-blue-800 text-white px-6 py-3 rounded hover:bg-blue-700 transition"
+    >
+      Send Resume
+    </button>
+  </div>
+</section>
+
         </div>
+    
   );
 };
 
