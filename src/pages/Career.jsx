@@ -84,10 +84,6 @@ const fileInputRef = useRef(null);
 const [showPopup, setShowPopup] = useState(false);
 
 
-
-
-
-
 const handleChange = (e) => {
   const { name, value } = e.target;
   setFormData(prev => ({ ...prev, [name]: value }));
@@ -133,7 +129,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   if (!validateForm()) {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => setStatus(""), 5000);
+    timeoutRef.current = setTimeout(() => setStatus(""), 9000);
     return;
   }
 
@@ -170,7 +166,7 @@ const handleSubmit = async (e) => {
   } finally {
     setIsSending(false);
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => setStatus(""), 5000);
+    timeoutRef.current = setTimeout(() => setStatus(""), 9000);
   }
 };
 
@@ -221,7 +217,7 @@ useEffect(() => {
      Work With Us
    </h2>
 
-  <p className="text-gray-700 text-justify max-w-full mx-auto text-[18px] leading-[28px]">
+  <p className="text-gray-700 text-justify max-w-full mx-auto text-[16px] leading-[28px]">
      We believe in teamwork, creativity, and hospitality excellence. Whether
      it’s a grand wedding, a corporate meeting, or a private event, our staff
      plays a key role in delivering memorable experiences.
@@ -452,13 +448,13 @@ useEffect(() => {
 
           const data = await res.json();
           if (res.ok) {
-            alert("✅ Resume sent successfully!");
+            alert(" Resume sent successfully!");
           } else {
-            alert("❌ Upload failed: " + data.error);
+            alert(" Upload failed: " + data.error);
           }
         } catch (err) {
           console.error(err);
-          alert("❌ Server error. Try again later.");
+          alert(" Server error. Try again later.");
         }
       }}
       accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
