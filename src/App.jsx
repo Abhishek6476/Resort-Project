@@ -20,6 +20,10 @@ import Engagement from './pages/Services/SocialEvent/Engagement';
 import Mehndi from "./pages/Services/SocialEvent/Mehndi";
 
 
+import AdminLogin from "./pages/Admin/AdminLogin";
+import Dashboard from "./pages/Admin/Dashboard";
+
+
 
 function App() {
   return (
@@ -27,6 +31,7 @@ function App() {
       <MainLayout>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/admin/dashboard" element={<Dashboard/>}/>
           <Route path="/about" element={<About />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/dining" element={<Dining/>} />
@@ -52,9 +57,15 @@ function App() {
          
           <Route path="/Services/Social/Mehndi" element={<Mehndi />} />
 
+ {/* Admin Routes */}
+        <Route path="/admin-login" element={<AdminLogin />} />
 
         </Routes>
       </MainLayout>
+
+   
+          
+
     </Router>
   );
 }
