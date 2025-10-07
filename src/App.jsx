@@ -21,7 +21,10 @@ import Mehndi from "./pages/Services/SocialEvent/Mehndi";
 
 
 import AdminLogin from "./pages/Admin/AdminLogin";
-import Dashboard from "./pages/Admin/Dashboard";
+import Dashboard from "./components/Admin/Dashboard";
+import AdminLayout from "./layouts/AdminLayout";
+
+import ContactSidebar from "./components/Admin/ContactSidebar";
 
 
 
@@ -31,7 +34,7 @@ function App() {
       <MainLayout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/admin/dashboard" element={<Dashboard/>}/>
+          
           <Route path="/about" element={<About />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/dining" element={<Dining/>} />
@@ -58,7 +61,18 @@ function App() {
           <Route path="/Services/Social/Mehndi" element={<Mehndi />} />
 
  {/* Admin Routes */}
+        <Route path="/admin/dashboard" element={<Dashboard/>}/>
         <Route path="/admin-login" element={<AdminLogin />} />
+
+      
+        <Route path="/admin/*" element={<AdminLayout />} />
+        <Route path="contactsidebar" element={<ContactSidebar />} />
+
+        {/* <Route path="/admin" element={<AdminLayout />}>
+  <Route path="dashboard" element={<Dashboard />} />
+  <Route path="contactsidebar" element={<ContactSidebar />} />
+</Route> */}
+
 
         </Routes>
       </MainLayout>
