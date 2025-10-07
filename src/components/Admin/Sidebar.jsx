@@ -26,7 +26,8 @@ export default function Sidebar() {
     // },
     { name: "Bookings", path: "/admin/bookings", icon: <FaClipboardList /> },
     { name: "Event Enquiries", path: "/admin/events", icon: <FaEnvelope /> },
-    { name: "ContactUs", path: "/admin/contactus", icon: <FaEnvelope /> },
+   { name: "Career", path: "/admin/career", icon: <FaClipboardList /> },
+   { name: "ContactUs", path: "/admin/contactus", icon: <FaEnvelope /> },
     { name: "Settings", path: "/admin/settings", icon: <FaUserCog /> },
   ];
 
