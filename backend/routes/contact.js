@@ -26,6 +26,17 @@ router.get("/contact/all", async (req, res) => {
     res.status(500).json({ msg: "Server error", error: err.message });
   }
 });
+// put 
+router.put("/contact/:id", async (req, res) => {
+  try {
+    const updated = await Contact.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating contact", error: err });
+  }
+});
 
 // Optional: DELETE route to remove a submission
 router.delete("/contact/:id", async (req, res) => {

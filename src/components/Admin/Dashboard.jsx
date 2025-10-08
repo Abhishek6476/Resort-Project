@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 const Dashboard = () => {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState("" );
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);

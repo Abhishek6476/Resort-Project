@@ -1,3 +1,4 @@
+// ye phle simple code h
 // import React, { useState } from "react";
 // import { motion } from "framer-motion";
 
@@ -328,6 +329,19 @@
 // export default Rooms;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+// 100 working code
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -357,6 +371,57 @@ const Rooms = () => {
   const [isOpen, setIsOpen] = useState(false); // booking form
   const [selectedRoom, setSelectedRoom] = useState("");
   const [previewImage, setPreviewImage] = useState(null); // full screen image preview
+
+ // 🧩 NEW: form state
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    roomCount: 1,
+    guestCount: 1,
+    checkIn: "",
+    checkOut: "",
+    message: "",
+  });
+
+  // 🧩 handle input change
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // 🧩 handle form submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const bookingData = { ...formData, roomType: selectedRoom };
+
+    try {
+      const response = await fetch("http://localhost:5000/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookingData),
+      });
+
+      if (response.ok) {
+        alert("✅ Booking submitted successfully!");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          roomCount: 1,
+          guestCount: 1,
+          checkIn: "",
+          checkOut: "",
+          message: "",
+        });
+        setIsOpen(false);
+      } else {
+        alert("❌ Failed to submit booking");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("❌ Error submitting booking");
+    }
+  };
 
   const openModal = (room) => {
     setSelectedRoom(room);
@@ -599,6 +664,141 @@ const Rooms = () => {
             </button>
 
             <h2 className="text-2xl font-bold mb-4 text-gray-900">
+              Book {selectedRoom}
+            </h2>
+
+            {/* ✅ Updated Booking Form */}
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Full Name"
+                required
+                className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-800 outline-none"
+              />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Email Address"
+                required
+                className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-800 outline-none"
+              />
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Mobile Number"
+                required
+                className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-800 outline-none"
+              />
+
+              <div className="flex gap-2">
+                <input
+                  type="number"
+                  name="roomCount"
+                  value={formData.roomCount}
+                  onChange={handleChange}
+                  min="1"
+                  required
+                  className="w-1/2 border border-gray-300 px-4 py-2 rounded-md"
+                  placeholder="Rooms"
+                />
+                <input
+                  type="number"
+                  name="guestCount"
+                  value={formData.guestCount}
+                  onChange={handleChange}
+                  min="1"
+                  required
+                  className="w-1/2 border border-gray-300 px-4 py-2 rounded-md"
+                  placeholder="Guests"
+                />
+              </div>
+
+              <div className="flex gap-2">
+                <input
+                  type="datetime-local"
+                  name="checkIn"
+                  value={formData.checkIn}
+                  onChange={handleChange}
+                  required
+                  className="w-1/2 border border-gray-300 px-4 py-2 rounded-md"
+                />
+                <input
+                  type="datetime-local"
+                  name="checkOut"
+                  value={formData.checkOut}
+                  onChange={handleChange}
+                  required
+                  className="w-1/2 border border-gray-300 px-4 py-2 rounded-md"
+                />
+              </div>
+
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Message or Special Request"
+                rows="3"
+                className="w-full border border-gray-300 px-4 py-2 rounded-md"
+              ></textarea>
+
+              <button
+                type="submit"
+                className="w-full bg-blue-800 hover:bg-blue-900 text-white py-3 rounded-md font-semibold transition hover:scale-105"
+              >
+                Submit Booking
+              </button>
+            </form>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Full Screen Image Preview */}
+      {previewImage && (
+        <div
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+          onClick={closeImage}
+        >
+          <img
+            src={previewImage}
+            alt="Preview"
+            className="max-h-[90%] max-w-[90%] rounded-lg shadow-lg"
+          />
+          <button
+            onClick={closeImage}
+            className="absolute top-6 right-6 bg-black/50 px-3 py-1 rounded-full text-white text-2xl"
+          >
+            ✖
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+      {/* Popup Modal Form */}
+      {/* {isOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="bg-white p-8 rounded-lg shadow-xl w-[90%] max-w-md relative"
+          >
+            <button
+              onClick={closeModal}
+              className="absolute top-3 right-3 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-full text-gray-700 text-lg"
+            >
+              ✖
+            </button>
+
+            <h2 className="text-2xl font-bold mb-4 text-gray-900">
               Submit Your Details
             </h2>
 
@@ -637,7 +837,7 @@ const Rooms = () => {
         </div>
       )}
 
-      {/* Full Screen Image Preview */}
+      {/* Full Screen Image Preview *
       {previewImage && (
         <div
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
@@ -658,6 +858,6 @@ const Rooms = () => {
       )}
     </div>
   );
-};
+}; */}
 
 export default Rooms;
