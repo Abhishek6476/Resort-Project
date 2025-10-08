@@ -100,5 +100,3 @@ export default function RoomSidebar({ isOpen, onClose, formData, setFormData, on
     </div>
   );
 }
-
-

@@ -21,11 +21,11 @@ export default function Sidebar() {
       name: "Rooms",
       icon: <FaBed />,
       submenu: [
-        { name: "Booing Room", path: "/admin/rooms/add" },
+        { name: "Booking Room", path: "/admin/rooms/booking" },
         { name: "All Rooms", path: "/admin/rooms/all" },
       ],
     },
-    { name: "Bookings", path: "/admin/bookings", icon: <FaClipboardList /> },
+    // { name: "Bookings", path: "/admin/bookings", icon: <FaClipboardList /> },
     { name: "Event Enquiries", path: "/admin/events", icon: <FaEnvelope /> },
     { name: "Contact Messages", path: "/admin/messages", icon: <FaEnvelope /> },
     { name: "Settings", path: "/admin/settings", icon: <FaUserCog /> },

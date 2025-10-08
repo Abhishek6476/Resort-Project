@@ -181,7 +181,9 @@ import AdminDashboard from "./pages/Admin/Dashboard";
 import ProtectedRoute from "./components/Admin/ProtectedRoute";
 import AdminLayout from "./layouts/AdminLayout";
 import AllRooms from "./pages/Admin/Rooms/AllRooms";
-import AddRooms from "./pages/Admin/Rooms/AddRooms";
+// import AddRooms from "./pages/Admin/Rooms/AddRooms";
+import AllBookings from "./pages/Admin/Rooms/AllBookings";
+import AllEvents from "./pages/Admin/AllEvents";  
 
 function App() {
   return (
@@ -232,7 +234,8 @@ function App() {
           {/* Admin child routes */}
           <Route index element={<AdminDashboard />} />
           <Route path="rooms/all" element={<AllRooms />} />
-          <Route path="rooms/add" element={<AddRooms />} />
+          <Route path="rooms/booking" element={<AllBookings />} />
+            <Route path="events" element={<AllEvents />} /> 
           {/* Future admin pages */}
           {/* <Route path="bookings" element={<BookingsPage />} /> */}
           {/* <Route path="rooms" element={<RoomsPage />} /> */}

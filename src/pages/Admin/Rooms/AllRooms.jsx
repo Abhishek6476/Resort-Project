@@ -11,6 +11,9 @@ export default function AllRooms() {
     { id: 1, name: "Luxury Room", type: "Luxury", price: "₹5,000", description: "Spacious room with sea view" },
     { id: 2, name: "Deluxe Room", type: "Deluxe", price: "₹3,500", description: "Comfortable room with modern amenities" },
     { id: 3, name: "Family Suite", type: "Suite", price: "₹7,000", description: "Large suite for family with extra beds" },
+     { id: 2, name: "Deluxe Room", type: "Deluxe", price: "₹3,500", description: "Comfortable room with modern amenities" },
+    { id: 3, name: "Family Suite", type: "Suite", price: "₹7,000", description: "Large suite for family with extra beds" },
+    
   ]);
 
   const [formData, setFormData] = useState({ name: "", type: "", price: "", description: "" });
@@ -147,4 +150,5 @@ export default function AllRooms() {
     </div>
   );
 }
+
 
