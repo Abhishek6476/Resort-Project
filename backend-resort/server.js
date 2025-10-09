@@ -1,12 +1,69 @@
+// import express from "express";
+// import dotenv from "dotenv";
+// import cors from "cors";
+// import connectDB from "./config/db.js";
+// import eventRoutes from "./routes/eventRoutes.js";
+
+// dotenv.config();
+// connectDB();  // ← ye line ensure kare MongoDB connect ho raha hai
+
+// const app = express();
+// app.use(cors());
+// app.use(express.json());
+
+// app.get("/", (req, res) => {
+//   res.send("API is running 🚀");
+// });
+
+// app.use("/api", eventRoutes);
+
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+
+// import express from "express";
+// import dotenv from "dotenv";
+// import cors from "cors";
+// import connectDB from "./config/db.js";
+// import eventRoutes from "./routes/eventRoutes.js";
+
+// dotenv.config();
+// connectDB();
+
+// const app = express();
+
+// // 1️⃣ CORS enable
+// app.use(cors());
+
+// // 2️⃣ JSON body parser
+// app.use(express.json());
+
+// // 3️⃣ Test route
+// app.get("/", (req, res) => {
+//   res.send("API is running 🚀");
+// });
+
+// // 4️⃣ Event routes
+// app.use("/api", eventRoutes);
+
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
+import eventRoutes from "./routes/eventRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+
 
 dotenv.config();
-connectDB();  // ← ye line ensure kare MongoDB connect ho raha hai
+connectDB();  // MongoDB connect
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
@@ -14,6 +71,17 @@ app.get("/", (req, res) => {
   res.send("API is running 🚀");
 });
 
+app.use(cors({
+  origin: "http://localhost:5173", // Vite frontend URL
+  credentials: true,
+}));
+
+// ✅ All API routes
+app.use("/api", eventRoutes);
+
+// Admin login
+app.use("/api/admin", adminRoutes);
+
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
