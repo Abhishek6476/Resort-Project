@@ -6,7 +6,7 @@ export default function AllBookings() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [editingBooking, setEditingBooking] = useState(null); 
+  const [editingBooking, setEditingBooking] = useState(null);
 
   const [bookings, setBookings] = useState([
     {
@@ -33,7 +33,7 @@ export default function AllBookings() {
       amount: 7000,
       status: "Pending",
     },
-     {
+    {
       id: 3,
       name: "Abhishek",
       email: "abhi@gmail.com",
@@ -45,7 +45,7 @@ export default function AllBookings() {
       amount: 7000,
       status: "Pending",
     },
-     {
+    {
       id: 4,
       name: "Raviranjan",
       email: "ravi@gmail.com",
@@ -102,7 +102,9 @@ export default function AllBookings() {
     if (editingBooking) {
       //  Update booking
       setBookings((prev) =>
-        prev.map((b) => (b.id === editingBooking.id ? { ...formData, id: b.id } : b))
+        prev.map((b) =>
+          b.id === editingBooking.id ? { ...formData, id: b.id } : b
+        )
       );
     } else {
       //  Add new booking
@@ -243,12 +245,8 @@ export default function AllBookings() {
         onClose={() => setIsSidebarOpen(false)}
         formData={formData}
         setFormData={setFormData}
-        onSubmit={handleSave} //  FIXED
+        onSubmit={handleSave} 
       />
     </div>
   );
 }
-
-
-
-

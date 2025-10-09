@@ -18,16 +18,32 @@
 
 
 
+// // src/components/Admin/ProtectedRoute.jsx
+// import { Navigate, useLocation } from "react-router-dom";
+
+// export default function ProtectedRoute({ children }) {
+//   const isAdminLoggedIn = localStorage.getItem("adminLoggedIn") === "true";
+//   const location = useLocation();
+
+//   if (!isAdminLoggedIn) {
+//     // Redirect to login if not logged in
+//     return <Navigate to="/admin-login" state={{ from: location }} replace />;
+//   }
+
+//   return children;
+// }
+
+
+
 // src/components/Admin/ProtectedRoute.jsx
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export default function ProtectedRoute({ children }) {
-  const isAdminLoggedIn = localStorage.getItem("adminLoggedIn") === "true";
-  const location = useLocation();
+  const token = localStorage.getItem("adminToken");
 
-  if (!isAdminLoggedIn) {
-    // Redirect to login if not logged in
-    return <Navigate to="/admin-login" state={{ from: location }} replace />;
+  if (!token) {
+    // Token nahi hai, redirect to login
+    return <Navigate to="/admin-login" replace />;
   }
 
   return children;
