@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {
   FileText,
@@ -15,7 +16,7 @@ export default function CareerData() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(false);
   const [editingApp, setEditingApp] = useState(null);
-  const [search, setSearch] = useState(""); // Search input state
+  const [search, setSearch] = useState("");
 
   // Fetch job applications
   const fetchApplications = async () => {

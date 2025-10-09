@@ -147,8 +147,10 @@ router.post("/upload-resume", upload.single("resume"), async (req, res) => {
 });
 
 
+
 //  GET route to fetch all job applications
-router.get("/", async (req, res) => {
+
+ router.get("/", async (req, res) => {
   try {
     const applications = await JobApplication.find().sort({ appliedAt: -1 });
     res.json(applications);
@@ -198,6 +200,4 @@ router.put("/:id", async (req, res) => {
     res.status(500).json({ message: "Error updating application", error: err.message });
   }
 });
-
-
 export default router;

@@ -1,3 +1,4 @@
+
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import MainLayout from "./layouts/MainLayout";
 // import Home from "./pages/Home";
@@ -85,7 +86,6 @@
 // }
 
 // export default App;
-
 
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -227,3 +227,4 @@ function App() {
 }
 
 export default App;
+
