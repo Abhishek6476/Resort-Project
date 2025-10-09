@@ -336,13 +336,8 @@
 
 
 
-
-
-
-
-
 // 100 working code
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Bed,
@@ -370,29 +365,57 @@ import room9 from "../assets/room9.jpeg";
 const Rooms = () => {
   const [isOpen, setIsOpen] = useState(false); // booking form
   const [selectedRoom, setSelectedRoom] = useState("");
-  const [previewImage, setPreviewImage] = useState(null); // full screen image preview
+  const [previewImage, setPreviewImage] = useState(null); 
+
+  const [totalPrice, setTotalPrice] = useState(0);
+
+    // const bookingData = { ...formData, totalPrice };
+
 
  // 🧩 NEW: form state
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    roomCount: 1,
-    guestCount: 1,
+    roomType: "",
+    price:0,
+    roomCount: "",
+    guestCount: "",
     checkIn: "",
     checkOut: "",
     message: "",
   });
+
+
 
   // 🧩 handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+
+  useEffect(() => {
+  if (formData.checkIn && formData.checkOut && formData.price > 0) {
+    const checkInDate = new Date(formData.checkIn);
+    const checkOutDate = new Date(formData.checkOut);
+    const diffTime = checkOutDate - checkInDate;
+    const nights = diffTime > 0 ? Math.ceil(diffTime / (1000 * 60 * 60 * 24)) : 0;
+
+    const total = formData.price * formData.roomCount * nights;
+    setTotalPrice(total);
+  } else {
+    setTotalPrice(0);
+  }
+}, [formData.checkIn, formData.checkOut, formData.price, formData.roomCount]);
+
+
+
+
   // 🧩 handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const bookingData = { ...formData, roomType: selectedRoom };
+    const bookingData = { ...formData, roomType: selectedRoom, totalPrice };
+
 
     try {
       const response = await fetch("http://localhost:5000/api/bookings", {
@@ -402,7 +425,7 @@ const Rooms = () => {
       });
 
       if (response.ok) {
-        alert("✅ Booking submitted successfully!");
+        alert(" Booking submitted successfully!");
         setFormData({
           name: "",
           email: "",
@@ -415,11 +438,11 @@ const Rooms = () => {
         });
         setIsOpen(false);
       } else {
-        alert("❌ Failed to submit booking");
+        alert(" Failed to submit booking");
       }
     } catch (error) {
       console.error(error);
-      alert("❌ Error submitting booking");
+      alert(" Error submitting booking");
     }
   };
 
@@ -667,7 +690,7 @@ const Rooms = () => {
               Book {selectedRoom}
             </h2>
 
-            {/* ✅ Updated Booking Form */}
+            {/*  Updated Booking Form */}
             <form className="space-y-4" onSubmit={handleSubmit}>
               <input
                 type="text"
@@ -696,6 +719,43 @@ const Rooms = () => {
                 required
                 className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-800 outline-none"
               />
+
+
+                {/* Room Type Dropdown */}
+                <select
+                  name="roomType"
+                  value={formData.roomType}
+                  onChange={(e) => {
+                    const selectedType = e.target.value;
+                    const prices = {
+                      Deluxe : 3500,
+                      Superior:5000,
+                      Suite : 7500,
+                      
+      
+                    };
+                    setFormData({
+                      ...formData,
+                      roomType: selectedType,
+                      price: prices[selectedType] || 0,
+                    });
+                  }}
+                  required
+                  className="w-full border border-gray-300 px-4 py-2 rounded-md"
+                >
+                  <option value="">Select Room Type</option>
+                  <option value="Deluxe">Deluxe Room</option>
+                  <option value="Superior">Superior Room</option>
+                  <option value="Suite">Suite Room</option>
+                  
+                </select>
+
+                {/* Auto-filled Room Price */}
+                {formData.price > 0 && (
+                  <div className="text-gray-700 font-medium">
+                    Room Price: ₹{formData.price.toLocaleString("en-IN")} / night
+                  </div>
+                )}
 
               <div className="flex gap-2">
                 <input
@@ -748,6 +808,13 @@ const Rooms = () => {
                 className="w-full border border-gray-300 px-4 py-2 rounded-md"
               ></textarea>
 
+                {/*  ADD total price display  */}
+                  {totalPrice > 0 && (
+                    <div className="text-lg font-semibold text-green-700">
+                      Total Price: ₹{totalPrice.toLocaleString("en-IN")}
+                    </div>
+                  )}
+
               <button
                 type="submit"
                 className="w-full bg-blue-800 hover:bg-blue-900 text-white py-3 rounded-md font-semibold transition hover:scale-105"
@@ -783,81 +850,5 @@ const Rooms = () => {
 };
 
 
-      {/* Popup Modal Form */}
-      {/* {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white p-8 rounded-lg shadow-xl w-[90%] max-w-md relative"
-          >
-            <button
-              onClick={closeModal}
-              className="absolute top-3 right-3 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-full text-gray-700 text-lg"
-            >
-              ✖
-            </button>
-
-            <h2 className="text-2xl font-bold mb-4 text-gray-900">
-              Submit Your Details
-            </h2>
-
-            <form className="space-y-4">
-              <input
-                type="text"
-                placeholder="Full Name"
-                className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-800 outline-none"
-              />
-              <input
-                type="email"
-                placeholder="Email Address"
-                className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-800 outline-none"
-              />
-              <input
-                type="number"
-                placeholder="Mob No"
-                className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-800 outline-none"
-              />
-              <input
-                type="date"
-                placeholder="Checked In"
-                className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-800 outline-none"
-              />
-              <textarea
-                placeholder="Your Message"
-                className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-800 outline-none"
-                rows="4"
-              ></textarea>
-
-              <button className="w-full bg-blue-800 hover:bg-blue-900 text-white py-3 rounded-md font-semibold transition hover:scale-105">
-                Submit
-              </button>
-            </form>
-          </motion.div>
-        </div>
-      )}
-
-      {/* Full Screen Image Preview *
-      {previewImage && (
-        <div
-          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
-          onClick={closeImage}
-        >
-          <img
-            src={previewImage}
-            alt="Preview"
-            className="max-h-[90%] max-w-[90%] rounded-lg shadow-lg"
-          />
-          <button
-            onClick={closeImage}
-            className="absolute top-6 right-6 bg-black/50 px-3 py-1 rounded-full text-white text-2xl"
-          >
-            ✖
-          </button>
-        </div>
-      )}
-    </div>
-  );
-}; */}
-
+      
 export default Rooms;

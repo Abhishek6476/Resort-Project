@@ -127,7 +127,8 @@ export default function Sidebar() {
       name: "Rooms",
       icon: <FaBed />,
       submenu: [
-        { name: "Booing Room", path: "/admin/rooms/add"},
+        // { name: "Booing Room", path: "/admin/rooms/add"},
+        { name: "Booking Room", path: "/admin/rooms/booking" },
         { name: "All Rooms", path: "/admin/rooms/all" },
       ],
     },

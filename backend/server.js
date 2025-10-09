@@ -25,6 +25,7 @@ import multer from "multer";
 import dotenv from "dotenv";
 import contactRoutes from "./routes/Contact.js";
 import jobRoutes from "./routes/jobApplication.js";
+import bookingRoom from "./routes/bookingRoom.js";
 
 dotenv.config();
 const app = express();
@@ -43,6 +44,11 @@ mongoose
 app.use("/api", contactRoutes);
 
 app.use("/api/job-application", jobRoutes); 
+
+// use route  for Rooms
+app.use("/api/bookings", bookingRoom);
+
+// app.listen(5000, () => console.log("Server running on port 5000"));
 
 // Start server
 const PORT = process.env.PORT || 5000;
