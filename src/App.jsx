@@ -91,17 +91,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
-
 import Rooms from "./pages/Rooms";
 import Contact from "./pages/Contact";
 import Dining from "./pages/Dining";
 import Career from "./pages/Career";
 import Gallery from "./pages/Gallery";
 import Engagement from './pages/Services/SocialEvent/Engagement';
-
 import Mehndi from "./pages/Services/SocialEvent/Mehndi";
-
-
 import AdminLogin from "./pages/Admin/AdminLogin";
 //import Dashboard from "./components/Admin/Dashboard";
 import AdminLayout from "./layouts/AdminLayout";

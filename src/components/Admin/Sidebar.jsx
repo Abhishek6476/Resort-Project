@@ -127,15 +127,15 @@ export default function Sidebar() {
       name: "Rooms",
       icon: <FaBed />,
       submenu: [
-        { name: "Booing Room", path: "/admin/rooms/add" },
+        { name: "Booing Room", path: "/admin/rooms/add"},
         { name: "All Rooms", path: "/admin/rooms/all" },
       ],
     },
-    { name: "Bookings", path: "/admin/bookings", icon: <FaClipboardList /> },
+    //{ name: "Bookings", path: "/admin/bookings", icon: <FaClipboardList /> },
     { name: "Event Enquiries", path: "/admin/events", icon: <FaEnvelope /> },
    { name: "Career", path: "/admin/career", icon: <FaClipboardList /> },
    { name: "ContactUs", path: "/admin/contactus", icon: <FaEnvelope /> },
-    { name: "Settings", path: "/admin/settings", icon: <FaUserCog /> },
+    // { name: "Settings", path: "/admin/settings", icon: <FaUserCog /> },
   ];
 
   const toggleMenu = (name) => {

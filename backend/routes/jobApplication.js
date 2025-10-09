@@ -130,9 +130,9 @@ router.post("/upload-resume", upload.single("resume"), async (req, res) => {
 
     // Save in DB
     const newEntry = new JobApplication({
-      name: "N/A",
-      email: "N/A",
-      phone: "N/A",
+      // name: "N/A",
+      // email: "N/A",
+      // phone: "N/A",
       position: "General Resume",
       resume: req.file.filename,
     });

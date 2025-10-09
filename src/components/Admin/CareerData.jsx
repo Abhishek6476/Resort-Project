@@ -89,7 +89,8 @@ export default function CareerData() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/jobapplication/${editingApp._id}`,
+        // NEW (correct)
+        `http://localhost:5000/api/job-application/${editingApp._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
