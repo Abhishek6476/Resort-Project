@@ -369,7 +369,7 @@ const Rooms = () => {
 
   const [totalPrice, setTotalPrice] = useState(0);
 
-    // const bookingData = { ...formData, totalPrice };
+    
 
 
  // 🧩 NEW: form state
@@ -753,7 +753,7 @@ const Rooms = () => {
                 {/* Auto-filled Room Price */}
                 {formData.price > 0 && (
                   <div className="text-gray-700 font-medium">
-                    Room Price: ₹{formData.price.toLocaleString("en-IN")} / night
+                    Room Price: ₹{formData.price.toLocaleString("en-IN")} 
                   </div>
                 )}
 

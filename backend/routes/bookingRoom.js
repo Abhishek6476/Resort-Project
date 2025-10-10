@@ -25,5 +25,46 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Error fetching bookings" });
   }
 });
+// PUT /api/bookings/:id
+router.put("/api/bookings/:id", async (req, res) => {
+  try {
+    const updated = await Booking.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to update booking" });
+  }
+});
+
+
+// PATCH booking status
+router.patch("/:id/status", async (req, res) => {
+  try {
+    const { status } = req.body;
+    const updatedBooking = await Booking.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+    if (!updatedBooking) {
+      return res.status(404).json({ error: "Booking not found" });
+    }
+    res.json(updatedBooking);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to update status" });
+  }
+});
+
+// DELETE a booking by ID
+router.delete("/:id", async (req, res) => {
+  try {
+    await Booking.findByIdAndDelete(req.params.id);
+    res.json({ message: "Booking deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to delete booking" });
+  }
+});
+
 
 export default router;

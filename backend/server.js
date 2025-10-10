@@ -1,28 +1,10 @@
-// import express from "express";
-// import dotenv from "dotenv";
-// import cors from "cors";
-// import connectDB from "./config/db.js";
-
-// dotenv.config();
-// connectDB(); 
-
-// const app = express();
-// app.use(cors());
-// app.use(express.json());
-
-// app.get("/", (req, res) => {
-//   res.send("API is running 🚀");
-// });
-
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
 
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import multer from "multer";
 import dotenv from "dotenv";
+// import paymentRoutes from "./routes/payment.js";
 import contactRoutes from "./routes/Contact.js";
 import jobRoutes from "./routes/jobApplication.js";
 import bookingRoom from "./routes/bookingRoom.js";
@@ -47,8 +29,7 @@ app.use("/api/job-application", jobRoutes);
 
 // use route  for Rooms
 app.use("/api/bookings", bookingRoom);
-
-// app.listen(5000, () => console.log("Server running on port 5000"));
+// app.use("/api/payment", paymentRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

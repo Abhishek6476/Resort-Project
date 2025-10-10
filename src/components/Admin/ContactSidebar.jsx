@@ -167,13 +167,13 @@ export default function ContactSidebar() {
                   className="flex items-center justify-between bg-gradient-to-r from-white to-blue-50 border border-gray-200 rounded-xl p-4 shadow hover:shadow-md transition"
                 >
                   <div className="flex items-center gap-3">
-                    <User className="w-5 h-5 text-blue-600" />
+                    <User className="w-5 h-5 text-blue-800" />
                     <span className="font-semibold text-gray-800">{c.name}</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => setSelectedContact(c)}
-                      className="flex items-center gap-1 bg-blue-500 text-white px-3 py-1 rounded-full text-sm hover:bg-blue-600 transition"
+                      className="flex items-center gap-1 bg-blue-800 text-white px-3 py-1 rounded-full text-sm hover:bg-blue-900 transition"
                     >
                       <Eye className="w-4 h-4" /> View
                     </button>
@@ -259,7 +259,7 @@ export default function ContactSidebar() {
                     handleEdit(selectedContact);
                     setSelectedContact(null);
                   }}
-                  className="px-5 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center gap-2 transition"
+                  className="px-5 py-2 bg-blue-800 text-white rounded-full hover:bg-blue-900 flex items-center gap-2 transition"
                 >
                   <Pencil className="w-4 h-4" /> Edit
                 </button>
