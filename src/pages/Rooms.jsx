@@ -389,9 +389,29 @@ const Rooms = () => {
 
 
   // 🧩 handle input change
+  // const handleChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const { name, value } = e.target;
+  let updatedForm = { ...formData, [name]: value };
+
+  // Guest limit logic
+  if (name === "guestCount" || name === "roomCount") {
+    const rooms = name === "roomCount" ? parseInt(value || 0) : parseInt(formData.roomCount || 0);
+    const guests = name === "guestCount" ? parseInt(value || 0) : parseInt(formData.guestCount || 0);
+
+    const maxGuestsAllowed = rooms * 3;
+
+    if (guests > maxGuestsAllowed) {
+      alert(`❌ Only ${maxGuestsAllowed} guests allowed for ${rooms} room(s).`);
+      updatedForm.guestCount = maxGuestsAllowed; // reset to max allowed
+    }
+  }
+
+  setFormData(updatedForm);
+};
 
 
   useEffect(() => {
@@ -411,40 +431,121 @@ const Rooms = () => {
 
 
 
-  // 🧩 handle form submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const bookingData = { ...formData, roomType: selectedRoom, totalPrice };
+//   // 🧩 handle form submit
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     const bookingData = { ...formData, roomType: selectedRoom, totalPrice };
 
 
-    try {
-      const response = await fetch("http://localhost:5000/api/bookings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bookingData),
-      });
+//     try {
+//       const response = await fetch("http://localhost:5000/api/bookings", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify(bookingData),
+//       });
 
-      if (response.ok) {
-        alert(" Booking submitted successfully!");
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          roomCount: 1,
-          guestCount: 1,
-          checkIn: "",
-          checkOut: "",
-          message: "",
-        });
-        setIsOpen(false);
-      } else {
-        alert(" Failed to submit booking");
-      }
-    } catch (error) {
-      console.error(error);
-      alert(" Error submitting booking");
+//       if (response.ok) {
+//         alert(" Booking submitted successfully!");
+//         setFormData({
+//           name: "",
+//           email: "",
+//           phone: "",
+//           roomCount: 1,
+//           guestCount: 1,
+//           checkIn: "",
+//           checkOut: "",
+//           message: "",
+//         });
+//         setIsOpen(false);
+//       } else {
+//         alert(" Failed to submit booking");
+//       }
+//     } catch (error) {
+//       console.error(error);
+//       alert(" Error submitting booking");
+//     }
+//   };
+
+//  handle form submit
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const bookingData = { ...formData, roomType: selectedRoom, totalPrice };
+
+  try {
+    // Step 1️⃣: Create Razorpay order from backend
+
+    const response = await fetch("http://localhost:5000/api/payment/create-order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ amount: totalPrice }),
+  });
+
+    const order = await response.json();
+    if (!order?.id) {
+      alert("Failed to create order!");
+      return;
     }
-  };
+
+    // Step 2️⃣: Open Razorpay Checkout
+    const options = {
+      key:"rzp_test_csPufS1nRGuil7", //  Replace with your frontend key
+      amount: order.amount,
+      currency: "INR",
+      name: "Hotel Booking",
+      description: `Booking for ${selectedRoom}`,
+      order_id: order.id,
+      handler: async function (response) {
+        alert(" Payment Successful!");
+
+        // Step 3️⃣: Save booking details + payment ID in DB
+        const bookingResponse = await fetch(
+          "http://localhost:5000/api/bookings",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              ...bookingData,
+              paymentId: response.razorpay_payment_id,
+              paymentStatus: "Paid",
+            }),
+          }
+        );
+
+        if (bookingResponse.ok) {
+          alert("Booking confirmed successfully!");
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            roomCount: 1,
+            guestCount: 1,
+            checkIn: "",
+            checkOut: "",
+            message: "",
+          });
+          setIsOpen(false);
+        } else {
+          alert("Booking save failed after payment!");
+        }
+      },
+      prefill: {
+        name: formData.name,
+        email: formData.email,
+        contact: formData.phone,
+      },
+      theme: { color: "#1E40AF" },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+
+  } catch (error) {
+    console.error("Payment Error:", error);
+    alert("Something went wrong during payment.");
+  }
+};
+
+
 
   const openModal = (room) => {
     setSelectedRoom(room);
@@ -677,7 +778,8 @@ const Rooms = () => {
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-white p-8 rounded-lg shadow-xl w-[90%] max-w-md relative"
+             className="bg-white p-6 md:p-10 rounded-lg shadow-xl w-[95%] max-w-2xl relative max-h-[90vh] overflow-y-auto"
+
           >
             <button
               onClick={closeModal}
@@ -787,6 +889,7 @@ const Rooms = () => {
                   value={formData.checkIn}
                   onChange={handleChange}
                   required
+                   min={new Date().toISOString().slice(0, 16)}
                   className="w-1/2 border border-gray-300 px-4 py-2 rounded-md"
                 />
                 <input
@@ -795,6 +898,7 @@ const Rooms = () => {
                   value={formData.checkOut}
                   onChange={handleChange}
                   required
+                   min={formData.checkIn || new Date().toISOString().slice(0, 16)}
                   className="w-1/2 border border-gray-300 px-4 py-2 rounded-md"
                 />
               </div>
