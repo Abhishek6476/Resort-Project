@@ -1,3 +1,4 @@
+
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
@@ -6,8 +7,8 @@ const adminSchema = new mongoose.Schema({
   password: { type: String, required: true }, // hashed password
 }, { timestamps: true });
 
-// Password hashing before saving
-adminSchema.pre("save", async function (next) {
+// Password hashing
+adminSchema.pre("save", async function(next) {
   if (!this.isModified("password")) return next();
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
@@ -15,7 +16,7 @@ adminSchema.pre("save", async function (next) {
 });
 
 // Password compare method
-adminSchema.methods.comparePassword = async function (plainPassword) {
+adminSchema.methods.comparePassword = async function(plainPassword) {
   return await bcrypt.compare(plainPassword, this.password);
 };
 

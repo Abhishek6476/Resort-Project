@@ -57,6 +57,9 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import roomRoutes from "./routes/roomRoutes.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 
 dotenv.config();
@@ -81,6 +84,13 @@ app.use("/api", eventRoutes);
 
 // Admin login
 app.use("/api/admin", adminRoutes);
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+app.use("/api/rooms", roomRoutes);
+
 
 
 const PORT = process.env.PORT || 5000;

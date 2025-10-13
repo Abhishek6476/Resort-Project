@@ -1,4 +1,3 @@
-
 import EventEnquiry from "../models/Event.js";
 
 // Add a new enquiry
@@ -43,5 +42,7 @@ export const updateStatus = async (req, res) => {
     res.status(200).json({ message: "Status updated", event: updated });
   } catch (error) {
     res.status(500).json({ message: error.message });
+
   }
 };
+
