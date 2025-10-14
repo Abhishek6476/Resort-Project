@@ -169,6 +169,7 @@ const RoomBookings = () => {
               <th className="p-2 border">Guests</th>
               <th className="p-2 border">Total Price</th>
               <th className="p-2 border">Status</th>
+              <th className="p-2 border">Payment Status</th> 
               <th className="p-2 border">Actions</th>
             </tr>
           </thead>
@@ -185,6 +186,7 @@ const RoomBookings = () => {
                     ₹{b.totalPrice?.toLocaleString("en-IN")}
                   </td>
                   <td className="p-2">{getStatusBadge(b.status)}</td>
+                  <td className="p-2">{getStatusBadge(b.paymentStatus)}</td>
                   <td className="p-2 flex justify-center gap-2">
                     <button
                       onClick={() => setSelectedBooking({ ...b })}
@@ -230,6 +232,7 @@ const RoomBookings = () => {
           { label: "Room Count", field: "roomCount" },
           { label: "Guest Count", field: "guestCount" },
           { label: "Message", field: "message" },
+          
         ].map(({ label, field }) => (
           <div key={field}>
             <label className="font-medium block mb-1">{label}</label>
@@ -247,7 +250,7 @@ const RoomBookings = () => {
           </div>
         ))}
 
-        <div>
+        {/* <div>
           <label className="font-medium block mb-1">Status</label>
           <select
             value={selectedBooking.status || "pending"}
@@ -263,7 +266,26 @@ const RoomBookings = () => {
             <option value="confirmed">Confirmed</option>
             <option value="canceled">Canceled</option>
           </select>
-        </div>
+        </div> */}
+
+        <div>
+  <label className="font-medium block mb-1">Payment Status</label>
+  <select
+    value={selectedBooking.paymentStatus || "pending"}
+    onChange={(e) =>
+      setSelectedBooking({
+        ...selectedBooking,
+        paymentStatus: e.target.value,
+      })
+    }
+    className="border border-gray-300 w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+  >
+    <option value="pending">Pending</option>
+    <option value="success">Success</option>
+    <option value="failed">Failed</option>
+  </select>
+</div>
+
 
         <div className="grid grid-cols-2 gap-4">
           <div>

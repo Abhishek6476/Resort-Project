@@ -337,6 +337,7 @@
 
 
 // 100 working code
+
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
@@ -363,7 +364,7 @@ import room8 from "../assets/room8.jpg";
 import room9 from "../assets/room9.jpeg";
 
 const Rooms = () => {
-  const [isOpen, setIsOpen] = useState(false); // booking form
+  const [isOpen, setIsOpen] = useState(false); 
   const [selectedRoom, setSelectedRoom] = useState("");
   const [previewImage, setPreviewImage] = useState(null); 
 
@@ -389,10 +390,7 @@ const Rooms = () => {
 
 
   // 🧩 handle input change
-  // const handleChange = (e) => {
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-  // };
-
+  
   const handleChange = (e) => {
   const { name, value } = e.target;
   let updatedForm = { ...formData, [name]: value };
@@ -431,7 +429,7 @@ const Rooms = () => {
 
 
 
-//   // 🧩 handle form submit
+// //   // 🧩 handle form submit
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     const bookingData = { ...formData, roomType: selectedRoom, totalPrice };
@@ -472,8 +470,7 @@ const handleSubmit = async (e) => {
   const bookingData = { ...formData, roomType: selectedRoom, totalPrice };
 
   try {
-    // Step 1️⃣: Create Razorpay order from backend
-
+    //  Create Razorpay order from backend
     const response = await fetch("http://localhost:5000/api/payment/create-order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -486,9 +483,26 @@ const handleSubmit = async (e) => {
       return;
     }
 
-    // Step 2️⃣: Open Razorpay Checkout
+
+    //  Dynamically load Razorpay script if not already loaded
+    if (!window.Razorpay) {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.onload = resolve;
+        script.onerror = reject;
+        document.body.appendChild(script);
+      });
+    }
+
+    if (!window.Razorpay) {
+      alert("Razorpay SDK failed to load. Try again later.");
+      return;
+    }
+
+    //  Open Razorpay Checkout
     const options = {
-      key:"rzp_test_csPufS1nRGuil7", //  Replace with your frontend key
+      key:"rzp_test_41Nyj6VrclMlo7", //  Replace with your frontend key
       amount: order.amount,
       currency: "INR",
       name: "Hotel Booking",
@@ -497,7 +511,7 @@ const handleSubmit = async (e) => {
       handler: async function (response) {
         alert(" Payment Successful!");
 
-        // Step 3️⃣: Save booking details + payment ID in DB
+        //  Save booking details + payment ID in DB
         const bookingResponse = await fetch(
           "http://localhost:5000/api/bookings",
           {
@@ -506,7 +520,9 @@ const handleSubmit = async (e) => {
             body: JSON.stringify({
               ...bookingData,
               paymentId: response.razorpay_payment_id,
-              paymentStatus: "Paid",
+            
+               paymentStatus: "success",  
+              status: "confirmed" 
             }),
           }
         );
@@ -517,13 +533,17 @@ const handleSubmit = async (e) => {
             name: "",
             email: "",
             phone: "",
-            roomCount: 1,
-            guestCount: 1,
+            roomCount: "",
+            guestCount: "",
             checkIn: "",
             checkOut: "",
             message: "",
+             price: 0,
+            roomType: "",
           });
           setIsOpen(false);
+          //alert(`✅ Booking confirmed!\nPayment ID: ${response.razorpay_payment_id}`);
+
         } else {
           alert("Booking save failed after payment!");
         }
@@ -544,6 +564,8 @@ const handleSubmit = async (e) => {
     alert("Something went wrong during payment.");
   }
 };
+
+
 
 
 
@@ -923,7 +945,7 @@ const handleSubmit = async (e) => {
                 type="submit"
                 className="w-full bg-blue-800 hover:bg-blue-900 text-white py-3 rounded-md font-semibold transition hover:scale-105"
               >
-                Submit Booking
+                Pay Now
               </button>
             </form>
           </motion.div>
@@ -953,6 +975,4 @@ const handleSubmit = async (e) => {
   );
 };
 
-
-      
 export default Rooms;

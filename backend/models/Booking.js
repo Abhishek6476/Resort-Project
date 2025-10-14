@@ -12,7 +12,15 @@ const bookingSchema = new mongoose.Schema({
   checkOut: String,
   message: String,
   totalPrice: Number,
-  date: { type: Date, default: Date.now },
+   orderId: String,
+  paymentId: String,
+  paymentStatus: {
+    type: String,
+    enum: ["Pending", "Success", "Failed"],
+    default: "Pending",
+  },
+  createdAt: { type: Date, default: Date.now },
+  //date: { type: Date, default: Date.now },
 });
 
 export default mongoose.model("Booking", bookingSchema);

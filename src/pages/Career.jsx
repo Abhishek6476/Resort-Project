@@ -200,7 +200,7 @@ useEffect(() => {
     />
 
     {/* Overlay with Gradient and Centered Text */}
-    <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-black/20 flex items-center justify-center px-8">
+    <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-black/20 flex items-center justify-center px-8">
       <div className="text-white max-w-2xl text-center">
          <h1 className="text-5xl font-bold mb-3">Career Opportunities</h1>
         <p className="text-lg text-gray-200">
