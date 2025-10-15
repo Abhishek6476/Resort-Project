@@ -6,12 +6,16 @@ const router = express.Router();
 // Create booking
 router.post("/", async (req, res) => {
   try {
-    const newBooking = new Booking(req.body);
-    await newBooking.save();
-    res.status(201).json({ message: "Booking saved successfully" });
+     const newBooking = new Booking(req.body);
+    //  await newBooking.save();
+    const savedBooking = await newBooking.save(); 
+     res.status(201).json(savedBooking);  
+    // res.status(201).json({ message: "Booking saved successfully" });
+
+
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error saving booking" });
+    console.error("Error saving booking:", error);
+    res.status(500).json({ message: "Error saving booking", });
   }
 });
 
@@ -26,7 +30,7 @@ router.get("/", async (req, res) => {
   }
 });
 // PUT /api/bookings/:id
-router.put("/api/bookings/:id", async (req, res) => {
+  router.put("/:id", async (req, res) => {
   try {
     const updated = await Booking.findByIdAndUpdate(req.params.id, req.body, {
       new: true,

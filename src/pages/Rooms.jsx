@@ -339,6 +339,8 @@
 // 100 working code
 
 import React, { useState, useEffect } from "react";
+import { generateRoomBookingInvoice } from "../utils/generateInvoice";
+
 import { motion } from "framer-motion";
 import {
   Bed,
@@ -428,42 +430,6 @@ const Rooms = () => {
 
 
 
-
-// //   // 🧩 handle form submit
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     const bookingData = { ...formData, roomType: selectedRoom, totalPrice };
-
-
-//     try {
-//       const response = await fetch("http://localhost:5000/api/bookings", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(bookingData),
-//       });
-
-//       if (response.ok) {
-//         alert(" Booking submitted successfully!");
-//         setFormData({
-//           name: "",
-//           email: "",
-//           phone: "",
-//           roomCount: 1,
-//           guestCount: 1,
-//           checkIn: "",
-//           checkOut: "",
-//           message: "",
-//         });
-//         setIsOpen(false);
-//       } else {
-//         alert(" Failed to submit booking");
-//       }
-//     } catch (error) {
-//       console.error(error);
-//       alert(" Error submitting booking");
-//     }
-//   };
-
 //  handle form submit
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -528,6 +494,10 @@ const handleSubmit = async (e) => {
         );
 
         if (bookingResponse.ok) {
+        const savedBooking = await bookingResponse.json(); // get saved booking
+    //  Generate invoice PDF
+          console.log("saved Booking  for invoice:",savedBooking);
+           generateRoomBookingInvoice(savedBooking, response);
           alert("Booking confirmed successfully!");
           setFormData({
             name: "",
@@ -538,12 +508,11 @@ const handleSubmit = async (e) => {
             checkIn: "",
             checkOut: "",
             message: "",
-             price: 0,
+            price: 0,
             roomType: "",
           });
           setIsOpen(false);
-          //alert(`✅ Booking confirmed!\nPayment ID: ${response.razorpay_payment_id}`);
-
+        
         } else {
           alert("Booking save failed after payment!");
         }
@@ -557,15 +526,38 @@ const handleSubmit = async (e) => {
     };
 
     const rzp = new window.Razorpay(options);
-    rzp.open();
 
-  } catch (error) {
-    console.error("Payment Error:", error);
-    alert("Something went wrong during payment.");
-  }
+
+  //  Attach listener BEFORE rzp.open()
+  let paymentFailedHandled = false;
+  rzp.on("payment.failed", async function (response) {
+      if (paymentFailedHandled) return; 
+      paymentFailedHandled = true;
+
+    alert("Payment Failed!");
+
+    console.error("Payment Failure:", response.error);
+
+    await fetch("http://localhost:5000/api/bookings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...formData, 
+        totalPrice: order.amount / 100,
+        paymentId: response.error.metadata?.payment_id || "N/A",
+        paymentStatus: "Failed",
+        status: "Payment Failed",
+      }),
+    });
+  });
+
+  //  Open Razorpay Checkout
+  rzp.open();
+} catch (error) {
+  console.error("Payment Error:", error);
+  alert("Something went wrong during payment.");
+}
 };
-
-
 
 
 

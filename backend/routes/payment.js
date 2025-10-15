@@ -56,7 +56,7 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// ✅ 1️⃣ Create Razorpay Order
+//  Create Razorpay Order
 router.post("/create-order", async (req, res) => {
   try {
     const { name, email, mobile, roomType, amount } = req.body;
@@ -72,28 +72,28 @@ router.post("/create-order", async (req, res) => {
     };
 
     const order = await razorpay.orders.create(options);
-    console.log("✅ Razorpay Order Created:", order);
+    console.log(" Razorpay Order Created:", order);
 
     // Save booking with "Pending" status
-    const newBooking = new Booking({
-      name,
-      email,
-      mobile,
-      roomType,
-      totalPrice: amount,
-      orderId: order.id,
-      paymentStatus: "Pending",
-    });
-    await newBooking.save();
+    // const newBooking = new Booking({
+    //   name,
+    //   email,
+    //   mobile,
+    //   roomType,
+    //   totalPrice: amount,
+    //   orderId: order.id,
+    //   paymentStatus: "Pending",
+    // });
+    // await newBooking.save();
 
     res.status(200).json(order);
   } catch (err) {
-    console.error("❌ Razorpay Error:", err);
+    console.error(" Razorpay Error:", err);
     res.status(500).json({ message: err.message || "Error creating order" });
   }
 });
 
-// ✅ 2️⃣ Verify Razorpay Payment
+//  Verify Razorpay Payment
 router.post("/verify-payment", async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
@@ -111,18 +111,18 @@ router.post("/verify-payment", async (req, res) => {
         { paymentId: razorpay_payment_id, paymentStatus: "Success" },
         { new: true }
       );
-      console.log("✅ Payment Verified Successfully");
+      console.log(" Payment Verified Successfully");
       res.json({ success: true, message: "Payment verified successfully" });
     } else {
       await Booking.findOneAndUpdate(
         { orderId: razorpay_order_id },
         { paymentStatus: "Failed" }
       );
-      console.log("❌ Payment Verification Failed");
+      console.log(" Payment Verification Failed");
       res.status(400).json({ success: false, message: "Payment verification failed" });
     }
   } catch (err) {
-    console.error("❌ Error verifying payment:", err);
+    console.error(" Error verifying payment:", err);
     res.status(500).json({ message: "Server error during payment verification" });
   }
 });
