@@ -19,8 +19,6 @@
 // import BookingPage from "./pages/BookingPage";
 // import BookingConfirmation from "./components/BookingConfirmation";
 
-
-
 // function App() {
 //   return (
 //     <Router>
@@ -62,10 +60,6 @@
 
 // export default App;
 
-
-
-
-
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import MainLayout from "./layouts/MainLayout";
 // import Home from "./pages/Home";
@@ -91,7 +85,7 @@
 
 // // Admin
 // import AdminLogin from "./pages/Admin/AdminLogin";
-// import AdminDashboard from "./pages/Admin/Dashboard"; 
+// import AdminDashboard from "./pages/Admin/Dashboard";
 // import ProtectedRoute from "./components/Admin/ProtectedRoute";
 // import AdminLayout from "./layouts/AdminLayout";
 
@@ -147,10 +141,6 @@
 
 // export default App;
 
-
-
-
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
@@ -169,7 +159,7 @@ import Dining from "./pages/Dining";
 import Career from "./pages/Career";
 import Gallery from "./pages/Gallery";
 import WeddingReception from "./pages/Services/SocailEvent/WeddingReception";
-import Engagement from './pages/Services/SocailEvent/Engagement';
+import Engagement from "./pages/Services/SocailEvent/Engagement";
 import Mehndi from "./pages/Services/SocailEvent/Mehndi";
 import BookingPage from "./pages/BookingPage";
 import BookingConfirmation from "./components/BookingConfirmation";
@@ -177,13 +167,15 @@ import BookingConfirmation from "./components/BookingConfirmation";
 // Admin
 import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminDashboard from "./pages/Admin/Dashboard";
- 
+
 import ProtectedRoute from "./components/Admin/ProtectedRoute";
 import AdminLayout from "./layouts/AdminLayout";
 import AllRooms from "./pages/Admin/Rooms/AllRooms";
 // import AddRooms from "./pages/Admin/Rooms/AddRooms";
 import AllBookings from "./pages/Admin/Rooms/AllBookings";
-import AllEvents from "./pages/Admin/AllEvents";  
+import AllEvents from "./pages/Admin/AllEvents";
+import AdminGallery from "./pages/Admin/AdminGallery";
+import AllReviews from "./pages/Admin/AllReviews";
 
 function App() {
   return (
@@ -204,14 +196,38 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/reviews" element={<Reviews />} />
                 <Route path="/reserve" element={<Reserve />} />
-                <Route path="/Services/venue/grand" element={<GrandBallRoom />} />
-                <Route path="/Services/venue/elite" element={<EliteBallRoom />} />
-                <Route path="/Services/venue/royal" element={<RoyalBallRoom />} />
-                <Route path="/Services/corporate/meeting" element={<CorporateMeetings />} />
-                <Route path="/Services/corporate/conference" element={<Conference />} />
-                <Route path="/Services/corporate/seminar" element={<Seminar />} />
-                <Route path="/Services/social/reception" element={<WeddingReception />} />
-                <Route path="/Services/social/Engagement" element={<Engagement />} />
+                <Route
+                  path="/Services/venue/grand"
+                  element={<GrandBallRoom />}
+                />
+                <Route
+                  path="/Services/venue/elite"
+                  element={<EliteBallRoom />}
+                />
+                <Route
+                  path="/Services/venue/royal"
+                  element={<RoyalBallRoom />}
+                />
+                <Route
+                  path="/Services/corporate/meeting"
+                  element={<CorporateMeetings />}
+                />
+                <Route
+                  path="/Services/corporate/conference"
+                  element={<Conference />}
+                />
+                <Route
+                  path="/Services/corporate/seminar"
+                  element={<Seminar />}
+                />
+                <Route
+                  path="/Services/social/reception"
+                  element={<WeddingReception />}
+                />
+                <Route
+                  path="/Services/social/Engagement"
+                  element={<Engagement />}
+                />
                 <Route path="/Services/social/Mehndi" element={<Mehndi />} />
                 <Route path="/booking" element={<BookingPage />} />
                 <Route path="/confirmation" element={<BookingConfirmation />} />
@@ -235,7 +251,11 @@ function App() {
           <Route index element={<AdminDashboard />} />
           <Route path="rooms/all" element={<AllRooms />} />
           <Route path="rooms/booking" element={<AllBookings />} />
-            <Route path="events" element={<AllEvents />} /> 
+          <Route path="events" element={<AllEvents />} />
+        <Route path="gallery" element={<AdminGallery />} />
+        <Route path="reviews" element={<AllReviews />} />
+
+
           {/* Future admin pages */}
           {/* <Route path="bookings" element={<BookingsPage />} /> */}
           {/* <Route path="rooms" element={<RoomsPage />} /> */}
@@ -247,3 +267,4 @@ function App() {
 }
 
 export default App;
+

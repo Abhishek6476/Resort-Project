@@ -189,6 +189,9 @@
 // }
 
 
+
+
+
 import { useState, useEffect } from "react";
 import { FaSearch, FaEdit, FaTrash } from "react-icons/fa";
 import axios from "axios";
@@ -215,7 +218,7 @@ export default function AllEvents() {
 const filteredEvents = events.filter((e) => {
   const matchesSearch =
     e.name.toLowerCase().includes(search.toLowerCase()) ||
-    e.occasion.toLowerCase().includes(search.toLowerCase()); // <-- yaha change
+    e.occasion.toLowerCase().includes(search.toLowerCase()); 
   const matchesStatus =
     statusFilter === "All" ? true : e.status === statusFilter;
   return matchesSearch && matchesStatus;

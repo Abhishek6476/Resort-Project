@@ -42,12 +42,12 @@ export default function AboutContent() {
           </ul>
 
           {/* CTA */}
-          <a
+          {/* <a
             href="/facilities"
             className="bg-blue-800 text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition"
           >
             Explore Facilities
-          </a>
+          </a> */}
         </div>
       </div>
     </section>
