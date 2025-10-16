@@ -429,18 +429,37 @@ const Rooms = () => {
 }, [formData.checkIn, formData.checkOut, formData.price, formData.roomCount]);
 
 
+const gstRate = 0.18; // 18%
+const gstAmount = Number((totalPrice * gstRate).toFixed(2)); 
+const totalWithGST = Number((totalPrice + gstAmount).toFixed(2));
+
+
 
 //  handle form submit
 const handleSubmit = async (e) => {
   e.preventDefault();
-  const bookingData = { ...formData, roomType: selectedRoom, totalPrice };
+  
+  //  GST calculation
+  const gstRate = 0.18; // 18% GST
+  const basePrice = totalPrice; 
+  const gstAmount = basePrice * gstRate;
+  const totalWithGST = basePrice + gstAmount;
+
+  //  Merge into booking data
+  const bookingData = {
+    ...formData,
+    roomType: selectedRoom,
+    totalPrice: basePrice,
+    gstAmount: gstAmount,
+    grandTotal: totalWithGST,
+  };
 
   try {
     //  Create Razorpay order from backend
     const response = await fetch("http://localhost:5000/api/payment/create-order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount: totalPrice }),
+    body: JSON.stringify({ amount: totalWithGST }),
   });
 
     const order = await response.json();
@@ -926,12 +945,26 @@ const handleSubmit = async (e) => {
                 className="w-full border border-gray-300 px-4 py-2 rounded-md"
               ></textarea>
 
-                {/*  ADD total price display  */}
+                
+                  {/* Price breakdown */}
                   {totalPrice > 0 && (
-                    <div className="text-lg font-semibold text-green-700">
-                      Total Price: ₹{totalPrice.toLocaleString("en-IN")}
+                    <div className="text-lg font-medium text-gray-800 space-y-1">
+                      <div className="flex justify-between">
+                        <span>Room Price:</span>
+                        <span>₹{totalPrice.toLocaleString("en-IN")}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>GST (18%):</span>
+                        <span>₹{gstAmount.toLocaleString("en-IN")}</span>
+                      </div>
+                      <div className="flex justify-between  pt-2 mt-2 font-semibold ">
+                        <span>Grand Total:</span>
+                        <span>₹{totalWithGST.toLocaleString("en-IN")}</span>
+                      </div>
                     </div>
                   )}
+
+
 
               <button
                 type="submit"
