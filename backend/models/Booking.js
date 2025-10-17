@@ -18,7 +18,12 @@ const bookingSchema = new mongoose.Schema({
   orderId: String,
   paymentStatus: { type: String, default: "Pending" },
   status: { type: String, default: "Pending" },
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+
+  
+  roomPrice: Number,
+  gst: Number,
+  totalPriceWithGST: Number,
 });
 
 export default mongoose.model("Booking", bookingSchema);
