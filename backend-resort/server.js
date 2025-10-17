@@ -80,10 +80,12 @@ app.get("/", (req, res) => {
   res.send("API is running 🚀");
 });
 
-app.use(cors({
-  origin: "http://localhost:5173", // Vite frontend URL
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "http://localhost:5174"],
+    credentials: true,
+  })
+);
 
 // ✅ All API routes
 app.use("/api", eventRoutes);

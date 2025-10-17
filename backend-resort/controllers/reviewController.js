@@ -1,6 +1,6 @@
 import Review from "../models/Review.js";
 
-// ✅ Create review
+//  Create review
 export const createReview = async (req, res) => {
   try {
     const { name, email, text, rating, role } = req.body;
@@ -11,7 +11,7 @@ export const createReview = async (req, res) => {
   }
 };
 
-// ✅ Get all reviews
+//  Get all reviews
 export const getAllReviews = async (req, res) => {
   try {
     const reviews = await Review.find().sort({ createdAt: -1 });
@@ -21,7 +21,7 @@ export const getAllReviews = async (req, res) => {
   }
 };
 
-// ✅ Delete review
+//  Delete review
 export const deleteReview = async (req, res) => {
   try {
     const review = await Review.findByIdAndDelete(req.params.id);
