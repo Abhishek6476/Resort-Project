@@ -7,7 +7,7 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_SECRET,
 });
 
-// ✅ Create Order
+//  Create Order
 export const createOrder = async (req, res) => {
   try {
     const { name, email, mobile, roomType, totalPrice } = req.body;
@@ -40,7 +40,7 @@ export const createOrder = async (req, res) => {
   }
 };
 
-// ✅ Verify Payment (after payment success)
+//  Verify Payment (after payment success)
 export const verifyPayment = async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;

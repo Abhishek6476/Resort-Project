@@ -774,94 +774,107 @@ const RoomBookings = () => {
   };
 
   // Generate PDF Invoice
-  const handleDownloadPDF = (b) => {
+  const handleDownloadPDF = (booking, paymentResponse, options = {}) => {
     const doc = new jsPDF({ unit: "pt", format: "a4" });
 
-    // Header
-    doc.setFontSize(20);
-    doc.text("Hotel Room Booking Invoice", 200, 60, { align: "center" });
 
-    doc.setFontSize(12);
-    doc.text("Hotel Horizon", 40, 100);
-    doc.text("Bangalore, India", 40, 115);
-    doc.text("Email: support@hotelhorizon.com", 40, 130);
-    doc.text("Phone: +91 9876543210", 40, 145);
+     const hotel = options.hotelInfo || {
+    name: "Resort Hotel Booking Receipt",
+    address: "H-15 BSI Business Park, Noida, Uttar Pradesh - 201307",
+    phone: "+91 98765 43210",
+    email: "resort@info.com",
+    
+  };
 
-    // Line
-    doc.setLineWidth(1);
-    doc.line(40, 160, 555, 160);
+  const leftMargin = 40;
+  let cursorY = 40;
+  const pageWidth = doc.internal.pageSize.getWidth();
 
-    // Booking Info
-    doc.setFontSize(14);
-    doc.text("Booking Details:", 40, 190);
 
-    doc.setFontSize(12);
-    const details = [
-      ["Booking ID", b._id || "—"],
-      ["Name", b.name || "—"],
-      ["Email", b.email || "—"],
-      ["Mobile", b.phone || "—"],
-      ["Room Type", b.roomType || "—"],
-      ["Rooms", b.roomCount || "—"],
-      ["Guests", b.guestCount || "—"],
-      ["Check-In", b.checkIn ? new Date(b.checkIn).toLocaleString() : "—"],
-      ["Check-Out", b.checkOut ? new Date(b.checkOut).toLocaleString() : "—"],
-      ["Status", b.status || "Pending"],
-      ["Payment Status", b.paymentStatus || "Pending"],
-      ["Payment ID", b.paymentId || "—"],
-    ];
+  // === HOTEL TITLE (Center) ===
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(16);
+  doc.setTextColor("#000000");
+  doc.text(hotel.name, pageWidth / 2, cursorY + 20, { align: "center" });
 
-    doc.autoTable({
-      startY: 200,
-      theme: "grid",
-      body: details,
-      styles: { fontSize: 11, cellPadding: 5 },
-      columnStyles: { 0: { fontStyle: "bold" } },
-    });
+  // === PHONE + EMAIL (Top Right) ===
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  const rightX = pageWidth - leftMargin;
+  doc.text(`Phone: ${hotel.phone}`, rightX, cursorY, { align: "right" });
+  doc.text(`Email: ${hotel.email}`, rightX, cursorY + 12, { align: "right" });
 
-    // Price Section
-    const finalY = doc.lastAutoTable.finalY + 20;
-    doc.text("Payment Summary:", 40, finalY);
+  cursorY += 80;
 
-    const priceData = [
-      ["Room Price", `₹${b.roomPrice?.toLocaleString("en-IN") || "0"}`],
-      ["GST", `₹${b.gst?.toLocaleString("en-IN") || "0"}`],
-      [
-        "Total (with GST)",
-        `₹${
-          b.totalPriceWithGST?.toLocaleString("en-IN") ||
-          b.totalPrice?.toLocaleString("en-IN") ||
-          "0"
-        }`,
-      ],
-    ];
+  // === BOOKING DETAILS TITLE ===
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(12);
+  doc.text("Booking Details", leftMargin, cursorY);
 
-    doc.autoTable({
-      startY: finalY + 10,
-      theme: "plain",
-      body: priceData,
-      styles: { fontSize: 12, cellPadding: 5 },
-      columnStyles: { 0: { fontStyle: "bold" } },
-    });
+  cursorY += 10;
 
-    // Footer
-    const pageHeight = doc.internal.pageSize.height;
-    doc.setFontSize(10);
-    doc.text(
-      "Thank you for booking with Hotel Horizon! Have a pleasant stay.",
-      200,
-      pageHeight - 30,
-      { align: "center" }
-    );
+  // === PRICE & GST Calculation ===
+  const roomPrice = parseFloat(booking.totalPrice || 0);
+  const gstRate = 0.18;
+  const gstAmount = roomPrice * gstRate;
+  const totalWithGST = roomPrice + gstAmount;
 
-    doc.save(`Booking_Invoice_${b.name}.pdf`);
+  // === Booking Info Table ===
+  const bookingDetails = [
+    ["Booking ID", booking._id || `INV-${Date.now()}`],
+    ["Name", booking.name || ""],
+    ["Phone", booking.phone || ""],
+    ["Email", booking.email || ""],
+    ["Room Type", booking.roomType || ""],
+    ["Rooms", booking.roomCount?.toString() || "1"],
+    ["Guests", booking.guestCount?.toString() || "1"],
+    ["Check-In", new Date(booking.checkIn).toLocaleString("en-IN")],
+    ["Check-Out", new Date(booking.checkOut).toLocaleString("en-IN")],
+    ["Room Price", `Rs. ${roomPrice.toLocaleString("en-IN")}`],
+    ["GST (18%)", `Rs. ${gstAmount.toLocaleString("en-IN")}`],
+    ["Total Amount", `Rs. ${totalWithGST.toLocaleString("en-IN")}`],
+    ["Payment ID", booking.paymentId || booking.razorpay_payment_id || "N/A"],
+    ["Payment Status", booking.paymentStatus || "Success"],
+  ];
+
+  doc.autoTable({
+    startY: cursorY,
+    head: [],
+    body: bookingDetails,
+    theme: "grid",
+    margin: { left: leftMargin, right: leftMargin },
+    styles: { fontSize: 10, cellPadding: 6, valign: "middle" },
+    columnStyles: { 0: { fontStyle: "bold", cellWidth: 150 }, 1: { cellWidth: 350 } },
+  });
+
+  const afterTableY = doc.lastAutoTable.finalY + 20;
+
+  // === Thank You Note ===
+  doc.setFont("helvetica", "italic");
+  doc.setFontSize(10);
+  doc.text("Thank you for booking with Resort Hotel!", leftMargin, afterTableY);
+  doc.text("We hope you enjoy your stay.", leftMargin, afterTableY + 12);
+
+  // === FOOTER LINE ===
+  const footerY = doc.internal.pageSize.getHeight() - 40;
+  doc.setDrawColor("#E5E7EB");
+  doc.line(leftMargin, footerY - 10, pageWidth - leftMargin, footerY - 10);
+
+  // === Footer Info ===
+  const generatedDate = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  doc.text(`Address: ${hotel.address}`, leftMargin, footerY);
+  doc.text(`Generated on: ${generatedDate}`, pageWidth - leftMargin, footerY, { align: "right" });
+
+    doc.save(`Booking_Invoice_${booking.name}.pdf`);
   };
 
   return (
     <div className="p-6">
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3">
-        <h2 className="text-2xl font-bold text-blue-900">Booking Room</h2>
+        <h2 className="text-2xl font-bold text-grey-700">Booking Room</h2>
         <div className="relative w-full sm:w-80">
           <FaSearch className="absolute top-3 left-3 text-gray-500" />
           <input
@@ -884,8 +897,8 @@ const RoomBookings = () => {
               <th className="p-2 border">Rooms</th>
               <th className="p-2 border">Guests</th>
               <th className="p-2 border">Total Price</th>
-              <th className="p-2 border">Payment Status</th>
-              <th className="p-2 border">Status</th>
+              <th className="p-2 border"> Status</th>
+              <th className="p-2 border"> Payment Status</th>
               <th className="p-2 border">Actions</th>
             </tr>
           </thead>
@@ -902,17 +915,33 @@ const RoomBookings = () => {
                   <td className="p-2">{b.roomCount}</td>
                   <td className="p-2">{b.guestCount}</td>
                   <td className="p-2 font-semibold text-green-700">
-                    ₹{b.totalPrice?.toLocaleString("en-IN")}
+                    ₹{(b.totalPrice * 1.18)?.toLocaleString("en-IN")}
                   </td>
                   <td className="p-2">{getStatusBadge(b.paymentStatus)}</td>
                   <td className="p-2">{getStatusBadge(b.status)}</td>
                   <td className="p-2 flex justify-center gap-2">
+                    
                     <button
-                      onClick={() => setSelectedBooking({ ...b })}
+                      onClick={() => {
+                        const gstRate = 0.18;
+                        const roomPrice = parseFloat(b.totalPrice || 0);
+                        const gst = roomPrice * gstRate;
+                        const totalWithGST = roomPrice + gst;
+
+                        setSelectedBooking({
+                          ...b,
+                          roomPrice,
+                          gst,
+                          totalPriceWithGST: totalWithGST,
+                          paymentId: b.paymentId || b.razorpay_payment_id || "N/A",
+                        });
+                      }}
                       className="bg-blue-800 hover:bg-blue-900 text-white px-3 py-1 rounded-md text-sm transition-all duration-200"
                     >
                       View Details
                     </button>
+
+
                     <button
                       onClick={() => handleDelete(b._id)}
                       className="text-red-600 hover:text-red-800"
@@ -964,7 +993,7 @@ const RoomBookings = () => {
                 <p><b>Room Price:</b> ₹{selectedBooking.roomPrice?.toLocaleString("en-IN")}</p>
                 <p><b>GST:</b> ₹{selectedBooking.gst?.toLocaleString("en-IN")}</p>
                 <p className="font-semibold text-green-700">
-                  Total (with GST): ₹
+                  Total Amount : ₹
                   {selectedBooking.totalPriceWithGST?.toLocaleString("en-IN") ||
                     selectedBooking.totalPrice?.toLocaleString("en-IN")}
                 </p>
@@ -975,6 +1004,8 @@ const RoomBookings = () => {
               <button
                 onClick={() => handleDownloadPDF(selectedBooking)}
                 className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md flex items-center gap-2"
+                
+
               >
                 <FaFilePdf /> Download Invoice
               </button>
