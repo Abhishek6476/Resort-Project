@@ -497,104 +497,46 @@ const handleSubmit = async (e) => {
         alert(" Payment Successful!");
 
     //     //  Save booking details + payment ID in DB
-    //     const bookingResponse = await fetch(
-    //       "http://localhost:5000/api/bookings",
-    //       {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify({
-    //           ...bookingData,
-    //           paymentId: response.razorpay_payment_id,
+        const bookingResponse = await fetch(
+          "http://localhost:5000/api/bookings",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              ...bookingData,
+              paymentId: response.razorpay_payment_id,
             
-    //            paymentStatus: "success",  
-    //           status: "confirmed" 
-    //         }),
-    //       }
-    //     );
+               paymentStatus: "success",  
+              status: "confirmed" 
+            }),
+          }
+        );
 
-    //     if (bookingResponse.ok) {
-    //     const savedBooking = await bookingResponse.json(); // get saved booking
-    // //  Generate invoice PDF
-    //       console.log("saved Booking  for invoice:",savedBooking);
-    //        generateRoomBookingInvoice(savedBooking, response);
-    //       alert("Booking confirmed successfully!");
-    //       setFormData({
-    //         name: "",
-    //         email: "",
-    //         phone: "",
-    //         roomCount: "",
-    //         guestCount: "",
-    //         checkIn: "",
-    //         checkOut: "",
-    //         message: "",
-    //         price: 0,
-    //         roomType: "",
-    //       });
-    //       setIsOpen(false);
+        if (bookingResponse.ok) {
+        const savedBooking = await bookingResponse.json(); // get saved booking
+    //  Generate invoice PDF
+          console.log("saved Booking  for invoice:",savedBooking);
+           generateRoomBookingInvoice(savedBooking, response);
+          alert("Booking confirmed successfully!");
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            roomCount: "",
+            guestCount: "",
+            checkIn: "",
+            checkOut: "",
+            message: "",
+            price: 0,
+            roomType: "",
+          });
+          setIsOpen(false);
         
-    //     } else {
-    //       alert("Booking save failed after payment!");
-    //     }
-    //   },
-   
-
-  // 🧾 Step 1: Verify payment with backend
-  const verifyResponse = await fetch("http://localhost:5000/api/payment/verify-payment", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      razorpay_order_id: order.id,
-      razorpay_payment_id: response.razorpay_payment_id,
-      razorpay_signature: response.razorpay_signature,
-    }),
-  });
-
-  const verifyResult = await verifyResponse.json();
-  console.log("✅ Verify Result:", verifyResult);
-
-  if (verifyResult.success) {
-    // 🧾 Step 2: Save booking in DB
-    const bookingResponse = await fetch("http://localhost:5000/api/bookings", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...bookingData,
-        paymentId: response.razorpay_payment_id,
-        paymentStatus: "success",
-        status: "confirmed",
-      }),
-    });
-
-    if (bookingResponse.ok) {
-      const savedBooking = await bookingResponse.json();
-      console.log("💾 Saved Booking:", savedBooking);
-
-      // 🧾 Step 3: Generate invoice
-      generateRoomBookingInvoice(savedBooking, response);
-
-      alert("✅ Booking confirmed! Check your email for confirmation.");
-
-      // 🧹 Step 4: Reset form
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        roomCount: "",
-        guestCount: "",
-        checkIn: "",
-        checkOut: "",
-        message: "",
-        price: 0,
-        roomType: "",
-      });
-      setIsOpen(false);
-    } else {
-      alert(" Booking save failed!");
-    }
-  } else {
-    alert(" Payment verification failed!");
-  }
-},
+        } else {
+          alert("Booking save failed after payment!");
+        }
+      },
+  
 
       prefill: {
         name: formData.name,
@@ -605,6 +547,8 @@ const handleSubmit = async (e) => {
     };
 
     const rzp = new window.Razorpay(options);
+  
+
 
 
   //  Attach listener BEFORE rzp.open()
