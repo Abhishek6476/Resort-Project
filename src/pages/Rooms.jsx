@@ -504,6 +504,7 @@ const handleSubmit = async (e) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               ...bookingData,
+              orderId: order.id,
               paymentId: response.razorpay_payment_id,
             
                paymentStatus: "success",  
@@ -513,10 +514,33 @@ const handleSubmit = async (e) => {
         );
 
         if (bookingResponse.ok) {
-        const savedBooking = await bookingResponse.json(); // get saved booking
+        //const savedBooking = await bookingResponse.json(); 
+     const { booking } = await bookingResponse.json(); 
+        console.log("saved Booking for invoice:", booking);
+
+           // Verify Payment on backend (this triggers mail + invoice)
+    await fetch("http://localhost:5000/api/payment/verify-payment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        razorpay_order_id: order.id,
+        razorpay_payment_id: response.razorpay_payment_id,
+        razorpay_signature: response.razorpay_signature,
+       //  bookingData: savedBooking,
+        bookingData: booking,
+      }),
+    });
     //  Generate invoice PDF
-          console.log("saved Booking  for invoice:",savedBooking);
-           generateRoomBookingInvoice(savedBooking, response);
+          console.log("saved Booking  for invoice:",booking);
+           // generateRoomBookingInvoice(savedBooking, response);
+           if (booking?.totalPrice) {
+  generateRoomBookingInvoice(booking, response);
+} else {
+  console.warn("⚠️ Invoice skipped: booking data missing");
+}
+
+
+           //generateRoomBookingInvoice(booking, response);
           alert("Booking confirmed successfully!");
           setFormData({
             name: "",

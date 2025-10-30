@@ -40,17 +40,23 @@
 
 // export default router;
 
+
 //without email code
+//100 work code for latest 
+
 // import express from "express";
 // import Razorpay from "razorpay";
 // import dotenv from "dotenv";
 // import crypto from "crypto";
 // import Booking from "../models/Booking.js"; 
+// import { verifyPayment } from "../controllers/paymentControllers.js";
 //  import { sendBookingMail } from "../utils/sendMail.js";
 
 
 // dotenv.config();
 // const router = express.Router();
+// //router.post("/verify-payment", verifyPayment);
+
 
 // const razorpay = new Razorpay({
 //   key_id: process.env.RAZORPAY_KEY_ID,
@@ -124,145 +130,117 @@ import express from "express";
 import Razorpay from "razorpay";
 import dotenv from "dotenv";
 import crypto from "crypto";
+import fs from "fs";
 import Booking from "../models/Booking.js";
 import { sendBookingMail } from "../utils/sendMail.js";
-import { createOrder, verifyPayment } from "../controllers/paymentController.js";
+import { generateRoomBookingInvoice } from "../utils/generateInvoice.js";
+import { verifyPayment } from "../controllers/paymentController.js";
+
+
 
 dotenv.config();
 const router = express.Router();
-router.post("/create-order", createOrder);
-router.post("/verify", verifyPayment);
 
-//  Initialize Razorpay
+router.post("/verify-payment", verifyPayment);
+
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// // Create Razorpay Order
+// // ✅ Create Razorpay Order
 router.post("/create-order", async (req, res) => {
   try {
-    const { name, email, mobile, roomType, amount } = req.body;
+    const { amount } = req.body;
 
     if (!amount || isNaN(amount) || amount <= 0) {
       return res.status(400).json({ message: "Invalid amount value" });
     }
 
     const options = {
-      amount: amount * 100, 
+      amount: amount * 100,
       currency: "INR",
       receipt: `receipt_${Date.now()}`,
     };
 
     const order = await razorpay.orders.create(options);
-    console.log(" Razorpay Order Created:", order);
-
+    console.log("🟢 Razorpay Order Created:", order);
 
     res.status(200).json(order);
   } catch (err) {
-    console.error(" Razorpay Error:", err);
-    res.status(500).json({ message: err.message || "Error creating order" });
+    console.error("🔴 Razorpay Error:", err);
+    res.status(500).json({ message: "Error creating order" });
   }
 });
 
-
-// router.post("/create-order", async (req, res) => {
-//   try {
-//     const { name, email, mobile, roomType, roomCount, guestCount, checkIn, checkOut, totalPrice, totalPriceWithGST } = req.body;
-
-//     const options = {
-//       amount: totalPrice * 100,
-//       currency: "INR",
-//       receipt: `receipt_${Date.now()}`,
-//     };
-
-//     const order = await razorpay.orders.create(options);
-//     console.log("✅ Razorpay Order Created:", order);
-
-//     // 💾 Save booking with pending payment
-//     const newBooking = new Booking({
-//       name,
-//       email,
-//       mobile,
-//       roomType,
-//       roomCount,
-//       guestCount,
-//       checkIn,
-//       checkOut,
-//       totalPrice,
-//       totalPriceWithGST,
-//       orderId: order.id, // 👈 very important
-//       paymentStatus: "Pending",
-//     });
-
-//     await newBooking.save();
-
-//     res.status(200).json(order);
-//   } catch (err) {
-//     console.error("❌ Error creating order:", err);
-//     res.status(500).json({ message: err.message || "Error creating order" });
-//   }
-// });
-
-
-
-
-
-
-
-
-
-// //  Verify Razorpay Payment
+// // ✅ Verify Razorpay Payment + Send Mail with Invoice
 // router.post("/verify-payment", async (req, res) => {
 //   try {
-//     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+//     const {
+//       razorpay_order_id,
+//       razorpay_payment_id,
+//       razorpay_signature,
+//       bookingData,
+//     } = req.body;
 
-//     // Generate server-side signature for verification
 //     const body = razorpay_order_id + "|" + razorpay_payment_id;
 //     const expectedSignature = crypto
 //       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
 //       .update(body)
 //       .digest("hex");
 
-//     //  Signature match = success
 //     if (expectedSignature === razorpay_signature) {
+//       // ✅ Update booking in DB
 //       const updatedBooking = await Booking.findOneAndUpdate(
 //         { orderId: razorpay_order_id },
-//         { paymentId: razorpay_payment_id, paymentStatus: "Success" },
+//         {
+//           paymentId: razorpay_payment_id,
+//           paymentStatus: "Success",
+//         },
 //         { new: true }
-//       );
+//       );  
 
-//       console.log(" Payment Verified Successfully");
+//       console.log("✅ Payment Verified Successfully");
 
-//       //  Send confirmation email
-//       if (updatedBooking && updatedBooking.email) {
-//         console.log(" Sending confirmation email to:", updatedBooking.email);
-//         await sendBookingMail(updatedBooking);
+//       // ✅ Generate invoice PDF (saved in /invoices folder)
+//       const invoicePath = `./invoices/invoice_${updatedBooking._id}.pdf`;
+//       await generateRoomBookingInvoice(updatedBooking, { filePath: invoicePath });
+
+//       // ✅ Send confirmation email with invoice attached
+//       await sendBookingMail(updatedBooking, invoicePath);
+
+//       // ✅ Delete local invoice after sending
+//       if (fs.existsSync(invoicePath)) {
+//         fs.unlinkSync(invoicePath);
 //       }
 
-//       res.json({ success: true, message: "Payment verified & email sent!" });
+//       return res.json({
+//         success: true,
+//         message: "Payment verified and email sent successfully",
+//       });
 //     } else {
-//       //  Signature mismatch = failed
 //       await Booking.findOneAndUpdate(
 //         { orderId: razorpay_order_id },
 //         { paymentStatus: "Failed" }
 //       );
-
-//       console.log(" Payment Verification Failed");
+//       console.log("❌ Payment Verification Failed");
 //       res.status(400).json({ success: false, message: "Payment verification failed" });
 //     }
 //   } catch (err) {
-//     console.error(" Error verifying payment:", err);
+//     console.error("❌ Error verifying payment:", err);
 //     res.status(500).json({ message: "Server error during payment verification" });
 //   }
 // });
 
-
- //  Verify Razorpay Payment
-
+// ✅ Verify Razorpay Payment + Send Mail with Invoice
 router.post("/verify-payment", async (req, res) => {
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    const {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+      bookingData,
+    } = req.body;
 
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSignature = crypto
@@ -271,36 +249,51 @@ router.post("/verify-payment", async (req, res) => {
       .digest("hex");
 
     if (expectedSignature === razorpay_signature) {
-      // ✅ Update booking as successful
+      // ✅ Update booking details in DB
       const updatedBooking = await Booking.findOneAndUpdate(
         { orderId: razorpay_order_id },
-        { paymentId: razorpay_payment_id, paymentStatus: "Success" },
+        {
+          ...bookingData,
+          paymentId: razorpay_payment_id,
+          paymentStatus: "Success",
+        },
         { new: true }
       );
 
-      console.log(" Payment Verified Successfully");
-
-      if (updatedBooking) {
-        console.log("📦 Booking found:", updatedBooking._id);
-        console.log("📧 Sending confirmation mail to:", updatedBooking.email);
-        await sendBookingMail(updatedBooking);
-      } else {
-        console.warn("⚠️ No booking found for orderId:", razorpay_order_id);
+      if (!updatedBooking) {
+        console.warn("⚠️ Booking not found for orderId:", razorpay_order_id);
+        return res.status(404).json({ success: false, message: "Booking not found" });
       }
 
-      return res.json({ success: true, message: "Payment verified and email sent successfully" });
+      // ✅ Generate Invoice PDF file
+      const { generateInvoicePDF } = await import("../utils/generateInvoice.js");
+      const pdfPath = await generateInvoicePDF(updatedBooking);
+
+      // ✅ Send Confirmation Email with Invoice
+      const { sendBookingMail } = await import("../utils/sendMail.js");
+      await sendBookingMail(updatedBooking, pdfPath);
+
+      // 🧹 Optional: Delete temp file after sending
+      setTimeout(() => {
+        fs.unlink(pdfPath, (err) => {
+          if (!err) console.log("🧹 Deleted temp invoice:", pdfPath);
+        });
+      }, 10000);
+
+      console.log(" Payment verified + invoice + email sent");
+      return res.json({ success: true, message: "Email sent successfully" });
     } else {
       await Booking.findOneAndUpdate(
         { orderId: razorpay_order_id },
         { paymentStatus: "Failed" }
       );
-      console.log("❌ Payment Verification Failed");
-      return res.status(400).json({ success: false, message: "Payment verification failed" });
+      res.status(400).json({ success: false, message: "Payment verification failed" });
     }
-  } catch (err) {
-    console.error("Error verifying payment:", err);
+  } catch (error) {
+    console.error(" verify-payment error:", error);
     res.status(500).json({ message: "Server error during payment verification" });
   }
 });
+
 
 export default router;
