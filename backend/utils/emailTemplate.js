@@ -1,34 +1,62 @@
+
+
+
 export const bookingEmailTemplate = (booking) => {
   return `
-  <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f7f7f7; padding: 30px;">
-    <div style="max-width: 600px; margin: auto; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+
+      <h2 style="text-align: center; color: #2c3e50; margin-bottom: 5px;">Booking Confirmation</h2>
+      <p style="text-align: center; color: #888; margin-top: 0;">Thank you for choosing <b>Hotel Resert Stay</b></p>
+
+      <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+
+      <p style="font-size: 15px; color: #333;">Dear <b>${booking.name || "Guest"}</b>,</p>
+      <p style="font-size: 15px; color: #444;">
+        We are pleased to confirm your booking. Below are your stay details. A detailed invoice PDF has been attached for your reference.
+      </p>
+
+      <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px;">
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid #eee;"><b>Booking ID</b></td>
+          <td style="padding: 8px; border-bottom: 1px solid #eee;">${booking._id || "N/A"}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid #eee;"><b>Name</b></td>
+          <td style="padding: 8px; border-bottom: 1px solid #eee;">${booking.name || "Guest"}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid #eee;"><b>Room Type</b></td>
+          <td style="padding: 8px; border-bottom: 1px solid #eee;">${booking.roomType || "N/A"}</td>
+        </tr>
+       
       
-      <div style="background-color: #003580; padding: 20px; text-align: center;">
-        <h1 style="color: #fff; margin: 0;">Hotel Royal Stay</h1>
-        <p style="color: #dcdcdc; margin: 5px 0 0;">Booking Confirmation</p>
-      </div>
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid #eee;"><b>Check-In</b></td>
+          <td style="padding: 8px; border-bottom: 1px solid #eee;">${booking.checkIn || "N/A"}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid #eee;"><b>Check-Out</b></td>
+          <td style="padding: 8px; border-bottom: 1px solid #eee;">${booking.checkOut || "N/A"}</td>
+        </tr>
+        
+       
+      </table>
 
-      <div style="padding: 25px;">
-        <p style="font-size: 16px;">Dear <b>${booking.name || "Guest"}</b>,</p>
-        <p>We’re delighted to confirm your booking with <b>Hotel Royal Stay</b>. Below are your booking details:</p>
+      <p style="font-size: 15px; color: #444;">
+        We look forward to welcoming you. For any assistance, feel free to contact our support team.
+      </p>
 
-        <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-          <tr><td><b>Room Type:</b></td><td>${booking.roomType || "N/A"}</td></tr>
-          <tr><td><b>Room Count:</b></td><td>${booking.roomCount || "1"}</td></tr>
-          <tr><td><b>Guests:</b></td><td>${booking.guestCount || "1"}</td></tr>
-          <tr><td><b>Check-In:</b></td><td>${booking.checkIn || "N/A"}</td></tr>
-          <tr><td><b>Check-Out:</b></td><td>${booking.checkOut || "N/A"}</td></tr>
-          <tr><td><b>Total Price:</b></td><td>₹${booking.totalPriceWithGST || booking.totalPrice || 0}</td></tr>
-          <tr><td><b>Payment ID:</b></td><td>${booking.paymentId || "Pending"}</td></tr>
-        </table>
+      <p style="margin-top: 20px; color: #555; font-size: 14px;">
+        Warm regards,<br>
+        <b>Hotel Royal Stay Team</b><br>
+        📞 +91-11-35017951<br>
+        ✉️ contact@hotelresertstay.com
+      </p>
 
-        <p>Thank you for choosing our hotel. We look forward to providing you with an exceptional stay!</p>
-        <p style="margin-top: 15px;">Warm regards,<br><b>Hotel Royal Stay Team</b></p>
+      <hr style="border: none; border-top: 1px solid #eee; margin: 25px 0;">
+     
 
-        <hr style="margin-top: 30px;">
-        <p style="font-size: 12px; color: #888;">This is an automated email. Please do not reply.</p>
-      </div>
-    </div>
-  </div>
+  
+ 
   `;
 };
+

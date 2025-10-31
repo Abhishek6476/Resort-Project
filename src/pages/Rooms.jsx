@@ -514,9 +514,14 @@ const handleSubmit = async (e) => {
         );
 
         if (bookingResponse.ok) {
-        //const savedBooking = await bookingResponse.json(); 
-     const { booking } = await bookingResponse.json(); 
-        console.log("saved Booking for invoice:", booking);
+    //     //const savedBooking = await bookingResponse.json(); 
+    //  const { booking } = await bookingResponse.json(); 
+    //     console.log("saved Booking for invoice:", booking);
+
+    const data = await bookingResponse.json();
+    const booking = data?.booking;
+    console.log(" Saved booking received:", booking);
+
 
            // Verify Payment on backend (this triggers mail + invoice)
     await fetch("http://localhost:5000/api/payment/verify-payment", {
@@ -533,11 +538,23 @@ const handleSubmit = async (e) => {
     //  Generate invoice PDF
           console.log("saved Booking  for invoice:",booking);
            // generateRoomBookingInvoice(savedBooking, response);
-           if (booking?.totalPrice) {
-  generateRoomBookingInvoice(booking, response);
+      //      setTimeout(() =>{
+      //       if (booking?.totalPrice) {
+      //         generateRoomBookingInvoice(booking, response);
+      //         } else {
+      //       console.warn(" Invoice skipped: booking data missing");
+      //   }
+      // },300); // delay  1800ms
+
+      if (booking && booking.totalPrice) {
+  setTimeout(() => {
+    generateRoomBookingInvoice(booking, response);  // PDF popup auto download
+  }, 1000);
 } else {
-  console.warn("⚠️ Invoice skipped: booking data missing");
+  console.warn("⚠️ Invoice skipped — booking data missing or undefined");
 }
+
+
 
 
            //generateRoomBookingInvoice(booking, response);
@@ -602,7 +619,7 @@ const handleSubmit = async (e) => {
   rzp.open();
 } catch (error) {
   console.error("Payment Error:", error);
-  alert("Something went wrong during payment.");
+  alert("Something went wrong check the backend start or not!.");
 }
 };
 
