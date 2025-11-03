@@ -121,7 +121,7 @@ const upload = multer({
 //  POST Route for Job Application
 router.post("/", upload.single("resume"), submitApplication);
 
-// ✅ Route 2: Only Resume Upload
+// Only Resume Upload
 router.post("/upload-resume", upload.single("resume"), async (req, res) => {
   try {
     if (!req.file) {

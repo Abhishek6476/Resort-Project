@@ -1,5 +1,6 @@
 
 
+//100 working and latest code 
 import PDFDocument from "pdfkit";
 import fs from "fs";
 import path from "path";
@@ -15,7 +16,7 @@ export const generateRoomBookingInvoice = async (booking, paymentResponse, optio
 
   // === Hotel Info ===
   const hotel = options.hotelInfo || {
-    name: "🏨 Resort Hotel Booking Receipt",
+    name: " Resort Hotel Booking Receipt",
     address: "H-15 BSI Business Park, Noida, Uttar Pradesh - 201307",
     phone: "+91 98765 43210",
     email: "resort@info.com",
@@ -33,11 +34,17 @@ export const generateRoomBookingInvoice = async (booking, paymentResponse, optio
   doc.font("Helvetica-Bold").fontSize(14).fillColor("#000000").text("Booking Details", 50, doc.y);
   doc.moveDown(0.5);
 
-  // === Booking Info Table Style ===
-  const addRow = (label, value) => {
-    doc.font("Helvetica-Bold").fillColor("#000000").text(`${label}:`, { continued: true });
-    doc.font("Helvetica").fillColor("#333333").text(` ${value}`);
-  };
+  // // === Booking Info Table Style ===
+  // const addRow = (label, value) => {
+  //   doc.font("Helvetica-Bold").fillColor("#000000").text(`${label}:`, { continued: true });
+  //   doc.font("Helvetica").fillColor("#333333").text(` ${value}`);
+  // };
+   // === BOOKING DETAILS TITLE ===
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(12);
+  doc.text("Booking Details", leftMargin, cursorY);
+
+  cursorY += 10;
 
   // === Price & GST ===
   const roomPrice = parseFloat(booking.totalPrice || 0);
@@ -46,20 +53,39 @@ export const generateRoomBookingInvoice = async (booking, paymentResponse, optio
   const totalWithGST = roomPrice + gstAmount;
 
   // === Booking Info Rows ===
-  addRow("Booking ID", booking._id || `INV-${Date.now()}`);
-  addRow("Name", booking.name || "Guest");
-  addRow("Phone", booking.phone || booking.mobile || "N/A");
-  addRow("Email", booking.email || "N/A");
-  addRow("Room Type", booking.roomType || "N/A");
-  addRow("Rooms", booking.roomCount || 1);
-  addRow("Guests", booking.guestCount || 1);
-  addRow("Check-In", new Date(booking.checkIn).toLocaleString("en-IN"));
-  addRow("Check-Out", new Date(booking.checkOut).toLocaleString("en-IN"));
-  addRow("Room Price", `₹${roomPrice.toLocaleString("en-IN")}`);
-  addRow("GST (18%)", `₹${gstAmount.toLocaleString("en-IN")}`);
-  addRow("Total Amount", `₹${totalWithGST.toLocaleString("en-IN")}`);
-  addRow("Payment ID", paymentResponse?.razorpay_payment_id || booking.paymentId || "N/A");
-  addRow("Payment Status", booking.paymentStatus || "Success");
+  // addRow("Booking ID", booking._id || `INV-${Date.now()}`);
+  // addRow("Name", booking.name || "Guest");
+  // addRow("Phone", booking.phone || booking.mobile || "N/A");
+  // addRow("Email", booking.email || "N/A");
+  // addRow("Room Type", booking.roomType || "N/A");
+  // addRow("Rooms", booking.roomCount || 1);
+  // addRow("Guests", booking.guestCount || 1);
+  // addRow("Check-In", new Date(booking.checkIn).toLocaleString("en-IN"));
+  // addRow("Check-Out", new Date(booking.checkOut).toLocaleString("en-IN"));
+  // addRow("Room Price", `₹${roomPrice.toLocaleString("en-IN")}`);
+  // addRow("GST (18%)", `₹${gstAmount.toLocaleString("en-IN")}`);
+  // addRow("Total Amount", `₹${totalWithGST.toLocaleString("en-IN")}`);
+  // addRow("Payment ID", paymentResponse?.razorpay_payment_id || booking.paymentId || "N/A");
+  // addRow("Payment Status", booking.paymentStatus || "Success");
+
+
+
+  
+  const details = [
+    ["Booking ID", booking._id || `INV-${Date.now()}`],
+    ["Name", booking.name],
+    ["Phone", booking.phone],
+    ["Email", booking.email],
+    ["Room Type", booking.roomType],
+    ["Check-In", new Date(booking.checkIn).toLocaleString("en-IN")],
+    ["Check-Out", new Date(booking.checkOut).toLocaleString("en-IN")],
+    ["Room Price", `Rs. ${roomPrice.toLocaleString("en-IN")}`],
+    ["GST (18%)", `Rs. ${gstAmount.toLocaleString("en-IN")}`],
+    ["Total Amount", `Rs. ${totalWithGST.toLocaleString("en-IN")}`],
+    ["Payment ID", paymentResponse?.razorpay_payment_id || "N/A"],
+    ["Payment Status", "Success"],
+  ];
+
 
   doc.moveDown(2);
   doc.font("Helvetica-Oblique").fontSize(11).fillColor("#000000")
@@ -88,10 +114,7 @@ export const generateRoomBookingInvoice = async (booking, paymentResponse, optio
 // import fs from "fs";
 // import path from "path";
 
-// /**
-//  * Generate room booking invoice (backend version using PDFKit)
-//  * Works fully in Node.js — used for sending via email
-//  */
+
 // export const generateRoomBookingInvoice = (booking, paymentResponse, options = {}) => {
 //   const doc = new PDFDocument({ size: "A4", margin: 50 });
 
@@ -197,3 +220,5 @@ export const generateRoomBookingInvoice = async (booking, paymentResponse, optio
 //     doc.on("error", reject);
 //   });
 // };
+
+

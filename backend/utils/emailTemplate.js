@@ -1,6 +1,4 @@
 
-
-
 export const bookingEmailTemplate = (booking) => {
   return `
 
@@ -53,9 +51,6 @@ export const bookingEmailTemplate = (booking) => {
       </p>
 
       <hr style="border: none; border-top: 1px solid #eee; margin: 25px 0;">
-     
-
-  
  
   `;
 };
