@@ -17,7 +17,7 @@
       type: "Full-Time",
       description:
         "Responsible for welcoming guests, managing check-ins/check-outs, and ensuring excellent customer service.",
-      related: ["Receptionist", "Guest Relations Executive"],
+      // related: ["Receptionist", "Guest Relations Executive"],
       img: front,
     },
     {
@@ -26,7 +26,7 @@
       type: "Full-Time",
       description:
         "Maintain cleanliness and hygiene in guest rooms and public areas, ensuring high standards of hospitality.",
-      related: ["Room Attendant", "Laundry Staff"],
+      // related: ["Room Attendant", "Laundry Staff"],
       img: house,
     },
     {
@@ -35,7 +35,7 @@
       type: "Full-Time",
       description:
         "Plan menus, supervise kitchen staff, and deliver exceptional dining experiences to our guests.",
-      related: ["Sous Chef", "Kitchen Manager"],
+      // related: ["Sous Chef", "Kitchen Manager"],
       img: chef,
     },
     {
@@ -44,7 +44,7 @@
       type: "Full-Time",
       description:
         "Oversee all food and beverage operations, ensuring top-quality service, menu design, and guest satisfaction.",
-      related: ["Restaurant Manager", "Banquet Manager"],
+      // related: ["Restaurant Manager", "Banquet Manager"],
       img: food,
     },
     {
@@ -53,7 +53,7 @@
       type: "Full-Time",
       description:
         "Plan and execute events, manage client communications, coordinate with vendors, and ensure smooth event operations.",
-      related: ["Banquet Coordinator", "Wedding Planner"],
+      // related: ["Banquet Coordinator", "Wedding Planner"],
       img: event,
     },
     {
@@ -62,7 +62,7 @@
       type: "Full-Time",
       description:
         "Monitor hotel premises, manage the security team, and ensure guest and staff safety at all times.",
-      related: ["Security Guard", "Safety Officer"],
+      // related: ["Security Guard", "Safety Officer"],
       img: security,
     },
   ];
@@ -381,39 +381,21 @@ useEffect(() => {
         </form>
       </section>
     
+
     {/* Application CTA */}
-          {/* <section
-          className="relative py-16 px-8 text-center bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${carrier})` }}>
-          <div className="absolute inset-0 bg-black/20"></div>
+    <section
+      className="relative py-16 px-8 text-center bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${carrier})` }}
+    >
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/40"></div>
 
-           <h3 className="text-2xl font-semibold text-gray-800 mb-4">Didn’t find your role?</h3>
-           <p className="text-gray-600 mb-6">We’re always looking for passionate individuals. Send us your resume and we’ll be in touch!</p>
-          <a  href="mailto:careers@resorthotel.com"
-            className="inline-block bg-blue-800 text-white px-6 py-3 rounded hover:bg-blue-700"
-          >
-            Send Resume
-          </a>
-
-        </section> */}
-
-
-
-
-        {/* Application CTA */}
-<section
-  className="relative py-16 px-8 text-center bg-cover bg-center bg-no-repeat"
-  style={{ backgroundImage: `url(${carrier})` }}
->
-  {/* Dark Overlay */}
-  <div className="absolute inset-0 bg-black/40"></div>
-
-  {/* Content */}
-  <div className="relative z-10">
-    <h3 className="text-2xl font-semibold text-white mb-4">Didn’t find your role?</h3>
-    <p className="text-gray-200 mb-6">
-      We’re always looking for passionate individuals. Send us your resume and we’ll be in touch!
-    </p>
+      {/* Content */}
+      <div className="relative z-10">
+        <h3 className="text-2xl font-semibold text-white mb-4">Didn’t find your role?</h3>
+        <p className="text-gray-200 mb-6">
+          We’re always looking for passionate individuals. Send us your resume and we’ll be in touch!
+        </p>
 
     {/* Hidden File Input */}
     <input
@@ -479,157 +461,3 @@ useEffect(() => {
 export default Career;
 
 
-
-// import React, { useState } from "react";
-
-// const Career = () => {
-//   const [formData, setFormData] = useState({
-//     name: "",
-//     email: "",
-//     phone: "",
-//     position: "",
-//     resume: null,
-//   });
-//   const [status, setStatus] = useState("");
-
-//   const handleChange = (e) => {
-//     setFormData({ ...formData, [e.target.name]: e.target.value });
-//   };
-
-//   const handleFileChange = (e) => {
-//     const file = e.target.files[0];
-//     if (!file) return;
-
-//     const allowedTypes = [
-//       "application/pdf",
-//       "application/msword",
-//       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-//       "application/vnd.ms-excel",
-//       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-//       "image/jpeg",
-//       "image/png",
-//     ];
-
-//     if (!allowedTypes.includes(file.type)) {
-//       alert("Only PDF, DOC, XLS, JPG, PNG files allowed!");
-//       e.target.value = "";
-//       return;
-//     }
-
-//     if (file.size > 5 * 1024 * 1024) {
-//       alert("File size must be < 5MB");
-//       e.target.value = "";
-//       return;
-//     }
-
-//     setFormData({ ...formData, resume: file });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const data = new FormData();
-//     data.append("name", formData.name);
-//     data.append("email", formData.email);
-//     data.append("phone", formData.phone);
-//     data.append("position", formData.position);
-//     data.append("resume", formData.resume);
-
-//     try {
-//       const res = await fetch("http://localhost:5000/api/job-application", {
-//         method: "POST",
-//         body: data,
-//       });
-//       const result = await res.json();
-
-//       setStatus(result.msg);
-
-//       if (res.ok) {
-//         setFormData({
-//           name: "",
-//           email: "",
-//           phone: "",
-//           position: "",
-//           resume: null,
-//         });
-//       }
-
-//       // Auto clear message
-//       setTimeout(() => setStatus(""), 5000);
-//     } catch (err) {
-//       setStatus("Error submitting application");
-//       setTimeout(() => setStatus(""), 5000);
-//     }
-//   };
-
-//   return (
-//     <section className="py-16 px-6 md:px-20 bg-white">
-//       <h2 className="text-3xl font-bold mb-8 text-center text-gray-900">
-//         Job Application
-//       </h2>
-//       <p className="text-center text-gray-600 mt-2 mb-8">
-//         Fill out the form below to start your career journey with us.
-//       </p>
-//       <form
-//         onSubmit={handleSubmit}
-//         className="max-w-2xl mx-auto bg-gray-50 p-8 rounded-2xl shadow-md space-y-6"
-//       >
-//         <input
-//           type="text"
-//           name="name"
-//           value={formData.name}
-//           onChange={handleChange}
-//           placeholder="Full Name"
-//           required
-//           className="w-full border px-4 py-3 rounded-lg"
-//         />
-//         <input
-//           type="email"
-//           name="email"
-//           value={formData.email}
-//           onChange={handleChange}
-//           placeholder="Email"
-//           required
-//           className="w-full border px-4 py-3 rounded-lg"
-//         />
-//         <input
-//           type="tel"
-//           name="phone"
-//           value={formData.phone}
-//           onChange={handleChange}
-//           placeholder="Phone Number"
-//           required
-//           className="w-full border px-4 py-3 rounded-lg"
-//         />
-//         <input
-//           type="text"
-//           name="position"
-//           value={formData.position}
-//           onChange={handleChange}
-//           placeholder="Position Applied For"
-//           required
-//           className="w-full border px-4 py-3 rounded-lg"
-//         />
-//         <input
-//           type="file"
-//           name="resume"
-//           accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"
-//           onChange={handleFileChange}
-//           required
-//           className="w-full border px-4 py-3 rounded-lg"
-//         />
-
-//         <button
-//           type="submit"
-//           className="w-full bg-blue-800 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg"
-//         >
-//           Submit Application
-//         </button>
-
-//         {status && <p className="text-center text-green-600 mt-4">{status}</p>}
-//       </form>
-//     </section>
-//   );
-// };
-
-// export default Career;

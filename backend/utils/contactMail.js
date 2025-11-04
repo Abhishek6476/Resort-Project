@@ -54,8 +54,8 @@ export const contactMail = async (contactData) => {
     await transporter.sendMail(userMail);
     //await transporter.sendMail(adminMail);
 
-    console.log("📧 Confirmation mail sent to user and admin");
+    console.log(" Confirmation mail sent to user and admin");
   } catch (err) {
-    console.error("❌ Error sending contact mail:", err);
+    console.error(" Error sending contact mail:", err);
   }
 };

@@ -12,7 +12,7 @@ router.post("/contact", submitContact);
 // New GET route to fetch all submissions
 router.get("/contact/all", async (req, res) => {
   try {
-    const contacts = await Contact.find().sort({ createdAt: -1 }); // latest first
+    const contacts = await Contact.find().sort({ createdAt: -1 }); 
     res.status(200).json(contacts);
   } catch (err) {
     res.status(500).json({ msg: "Server error", error: err.message });

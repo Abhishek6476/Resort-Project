@@ -159,22 +159,7 @@ export default function Engagement() {
       </div>
 
       {/* Gallery Section - wider */}
-      {/* <div className="lg:w-7/12 grid grid-cols-2 sm:grid-cols-3 gap-4">
-        {gallery.map((img, idx) => (
-          <div
-            key={idx}
-            className="overflow-hidden rounded-lg cursor-pointer"
-            onClick={() => setSelectedImg(img)}
-          >
-            <img
-              src={img}
-              alt={`Engagement Hall ${idx + 1}`}
-              className="w-full h-60 object-cover hover:scale-110 transition-transform duration-500"
-            />
-          </div>
-        ))}
-      </div> */}
-
+    
        <div className="lg:w-7/12 grid grid-cols-2 sm:grid-cols-3 gap-4">
       {/* Gallery Grid */}
       {gallery.map((img, idx) => (

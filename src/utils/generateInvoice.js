@@ -9,7 +9,7 @@ export const generateRoomBookingInvoice = (booking, paymentResponse, options = {
     name: "Resort Hotel Booking Receipt",
     address: "H-15 BSI Business Park, Noida, Uttar Pradesh - 201307",
     phone: "+91 98765 43210",
-    email: "resort@info.com",
+    email: "resort@hotel.com",
     
   };
 
