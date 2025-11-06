@@ -1,5 +1,4 @@
 
-//100 work
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import {
@@ -28,19 +27,54 @@ export default function ContactSidebar() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  // Fetch contacts
+  // Fetch contacts for contact us 
+  // const fetchContacts = async () => {
+  //   try {
+  //     const res = await fetch("http://localhost:5000/api/contact/all");
+  //     const data = await res.json();
+  //     setContacts(data);
+  //     setLoading(false);
+  //   } catch (err) {
+  //     console.error("Error fetching contacts:", err);
+  //     toast.error("Failed to fetch contacts.");
+  //     setLoading(false);
+  //   }
+  // };
+
   const fetchContacts = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/api/contact/all");
-      const data = await res.json();
-      setContacts(data);
-      setLoading(false);
-    } catch (err) {
-      console.error("Error fetching contacts:", err);
-      toast.error("Failed to fetch contacts.");
-      setLoading(false);
-    }
-  };
+  try {
+    // Fetch both Contact and Engagement data
+    const [contactRes, engagementRes] = await Promise.all([
+      fetch("http://localhost:5000/api/contact/all"),
+      fetch("http://localhost:5000/api/engagement/all"),
+      //fetch("http://localhost:5000/api/mehadi/all"),
+    ]);
+
+    const [contactData, engagementData] = await Promise.all([
+      contactRes.json(),
+      engagementRes.json(),
+    ]);
+
+    // Add a `type` label so admin knows where it came from
+    const allData = [
+      ...contactData.map((c) => ({ ...c, type: "Contact" })),
+      ...engagementData.map((e) => ({ ...e, type:"Engagement" })),
+    ];
+
+    // Sort by date (latest first)
+    allData.sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
+    setContacts(allData);
+    setLoading(false);
+  } catch (err) {
+    console.error("Error fetching data:", err);
+    toast.error("Failed to fetch submissions.");
+    setLoading(false);
+  }
+};
+
 
   useEffect(() => {
     fetchContacts();
@@ -154,7 +188,7 @@ export default function ContactSidebar() {
             />
           </div>
 
-          {/* 📋 Contact List */}
+          {/*  Contact List */}
           <div className="space-y-4">
             {paginatedContacts.length === 0 ? (
               <p className="text-gray-500 text-center py-8 text-lg">
@@ -164,12 +198,21 @@ export default function ContactSidebar() {
               paginatedContacts.map((c) => (
                 <div
                   key={c._id}
-                  className="flex items-center justify-between bg-gradient-to-r from-white to-blue-50 border border-gray-200 rounded-xl p-4 shadow hover:shadow-md transition"
-                >
-                  <div className="flex items-center gap-3">
-                    <User className="w-5 h-5 text-blue-800" />
-                    <span className="font-semibold text-gray-800">{c.name}</span>
+                  className="flex items-center justify-between bg-gradient-to-r from-white to-blue-50 border border-gray-200 rounded-xl p-4 shadow hover:shadow-md transition" >
+                  <div className="flex items-center gap-3 w-64">
+                    <User className="w-5 h-5 text-blue-700" />
+                    <span className="font-semibold text-gray-700">{c.name}</span>
+             </div>
+                {/* engagement  */}
+                <div className="w-40 text-center">
+                <span
+                    className={`px-3 py-1 rounded-full text-xs font-semibold ${ c.type === "Engagement"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-green-100 text-green-700"}`}> {c.type}
+                  </span>
                   </div>
+
+
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => setSelectedContact(c)}

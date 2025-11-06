@@ -4,6 +4,9 @@ import express from "express";
 import { submitContact } from "../controllers/contactController.js";
 import Contact from "../models/Contact.js";
 
+import { submitEngagement } from "../controllers/engagement.js";
+import Engagement from "../models/Engagement.js";
+
 const router = express.Router();
 
 // Existing POST route
@@ -40,4 +43,21 @@ router.delete("/contact/:id", async (req, res) => {
   }
 });
 
+
+/* ---------------- ENGAGEMENT ROUTES ---------------- */
+
+// POST - Create a new engagement submission (Get Quote form)
+// router.post("/engagement", submitEngagement);
+router.post("/engagement", submitEngagement);
+
+
+// GET - Fetch all engagement submissions (for admin panel)
+router.get("/engagement/all", async (req, res) => {
+  try {
+    const engagements = await Engagement.find().sort({ createdAt: -1 });
+    res.status(200).json(engagements);
+  } catch (err) {
+    res.status(500).json({ msg: "Server error", error: err.message });
+  }
+});
 export default router;

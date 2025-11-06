@@ -26,8 +26,9 @@ import pack3 from "../../../assets/pack3.jpg";
 export default function Engagement() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImg, setSelectedImg] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
- const [selectedIndex, setSelectedIndex] = useState(null);
+
    const handleClose = () => setSelectedIndex(null);
   const handleNext = () => setSelectedIndex((prev) => (prev + 1) % gallery.length);
   const handlePrev = () =>
@@ -55,7 +56,7 @@ export default function Engagement() {
       features:["Live Music & DJ", "Gourmet Dining", "Luxury Decorations", "Catering for 500 Guests",  ],
     },
   ];
- // 🎨 Map features to icons
+ //  Map features to icons
   const getIcon = (feature) => {
     const f = feature.toLowerCase();
     if (f.includes("music") || f.includes("band")) return <FaMusic className="text-blue-600 text-lg" />;
@@ -244,7 +245,7 @@ export default function Engagement() {
                   {pkg.title}
                 </h3>
 
-                {/* 🌟 Features Centered with Icons */}
+                {/*  Features Centered with Icons */}
                 <ul className="text-gray-800 flex flex-col items-left gap-3">
                   {pkg.features.map((feature, i) => (
                     <li key={i} className="flex items-center gap-2">
@@ -444,28 +445,28 @@ export default function Engagement() {
         key={idx}
         className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-xl transition-all duration-300 border-t-4 border-blue-500"
       >
-        {/* 👤 Customer Icon */}
+        {/*  Customer Icon */}
         <div className="text-blue-500 text-6xl mb-4">
           <FaUserCircle className="mx-auto" />
         </div>
         
 
-        {/* 💬 Quote Icon */}
+        {/*  Quote Icon */}
         <div className="text-blue-400 text-2xl mb-3">
           <FaQuoteLeft className="mx-auto" />
         </div>
 
-        {/* 📝 Testimonial Text */}
+        {/*  Testimonial Text */}
         <p className="text-gray-600 italic mb-4">"{test.text}"</p>
 
-        {/* ⭐ Star Rating */}
+        {/*  Star Rating */}
         <div className="flex justify-center text-yellow-400 mb-2">
           {[...Array(5)].map((_, i) => (
             <FaStar key={i} />
           ))}
         </div>
 
-        {/* 🙍 Customer Name */}
+        {/*  Customer Name */}
         <h4 className="font-semibold text-blue-800">{test.name}</h4>
       </div>
     ))}
@@ -475,6 +476,8 @@ export default function Engagement() {
 
       {/* Modal Form */}
       {isOpen && <ModalForm onClose={() => setIsOpen(false)} />}
+
+      
 
       {/* Image Modal */}
       {selectedImg && (
