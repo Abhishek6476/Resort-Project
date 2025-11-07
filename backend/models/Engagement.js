@@ -5,7 +5,7 @@ const engagementSchema = new mongoose.Schema({
     email: String,
     phone: String,
     message: String,
-
+    formType: {type: String, default: "unknown"},
     createdAt: { type: Date, default: Date.now},
 });
 

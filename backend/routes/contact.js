@@ -1,10 +1,9 @@
-
-
 import express from "express";
 import { submitContact } from "../controllers/contactController.js";
 import Contact from "../models/Contact.js";
 
-import { submitEngagement } from "../controllers/engagement.js";
+//import { submitEngagement } from "../controllers/engagement.js";
+import { submitInquiry, getAllInquiries } from "../controllers/inquiryController.js";
 import Engagement from "../models/Engagement.js";
 
 const router = express.Router();
@@ -44,13 +43,18 @@ router.delete("/contact/:id", async (req, res) => {
 });
 
 
-/* ---------------- ENGAGEMENT ROUTES ---------------- */
+/* ----------------  UNIVERSAL INQUIRY ROUTES ---------------- */
 
 // POST - Create a new engagement submission (Get Quote form)
-// router.post("/engagement", submitEngagement);
-router.post("/engagement", submitEngagement);
+
+//router.post("/engagement", submitEngagement);
 
 
+router.post("/inquiry", submitInquiry);
+
+//get admin view 
+
+router.get("/inquiry/all", getAllInquiries);
 // GET - Fetch all engagement submissions (for admin panel)
 router.get("/engagement/all", async (req, res) => {
   try {

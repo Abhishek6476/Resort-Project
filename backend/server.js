@@ -5,11 +5,13 @@ import mongoose from "mongoose";
 import multer from "multer";
 import dotenv from "dotenv";
 
-import contactRoutes from "./routes/Contact.js";
+import contactRoutes from "./routes/contact.js";
 import jobRoutes from "./routes/jobApplication.js";
-//import bookingRoom from "./routes/bookingRoom.js";
+
 import paymentRoutes from "./routes/payment.js";
 import bookingRoutes from "./routes/bookingRoom.js";
+
+
 
 dotenv.config();
 const app = express();
@@ -30,7 +32,7 @@ app.use("/api", contactRoutes);
 app.use("/api/job-application", jobRoutes); 
 
 // use route  for Rooms
-//app.use("/api/bookings", bookingRoom);
+
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/payment", paymentRoutes);
 

@@ -27,19 +27,7 @@ export default function ContactSidebar() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  // Fetch contacts for contact us 
-  // const fetchContacts = async () => {
-  //   try {
-  //     const res = await fetch("http://localhost:5000/api/contact/all");
-  //     const data = await res.json();
-  //     setContacts(data);
-  //     setLoading(false);
-  //   } catch (err) {
-  //     console.error("Error fetching contacts:", err);
-  //     toast.error("Failed to fetch contacts.");
-  //     setLoading(false);
-  //   }
-  // };
+  
 
   const fetchContacts = async () => {
   try {
@@ -47,7 +35,7 @@ export default function ContactSidebar() {
     const [contactRes, engagementRes] = await Promise.all([
       fetch("http://localhost:5000/api/contact/all"),
       fetch("http://localhost:5000/api/engagement/all"),
-      //fetch("http://localhost:5000/api/mehadi/all"),
+     
     ]);
 
     const [contactData, engagementData] = await Promise.all([
@@ -58,7 +46,7 @@ export default function ContactSidebar() {
     // Add a `type` label so admin knows where it came from
     const allData = [
       ...contactData.map((c) => ({ ...c, type: "Contact" })),
-      ...engagementData.map((e) => ({ ...e, type:"Engagement" })),
+      ...engagementData.map((e) => ({ ...e, type: e.formType ||"Engagement" })),
     ];
 
     // Sort by date (latest first)
@@ -205,11 +193,16 @@ export default function ContactSidebar() {
              </div>
                 {/* engagement  */}
                 <div className="w-40 text-center">
-                <span
+                {/* <span
                     className={`px-3 py-1 rounded-full text-xs font-semibold ${ c.type === "Engagement"
                         ? "bg-green-100 text-green-700"
                         : "bg-green-100 text-green-700"}`}> {c.type}
-                  </span>
+                  </span> */}
+                  <span
+                    className="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">
+                      {c.type.charAt(0).toUpperCase() + c.type.slice(1)}
+                    </span>
+
                   </div>
 
 
