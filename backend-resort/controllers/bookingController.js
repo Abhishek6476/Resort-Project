@@ -91,16 +91,303 @@
 
 
 
+// import Razorpay from "razorpay";
+// import crypto from "crypto";
+// import Booking from "../models/Booking.js";
+
+// // ✅ Razorpay instance helper
+// const getRazorpayInstance = () => {
+//   if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+//     throw new Error(
+//       "⚠️ RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET must be defined in .env"
+//     );
+//   }
+//   return new Razorpay({
+//     key_id: process.env.RAZORPAY_KEY_ID,
+//     key_secret: process.env.RAZORPAY_KEY_SECRET,
+//   });
+// };
+
+// // 🧾 Create Razorpay Order
+// export const createOrder = async (req, res) => {
+//   try {
+//     const razorpay = getRazorpayInstance();
+//     const { amount } = req.body;
+
+//     if (!amount || isNaN(amount)) {
+//       return res.status(400).json({ message: "Invalid amount" });
+//     }
+
+//     const options = {
+//       amount: Number(amount) * 100, // convert INR to paisa
+//       currency: "INR",
+//       receipt: "receipt_" + Date.now(),
+//     };
+
+//     const order = await razorpay.orders.create(options);
+
+//     console.log("✅ Razorpay order created:", order);
+
+//     res.json({ orderId: order.id, amount: order.amount });
+//   } catch (error) {
+//     console.error("Error creating order:", error);
+//     res.status(500).json({ message: "Failed to create order" });
+//   }
+// };
+
+// // 💳 Verify payment and save booking
+// export const verifyPayment = async (req, res) => {
+//   try {
+//     const razorpay = getRazorpayInstance();
+//     const {
+//       razorpay_order_id,
+//       razorpay_payment_id,
+//       razorpay_signature,
+//       bookingData,
+//     } = req.body;
+
+//     if (!bookingData) {
+//       return res.status(400).json({ message: "Booking data is required" });
+//     }
+
+//     // ✅ Validate signature
+//     const sign = razorpay_order_id + "|" + razorpay_payment_id;
+//     const expectedSign = crypto
+//       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+//       .update(sign.toString())
+//       .digest("hex");
+
+//     if (expectedSign !== razorpay_signature) {
+//       return res.status(400).json({ success: false, message: "Invalid signature" });
+//     }
+
+//     // ✅ Save booking
+//     const newBooking = new Booking({
+//       ...bookingData,
+//       amount: bookingData.price || bookingData.amount, // ensure amount exists
+//       orderId: razorpay_order_id,
+//       paymentId: razorpay_payment_id,
+//       paymentStatus: "paid",
+//     });
+
+//     await newBooking.save();
+
+//     res.json({ success: true, message: "Payment verified & booking confirmed" });
+//   } catch (error) {
+//     console.error("Error verifying payment:", error);
+//     res.status(500).json({ message: "Payment verification failed" });
+//   }
+// };
+
+// // 📜 Get all bookings (admin)
+// export const getAllBookings = async (req, res) => {
+//   try {
+//     const bookings = await Booking.find().populate("roomId");
+//     res.json(bookings);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
+
+
+
+
+// import Razorpay from "razorpay";
+// import crypto from "crypto";
+// import Booking from "../models/Booking.js";
+// import Room from "../models/Room.js"; // ✅ add this import
+
+// // ✅ Razorpay instance helper
+// const getRazorpayInstance = () => {
+//   if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+//     throw new Error("⚠️ RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET must be defined in .env");
+//   }
+//   return new Razorpay({
+//     key_id: process.env.RAZORPAY_KEY_ID,
+//     key_secret: process.env.RAZORPAY_KEY_SECRET,
+//   });
+// };
+
+// // 🧾 Create Razorpay Order
+// export const createOrder = async (req, res) => {
+//   try {
+//     const razorpay = getRazorpayInstance();
+//     const { amount } = req.body;
+
+//     if (!amount || isNaN(amount)) {
+//       return res.status(400).json({ message: "Invalid amount" });
+//     }
+
+//     const options = {
+//       amount: Number(amount) * 100, // convert INR to paisa
+//       currency: "INR",
+//       receipt: "receipt_" + Date.now(),
+//     };
+
+//     const order = await razorpay.orders.create(options);
+
+//     console.log("✅ Razorpay order created:", order);
+
+//     res.json({ orderId: order.id, amount: order.amount });
+//   } catch (error) {
+//     console.error("Error creating order:", error);
+//     res.status(500).json({ message: "Failed to create order" });
+//   }
+// };
+
+// // 💳 Verify payment and save booking
+// export const verifyPayment = async (req, res) => {
+//   try {
+//     const {
+//       razorpay_order_id,
+//       razorpay_payment_id,
+//       razorpay_signature,
+//       bookingData,
+//     } = req.body;
+
+//     if (!bookingData) {
+//       return res.status(400).json({ message: "Booking data is required" });
+//     }
+
+//     // ✅ Validate Razorpay signature
+//     const sign = razorpay_order_id + "|" + razorpay_payment_id;
+//     const expectedSign = crypto
+//       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+//       .update(sign.toString())
+//       .digest("hex");
+
+//     if (expectedSign !== razorpay_signature) {
+//       return res.status(400).json({ success: false, message: "Invalid signature" });
+//     }
+
+//     // ✅ STEP 1: Check room availability
+//     const { roomId, checkIn, checkOut, roomsBooked = 1 } = bookingData;
+//     const room = await Room.findById(roomId);
+//     if (!room) return res.status(404).json({ message: "Room not found" });
+
+//     // Find overlapping bookings for this room
+//     const existingBookings = await Booking.find({
+//       roomId,
+//       $or: [
+//         { checkIn: { $lte: checkOut }, checkOut: { $gte: checkIn } }
+//       ],
+//     });
+
+//     const totalBooked = existingBookings.reduce((sum, b) => sum + (b.roomsBooked || 1), 0);
+//     const available = room.totalRooms - totalBooked;
+
+//     if (available < roomsBooked) {
+//       return res.status(400).json({ message: "Not enough rooms available for these dates" });
+//     }
+
+//     // ✅ STEP 2: Save new booking
+//     const newBooking = new Booking({
+//       ...bookingData,
+//       amount: bookingData.price || bookingData.amount,
+//       orderId: razorpay_order_id,
+//       paymentId: razorpay_payment_id,
+//       paymentStatus: "paid",
+//     });
+
+//     await newBooking.save();
+
+//     res.json({ success: true, message: "Payment verified & booking confirmed" });
+//   } catch (error) {
+//     console.error("Error verifying payment:", error);
+//     res.status(500).json({ message: "Payment verification failed" });
+//   }
+// };
+
+// // 📜 Get all bookings (admin)
+// export const getAllBookings = async (req, res) => {
+//   try {
+//     const bookings = await Booking.find().populate("roomId");
+//     res.json(bookings);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
+// // 🗓️ Check Room Availability (before booking)
+// export const checkAvailability = async (req, res) => {
+//   try {
+//     const { roomId, checkIn, checkOut, roomsBooked = 1 } = req.body;
+
+//     const room = await Room.findById(roomId);
+//     if (!room) return res.status(404).json({ message: "Room not found" });
+
+//     // Find bookings overlapping given dates
+//     const existingBookings = await Booking.find({
+//       roomId,
+//       $or: [
+//         { checkIn: { $lte: checkOut }, checkOut: { $gte: checkIn } }
+//       ],
+//     });
+
+//     const totalBooked = existingBookings.reduce(
+//       (sum, b) => sum + (b.roomsBooked || 1),
+//       0
+//     );
+
+//     const availableRooms = room.totalRooms - totalBooked;
+
+//     if (availableRooms < roomsBooked) {
+//       return res.json({
+//         available: false,
+//         message: `Only ${availableRooms} rooms left for selected dates.`,
+//       });
+//     }
+
+//     res.json({
+//       available: true,
+//       message: `${availableRooms} rooms available for booking.`,
+//     });
+//   } catch (error) {
+//     console.error("Error checking availability:", error);
+//     res.status(500).json({ message: "Error checking room availability" });
+//   }
+// };
+
+// // 📅 NEW: Get all unavailable dates for a room
+// export const getUnavailableDates = async (req, res) => {
+//   try {
+//     const { roomId } = req.params;
+
+//     const bookings = await Booking.find({ roomId });
+
+//     const unavailableDates = [];
+
+//     bookings.forEach((booking) => {
+//       const start = new Date(booking.checkIn);
+//       const end = new Date(booking.checkOut);
+//       let current = new Date(start);
+
+//       while (current <= end) {
+//         unavailableDates.push(current.toISOString().split("T")[0]);
+//         current.setDate(current.getDate() + 1);
+//       }
+//     });
+
+//     res.json({ unavailableDates });
+//   } catch (error) {
+//     console.error("Error fetching unavailable dates:", error);
+//     res.status(500).json({ message: "Failed to fetch unavailable dates" });
+//   }
+// };
+
+
+
+
 import Razorpay from "razorpay";
 import crypto from "crypto";
 import Booking from "../models/Booking.js";
+import Room from "../models/Room.js"; // ✅ add this import
 
 // ✅ Razorpay instance helper
 const getRazorpayInstance = () => {
   if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
-    throw new Error(
-      "⚠️ RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET must be defined in .env"
-    );
+    throw new Error("⚠️ RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET must be defined in .env");
   }
   return new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
@@ -138,7 +425,6 @@ export const createOrder = async (req, res) => {
 // 💳 Verify payment and save booking
 export const verifyPayment = async (req, res) => {
   try {
-    const razorpay = getRazorpayInstance();
     const {
       razorpay_order_id,
       razorpay_payment_id,
@@ -150,7 +436,7 @@ export const verifyPayment = async (req, res) => {
       return res.status(400).json({ message: "Booking data is required" });
     }
 
-    // ✅ Validate signature
+    // ✅ Validate Razorpay signature
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
@@ -161,10 +447,30 @@ export const verifyPayment = async (req, res) => {
       return res.status(400).json({ success: false, message: "Invalid signature" });
     }
 
-    // ✅ Save booking
+    // ✅ STEP 1: Check room availability
+    const { roomId, checkIn, checkOut, roomsBooked = 1 } = bookingData;
+    const room = await Room.findById(roomId);
+    if (!room) return res.status(404).json({ message: "Room not found" });
+
+    // Find overlapping bookings for this room
+    const existingBookings = await Booking.find({
+      roomId,
+      $or: [
+        { checkIn: { $lte: checkOut }, checkOut: { $gte: checkIn } }
+      ],
+    });
+
+    const totalBooked = existingBookings.reduce((sum, b) => sum + (b.roomsBooked || 1), 0);
+    const available = room.totalRooms - totalBooked;
+
+    if (available < roomsBooked) {
+      return res.status(400).json({ message: "Not enough rooms available for these dates" });
+    }
+
+    // ✅ STEP 2: Save new booking
     const newBooking = new Booking({
       ...bookingData,
-      amount: bookingData.price || bookingData.amount, // ensure amount exists
+      amount: bookingData.price || bookingData.amount,
       orderId: razorpay_order_id,
       paymentId: razorpay_payment_id,
       paymentStatus: "paid",
@@ -186,5 +492,102 @@ export const getAllBookings = async (req, res) => {
     res.json(bookings);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+// 🗓️ Check Room Availability (before booking)
+export const checkAvailability = async (req, res) => {
+  try {
+    const { roomId, checkIn, checkOut, roomsBooked = 1 } = req.body;
+
+    const room = await Room.findById(roomId);
+    if (!room) return res.status(404).json({ message: "Room not found" });
+
+    // Find bookings overlapping given dates
+    const existingBookings = await Booking.find({
+      roomId,
+      $or: [
+        { checkIn: { $lte: checkOut }, checkOut: { $gte: checkIn } }
+      ],
+    });
+
+    const totalBooked = existingBookings.reduce(
+      (sum, b) => sum + (b.roomsBooked || 1),
+      0
+    );
+
+    const availableRooms = room.totalRooms - totalBooked;
+
+    if (availableRooms < roomsBooked) {
+      return res.json({
+        available: false,
+        message: `Only ${availableRooms} rooms left for selected dates.`,
+      });
+    }
+
+    res.json({
+      available: true,
+      message: `${availableRooms} rooms available for booking.`,
+    });
+  } catch (error) {
+    console.error("Error checking availability:", error);
+    res.status(500).json({ message: "Error checking room availability" });
+  }
+};
+
+// 📅 Get all unavailable dates for a room
+export const getUnavailableDates = async (req, res) => {
+  try {
+    const { roomId } = req.params;
+
+    const bookings = await Booking.find({ roomId });
+
+    const unavailableDates = [];
+
+    bookings.forEach((booking) => {
+      const start = new Date(booking.checkIn);
+      const end = new Date(booking.checkOut);
+      let current = new Date(start);
+
+      while (current <= end) {
+        unavailableDates.push(current.toISOString().split("T")[0]);
+        current.setDate(current.getDate() + 1);
+      }
+    });
+
+    res.json({ unavailableDates });
+  } catch (error) {
+    console.error("Error fetching unavailable dates:", error);
+    res.status(500).json({ message: "Failed to fetch unavailable dates" });
+  }
+};
+
+// ✏️ UPDATE Booking (Edit)
+export const updateBooking = async (req, res) => {
+  try {
+    const updated = await Booking.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!updated)
+      return res.status(404).json({ message: "Booking not found" });
+    res.json(updated);
+  } catch (error) {
+    console.error("Error updating booking:", error);
+    res.status(500).json({ message: "Failed to update booking" });
+  }
+};
+
+// ❌ DELETE Booking
+export const deleteBooking = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedBooking = await Booking.findByIdAndDelete(id);
+    if (!deletedBooking)
+      return res.status(404).json({ message: "Booking not found" });
+
+    res.json({ success: true, message: "Booking deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting booking:", error);
+    res.status(500).json({ message: "Failed to delete booking" });
   }
 };
