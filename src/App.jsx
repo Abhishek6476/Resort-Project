@@ -176,6 +176,10 @@ import AllBookings from "./pages/Admin/Rooms/AllBookings";
 import AllEvents from "./pages/Admin/AllEvents";
 import AdminGallery from "./pages/Admin/AdminGallery";
 import AllReviews from "./pages/Admin/AllReviews";
+import AllContacts from "./pages/Admin/AllContacts";
+import AllJobApplications from "./pages/Admin/AllJobApplications";
+
+
 
 function App() {
   return (
@@ -254,6 +258,11 @@ function App() {
           <Route path="events" element={<AllEvents />} />
         <Route path="gallery" element={<AdminGallery />} />
         <Route path="reviews" element={<AllReviews />} />
+         <Route path="contacts" element={<AllContacts />} />
+         <Route path="jobs" element={<AllJobApplications />} />
+
+ 
+        
 
 
           {/* Future admin pages */}

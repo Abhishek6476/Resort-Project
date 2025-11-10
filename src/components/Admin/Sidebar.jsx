@@ -106,9 +106,6 @@
 //   );
 // }
 
-
-
-
 // import { useState } from "react";
 // import { NavLink } from "react-router-dom";
 // import {
@@ -211,9 +208,6 @@
 // }
 
 
-
-
-
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
@@ -224,7 +218,8 @@ import {
   FaSignOutAlt,
   FaChevronDown,
   FaChevronUp,
-  
+  FaCommentDots,
+   FaBriefcase,
 } from "react-icons/fa";
 
 export default function Sidebar({ onLogout }) {
@@ -241,10 +236,11 @@ export default function Sidebar({ onLogout }) {
       ],
     },
     { name: "Event Enquiries", path: "/admin/events", icon: <FaEnvelope /> },
-    { name: "Contact Messages", path: "/admin/messages", icon: <FaEnvelope /> },
-    { name: "Gallery", path: "/admin/gallery", icon: <FaImages /> }, // ✅ Replaced Settings with Gallery
+    { name: "Contact Messages", path: "/admin/contacts", icon: <FaCommentDots /> },
+    { name: "Gallery", path: "/admin/gallery", icon: <FaImages /> }, // 
     { name: "All Reviews", path: "/admin/reviews", icon: <FaEnvelope /> },
-
+    { name: "Job Applications", path: "/admin/jobs", icon: <FaBriefcase /> },
+    
   ];
 
   const toggleMenu = (name) => {
@@ -319,3 +315,4 @@ export default function Sidebar({ onLogout }) {
     </div>
   );
 }
+

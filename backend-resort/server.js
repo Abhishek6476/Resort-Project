@@ -65,6 +65,8 @@ import { fileURLToPath } from "url";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import galleryRoutes from "./routes/galleryRoutes.js"; 
 import reviewRoutes from "./routes/reviewRoutes.js";
+import contactRoutes from "./routes/contactRoutes.js";
+import jobApplicationRoutes from "./routes/jobApplicationRoutes.js";
 
 
 // dotenv.config();
@@ -92,6 +94,11 @@ app.use("/api", eventRoutes);
 
 // Admin login
 app.use("/api/admin", adminRoutes);
+
+app.use("/api/contact", contactRoutes);
+
+app.use("/api/job-applications", jobApplicationRoutes);
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
