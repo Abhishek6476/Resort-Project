@@ -1,5 +1,3 @@
-
-
 import Razorpay from "razorpay";
 import crypto from "crypto";
 import fs from "fs";
@@ -41,12 +39,12 @@ export const createOrder = async (req, res) => {
 
     res.status(200).json({ success: true, order, booking });
   } catch (error) {
-    console.error("❌ Error creating order:", error);
+    console.error(" Error creating order:", error);
     res.status(500).json({ message: "Server error while creating order" });
   }
 };
 
-// 🔹 Verify payment, generate invoice, send mail
+//  Verify payment, generate invoice, send mail
 export const verifyPayment = async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingData } = req.body;
@@ -64,7 +62,7 @@ export const verifyPayment = async (req, res) => {
       return res.status(400).json({ success: false, message: "Signature mismatch" });
     }
 
-    // ✅ Update booking in DB
+    //  Update booking in DB
     const updatedBooking = await Booking.findOneAndUpdate(
       { orderId: razorpay_order_id },
       {
@@ -80,19 +78,19 @@ export const verifyPayment = async (req, res) => {
       return res.status(404).json({ success: false, message: "Booking not found" });
     }
 
-    // ✅ Generate invoice (pdfkit)
+    //  Generate invoice (pdfkit)
 const pdfPath = await generateRoomBookingInvoice(
   updatedBooking,
   { razorpay_payment_id } // pass payment details to include in PDF
 );
 
-    // ✅ Send email
+    //  Send email
     await sendBookingMail(updatedBooking, pdfPath);
 
     // delete temporary file after email sent
     setTimeout(() => {
       fs.unlink(pdfPath, (err) => {
-        if (!err) console.log("🧹 Deleted temp invoice:", pdfPath);
+        if (!err) console.log(" Deleted temp invoice:", pdfPath);
       });
     }, 15000);
 

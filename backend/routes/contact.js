@@ -2,7 +2,6 @@ import express from "express";
 import { submitContact } from "../controllers/contactController.js";
 import Contact from "../models/Contact.js";
 
-//import { submitEngagement } from "../controllers/engagement.js";
 import { submitInquiry, getAllInquiries } from "../controllers/inquiryController.js";
 import Engagement from "../models/Engagement.js";
 
@@ -32,7 +31,7 @@ router.put("/contact/:id", async (req, res) => {
   }
 });
 
-// Optional: DELETE route to remove a submission
+//  DELETE route submission
 router.delete("/contact/:id", async (req, res) => {
   try {
     await Contact.findByIdAndDelete(req.params.id);
@@ -43,19 +42,34 @@ router.delete("/contact/:id", async (req, res) => {
 });
 
 
-/* ----------------  UNIVERSAL INQUIRY ROUTES ---------------- */
+// /* ----------------  UNIVERSAL INQUIRY ROUTES ---------------- */
 
-// POST - Create a new engagement submission (Get Quote form)
+// // POST - Create a new engagement submission (Get Quote form)
 
-//router.post("/engagement", submitEngagement);
+// //router.post("/engagement", submitEngagement);
 
 
+// router.post("/inquiry", submitInquiry);
+
+// //get admin view 
+
+// router.get("/inquiry/all", getAllInquiries);
+// // GET - Fetch all engagement submissions (for admin panel)
+// router.get("/engagement/all", async (req, res) => {
+//   try {
+//     const engagements = await Engagement.find().sort({ createdAt: -1 });
+//     res.status(200).json(engagements);
+//   } catch (err) {
+//     res.status(500).json({ msg: "Server error", error: err.message });
+//   }
+// });
+
+
+// ---------------- UNIVERSAL INQUIRY ROUTES ----------------
 router.post("/inquiry", submitInquiry);
-
-//get admin view 
-
 router.get("/inquiry/all", getAllInquiries);
-// GET - Fetch all engagement submissions (for admin panel)
+
+// ---------------- ENGAGEMENT ROUTES ----------------
 router.get("/engagement/all", async (req, res) => {
   try {
     const engagements = await Engagement.find().sort({ createdAt: -1 });
@@ -64,4 +78,37 @@ router.get("/engagement/all", async (req, res) => {
     res.status(500).json({ msg: "Server error", error: err.message });
   }
 });
+
+//  added for Engagement delete
+router.delete("/engagement/:id", async (req, res) => {
+  try {
+    await Engagement.findByIdAndDelete(req.params.id);
+    res.status(200).json({ msg: "Engagement deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ msg: "Server error", error: err.message });
+  }
+});
+
+// ---------------- MEHNDI ROUTES ----------------
+//  added for Mehndi get and delete
+// GET - All Mehndi (using same Engagement model)
+router.get("/mehndi/all", async (req, res) => {
+  try {
+    const mehndis = await Engagement.find().sort({ createdAt: -1 });
+    res.status(200).json(mehndis);
+  } catch (err) {
+    res.status(500).json({ msg: "Server error", error: err.message });
+  }
+});
+
+// DELETE - Mehndi (using same Engagement model)
+router.delete("/mehndi/:id", async (req, res) => {
+  try {
+    await Engagement.findByIdAndDelete(req.params.id);
+    res.status(200).json({ msg: "Mehndi deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ msg: "Server error", error: err.message });
+  }
+});
+
 export default router;

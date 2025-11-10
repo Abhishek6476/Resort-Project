@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import {
@@ -32,21 +31,24 @@ export default function ContactSidebar() {
   const fetchContacts = async () => {
   try {
     // Fetch both Contact and Engagement data
-    const [contactRes, engagementRes] = await Promise.all([
+    const [contactRes, engagementRes, mehndiRes] = await Promise.all([
       fetch("http://localhost:5000/api/contact/all"),
       fetch("http://localhost:5000/api/engagement/all"),
+      fetch("http://localhost:5000/api/mehndi/all"),
      
     ]);
 
-    const [contactData, engagementData] = await Promise.all([
+    const [contactData, engagementData, mehndiData] = await Promise.all([
       contactRes.json(),
       engagementRes.json(),
+      mehndiRes.json(),
     ]);
 
     // Add a `type` label so admin knows where it came from
     const allData = [
       ...contactData.map((c) => ({ ...c, type: "Contact" })),
       ...engagementData.map((e) => ({ ...e, type: e.formType ||"Engagement" })),
+       ...mehndiData.map((m) => ({...m, type: m.formType || "Mehndi",})),
     ];
 
     // Sort by date (latest first)
@@ -63,31 +65,59 @@ export default function ContactSidebar() {
   }
 };
 
-
   useEffect(() => {
     fetchContacts();
   }, []);
 
   // Delete contact
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this contact?");
-    if (!confirmDelete) return;
+  // const handleDelete = async (id) => {
+  //   const confirmDelete = window.confirm("Are you sure you want to delete this contact?");
+  //   if (!confirmDelete) return;
 
+  //   try {
+  //     const res = await fetch(`http://localhost:5000/api/contact/${id}`, {
+  //       method: "DELETE",
+  //     });
+  //     if (res.ok) {
+  //       setContacts((prev) => prev.filter((c) => c._id !== id));
+  //       toast.success("Contact deleted successfully!");
+  //     } else {
+  //       toast.error("Failed to delete contact.");
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //     toast.error("Error deleting contact.");
+  //   }
+  // };
+
+  const handleDelete = async (id, type) => {
+  if (window.confirm("Are you sure you want to delete this Entry")) {
     try {
-      const res = await fetch(`http://localhost:5000/api/contact/${id}`, {
-        method: "DELETE",
-      });
+      //  Choose endpoint dynamically based on type
+      let endpoint = "";
+      if (type === "Engagement") {
+        endpoint = `http://localhost:5000/api/engagement/${id}`;
+      } else if (type === "Mehndi") {
+        endpoint = `http://localhost:5000/api/mehndi/${id}`;
+      } else {
+        endpoint = `http://localhost:5000/api/contact/${id}`;
+      }
+
+      const res = await fetch(endpoint, { method: "DELETE" });
+
       if (res.ok) {
         setContacts((prev) => prev.filter((c) => c._id !== id));
-        toast.success("Contact deleted successfully!");
+        toast.success(`${type} Entry Deleted Successfully!`);
       } else {
-        toast.error("Failed to delete contact.");
+        toast.error(`Failed to delete ${type} entry.`);
       }
-    } catch (err) {
-      console.error(err);
-      toast.error("Error deleting contact.");
+    } catch (error) {
+      console.error("Error deleting:", error);
+      toast.error("Error deleting entry.");
     }
-  };
+  }
+};
+
 
   // Edit contact
   const handleEdit = (contact) => {
@@ -126,7 +156,7 @@ export default function ContactSidebar() {
     (c) =>
       c.name.toLowerCase().includes(search.toLowerCase()) ||
       c.email.toLowerCase().includes(search.toLowerCase()) ||
-      c.phone.includes(search)
+      (c.phone || "").includes(search)
   );
 
   const totalPages = Math.ceil(filteredContacts.length / itemsPerPage);
@@ -164,7 +194,7 @@ export default function ContactSidebar() {
             Contact Submissions
           </h1>
 
-          {/* 🔍 Search */}
+          {/*  Search */}
           <div className="relative mb-6">
             <Search className="absolute left-4 top-3 text-gray-400 w-5 h-5" />
             <input
@@ -193,11 +223,7 @@ export default function ContactSidebar() {
              </div>
                 {/* engagement  */}
                 <div className="w-40 text-center">
-                {/* <span
-                    className={`px-3 py-1 rounded-full text-xs font-semibold ${ c.type === "Engagement"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-green-100 text-green-700"}`}> {c.type}
-                  </span> */}
+              
                   <span
                     className="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">
                       {c.type.charAt(0).toUpperCase() + c.type.slice(1)}
@@ -209,12 +235,14 @@ export default function ContactSidebar() {
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => setSelectedContact(c)}
-                      className="flex items-center gap-1 bg-blue-800 text-white px-3 py-1 rounded-full text-sm hover:bg-blue-900 transition"
-                    >
-                      <Eye className="w-4 h-4" /> View
+                      className="flex items-center gap-1 bg-blue-800 text-white px-3 py-1 rounded-full text-sm hover:bg-blue-900 transition" >
+
+                    <Eye className="w-4 h-4" /> View
                     </button>
                     <button
-                      onClick={() => handleDelete(c._id)}
+                      //onClick={() => handleDelete(c._id)}
+                      onClick={() => handleDelete(c._id, c.type)}
+
                       className="flex items-center gap-1 bg-red-500 text-white px-3 py-1 rounded-full text-sm hover:bg-red-600 transition"
                     >
                       <Trash2 className="w-4 h-4" /> Delete
@@ -310,14 +338,13 @@ export default function ContactSidebar() {
           </div>
         )}
 
-        {/* ✏️ Edit Modal */}
+        {/*  Edit Modal */}
         {isEditing && editData && (
           <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
             <div className="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl relative">
               <button
                 onClick={() => setIsEditing(false)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-              >
+                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600" >
                 <X className="w-5 h-5" />
               </button>
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Edit Contact</h2>
