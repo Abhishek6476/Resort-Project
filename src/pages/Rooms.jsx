@@ -372,10 +372,7 @@ const Rooms = () => {
 
   const [totalPrice, setTotalPrice] = useState(0);
 
-    
-
-
- // 🧩 NEW: form state
+ //  NEW: form state
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -391,7 +388,7 @@ const Rooms = () => {
 
 
 
-  // 🧩 handle input change
+  //  handle input change
   
   const handleChange = (e) => {
   const { name, value } = e.target;
@@ -405,8 +402,8 @@ const Rooms = () => {
     const maxGuestsAllowed = rooms * 3;
 
     if (guests > maxGuestsAllowed) {
-      alert(`❌ Only ${maxGuestsAllowed} guests allowed for ${rooms} room(s).`);
-      updatedForm.guestCount = maxGuestsAllowed; // reset to max allowed
+      alert(` Only ${maxGuestsAllowed} guests allowed for ${rooms} room(s).`);
+      updatedForm.guestCount = maxGuestsAllowed; 
     }
   }
 

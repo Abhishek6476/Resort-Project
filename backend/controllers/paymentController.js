@@ -14,7 +14,7 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// 🔹 Create Razorpay order + save booking
+//  Create Razorpay order + save booking
 export const createOrder = async (req, res) => {
   try {
     const {

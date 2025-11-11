@@ -15,7 +15,7 @@ const Footer = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // Yahan aap API ya form processing code likh sakte hain
+   
     alert("Form submitted successfully!");
     setIsModalOpen(false);
   };
@@ -69,7 +69,7 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-yellow-500">
+                  <a href="Dining" className="hover:text-yellow-500">
                     Dining
                   </a>
                 </li>
@@ -142,12 +142,13 @@ const Footer = () => {
                   Address - H 15 BSI Business Park, Sector 63, Noida – 201309
                 </p>
               </div>
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="bg-yellow-600 hover:bg-yellow-500 text-white px-5 py-2 rounded transition"
-              >
-                Get in Touch
-              </button>
+
+              <a
+                  href="/contact"
+                  className="bg-yellow-600 hover:bg-yellow-500 text-white px-5 py-2 rounded transition inline-block">
+                  Get in Touch
+                </a>
+
             </div>
           </div>
 
@@ -160,56 +161,6 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-
-      {/* Modal Popup */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-lg relative">
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="absolute top-2 right-3 text-gray-600 hover:text-red-600 text-xl"
-              aria-label="Close modal"
-            >
-              &times;
-            </button>
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-              Contact Us
-            </h2>
-            <form onSubmit={handleFormSubmit} className="space-y-4">
-              <input
-                type="text"
-                placeholder="Full Name"
-                className="border border-gray-300 rounded px-4 py-2 w-full"
-                required
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                className="border border-gray-300 rounded px-4 py-2 w-full"
-                required
-              />
-              <input
-                type="mob"
-                placeholder="Mobile No"
-                className="border border-gray-300 rounded px-4 py-2 w-full"
-                required
-              />
-              <textarea
-                rows="4"
-                placeholder="Your Message"
-                className="border border-gray-300 rounded px-4 py-2 w-full"
-                required
-              />
-              <button
-                type="submit"
-                className="bg-blue-800 hover:bg-blue-900 text-white px-6 py-2 rounded transition w-full"
-              >
-                Send Message
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
     </>
   );
 };

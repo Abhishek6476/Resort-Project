@@ -41,35 +41,11 @@ router.delete("/contact/:id", async (req, res) => {
   }
 });
 
-
-// /* ----------------  UNIVERSAL INQUIRY ROUTES ---------------- */
-
-// // POST - Create a new engagement submission (Get Quote form)
-
-// //router.post("/engagement", submitEngagement);
-
-
-// router.post("/inquiry", submitInquiry);
-
-// //get admin view 
-
-// router.get("/inquiry/all", getAllInquiries);
-// // GET - Fetch all engagement submissions (for admin panel)
-// router.get("/engagement/all", async (req, res) => {
-//   try {
-//     const engagements = await Engagement.find().sort({ createdAt: -1 });
-//     res.status(200).json(engagements);
-//   } catch (err) {
-//     res.status(500).json({ msg: "Server error", error: err.message });
-//   }
-// });
-
-
 // ---------------- UNIVERSAL INQUIRY ROUTES ----------------
 router.post("/inquiry", submitInquiry);
 router.get("/inquiry/all", getAllInquiries);
 
-// ---------------- ENGAGEMENT ROUTES ----------------
+// // ---------------- ENGAGEMENT ROUTES ----------------
 router.get("/engagement/all", async (req, res) => {
   try {
     const engagements = await Engagement.find().sort({ createdAt: -1 });
@@ -92,6 +68,7 @@ router.delete("/engagement/:id", async (req, res) => {
 // ---------------- MEHNDI ROUTES ----------------
 //  added for Mehndi get and delete
 // GET - All Mehndi (using same Engagement model)
+
 router.get("/mehndi/all", async (req, res) => {
   try {
     const mehndis = await Engagement.find().sort({ createdAt: -1 });

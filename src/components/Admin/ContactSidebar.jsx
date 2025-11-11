@@ -34,21 +34,21 @@ export default function ContactSidebar() {
     const [contactRes, engagementRes, mehndiRes] = await Promise.all([
       fetch("http://localhost:5000/api/contact/all"),
       fetch("http://localhost:5000/api/engagement/all"),
-      fetch("http://localhost:5000/api/mehndi/all"),
+      
      
     ]);
 
-    const [contactData, engagementData, mehndiData] = await Promise.all([
+    const [contactData, engagementData] = await Promise.all([
       contactRes.json(),
       engagementRes.json(),
-      mehndiRes.json(),
+      
     ]);
 
     // Add a `type` label so admin knows where it came from
     const allData = [
       ...contactData.map((c) => ({ ...c, type: "Contact" })),
-      ...engagementData.map((e) => ({ ...e, type: e.formType ||"Engagement" })),
-       ...mehndiData.map((m) => ({...m, type: m.formType || "Mehndi",})),
+      ...engagementData.map((e) => ({ ...e, type: e.formType || (e.eventType === "mehndi" ? "Mehndi" : "Engagement"),
+  })),
     ];
 
     // Sort by date (latest first)
@@ -68,27 +68,6 @@ export default function ContactSidebar() {
   useEffect(() => {
     fetchContacts();
   }, []);
-
-  // Delete contact
-  // const handleDelete = async (id) => {
-  //   const confirmDelete = window.confirm("Are you sure you want to delete this contact?");
-  //   if (!confirmDelete) return;
-
-  //   try {
-  //     const res = await fetch(`http://localhost:5000/api/contact/${id}`, {
-  //       method: "DELETE",
-  //     });
-  //     if (res.ok) {
-  //       setContacts((prev) => prev.filter((c) => c._id !== id));
-  //       toast.success("Contact deleted successfully!");
-  //     } else {
-  //       toast.error("Failed to delete contact.");
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //     toast.error("Error deleting contact.");
-  //   }
-  // };
 
   const handleDelete = async (id, type) => {
   if (window.confirm("Are you sure you want to delete this Entry")) {
@@ -120,36 +99,36 @@ export default function ContactSidebar() {
 
 
   // Edit contact
-  const handleEdit = (contact) => {
-    setEditData({ ...contact });
-    setIsEditing(true);
-  };
+  // const handleEdit = (contact) => {
+  //   setEditData({ ...contact });
+  //   setIsEditing(true);
+  // };
 
-  const handleEditChange = (e) => {
-    const { name, value } = e.target;
-    setEditData((prev) => ({ ...prev, [name]: value }));
-  };
+  // const handleEditChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setEditData((prev) => ({ ...prev, [name]: value }));
+  // };
 
-  const handleEditSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch(`http://localhost:5000/api/contact/${editData._id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(editData),
-      });
-      if (res.ok) {
-        toast.success("Contact updated successfully!");
-        setIsEditing(false);
-        fetchContacts();
-      } else {
-        toast.error("Failed to update contact.");
-      }
-    } catch (err) {
-      console.error(err);
-      toast.error("Error updating contact.");
-    }
-  };
+  // const handleEditSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const res = await fetch(`http://localhost:5000/api/contact/${editData._id}`, {
+  //       method: "PUT",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(editData),
+  //     });
+  //     if (res.ok) {
+  //       toast.success("Contact updated successfully!");
+  //       setIsEditing(false);
+  //       fetchContacts();
+  //     } else {
+  //       toast.error("Failed to update contact.");
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //     toast.error("Error updating contact.");
+  //   }
+  // };
 
   // Filtered + paginated contacts
   const filteredContacts = contacts.filter(
@@ -318,15 +297,14 @@ export default function ContactSidebar() {
                 </p>
               </div>
               <div className="flex justify-end gap-3 mt-6">
-                <button
+                 {/* <button
                   onClick={() => {
                     handleEdit(selectedContact);
                     setSelectedContact(null);
                   }}
-                  className="px-5 py-2 bg-blue-800 text-white rounded-full hover:bg-blue-900 flex items-center gap-2 transition"
-                >
+                  className="px-5 py-2 bg-blue-800 text-white rounded-full hover:bg-blue-900 flex items-center gap-2 transition" >
                   <Pencil className="w-4 h-4" /> Edit
-                </button>
+                </button>  */}
                 <button
                   onClick={() => setSelectedContact(null)}
                   className="px-5 py-2 bg-gray-200 rounded-full hover:bg-gray-300 transition"
@@ -339,7 +317,7 @@ export default function ContactSidebar() {
         )}
 
         {/*  Edit Modal */}
-        {isEditing && editData && (
+        {/* {isEditing && editData && (
           <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
             <div className="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl relative">
               <button
@@ -398,8 +376,8 @@ export default function ContactSidebar() {
                 </div>
               </form>
             </div>
-          </div>
-        )}
+          </div> */}
+        {/* )} */}
       </div>
     </>
   );
