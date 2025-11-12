@@ -9,6 +9,16 @@ import Career from "./pages/Career";
 import Gallery from "./pages/Gallery";
 import Engagement from './pages/Services/SocialEvent/Engagement';
 import Mehndi from "./pages/Services/SocialEvent/Mehndi";
+import WeddingReception from "./pages/Services/SocialEvent/WeddingReception";
+
+import CorporateMeetings from "./pages/Services/CorparoteEvent/CorporateMeetings";
+import Conference from "./pages/Services/CorparoteEvent/Conference";
+import Seminar from "./pages/Services/CorparoteEvent/Seminar";
+import GrandBallRoom from "./pages/Services/Venue/GrandBallRoom";
+import EliteBallRoom from "./pages/Services/Venue/EliteBallRoom";
+import RoyalBallRoom from "./pages/Services/Venue/RoyalBallRoom";
+
+
 import AdminLogin from "./pages/Admin/AdminLogin";
 //import Dashboard from "./components/Admin/Dashboard";
 import AdminLayout from "./layouts/AdminLayout";
@@ -39,9 +49,38 @@ function App() {
                 <Route path="/career" element={<Career />} />
                 <Route path="/gallery" element={<Gallery />} />
                 <Route path="/contact" element={<Contact />} />
+
+                
+                <Route
+                  path="/Services/corporate/meeting"
+                  element={<CorporateMeetings />}
+                />
+                <Route
+                  path="/Services/corporate/conference"
+                  element={<Conference />}
+                />
+                <Route
+                  path="/Services/corporate/seminar"
+                  element={<Seminar />}
+                />
+
+                <Route
+                  path="/Services/venue/grand"
+                  element={<GrandBallRoom />}
+                />
+                <Route
+                  path="/Services/venue/elite"
+                  element={<EliteBallRoom />}
+                />
+                <Route
+                  path="/Services/venue/royal"
+                  element={<RoyalBallRoom />}
+                />
                
                 <Route path="/Services/social/Engagement" element={<Engagement />} />
                 <Route path="/Services/social/Mehndi" element={<Mehndi />} />
+                <Route path="/Services/social/reception" element={<WeddingReception />}/>
+
                
               </Routes>
             </MainLayout>

@@ -24,7 +24,7 @@ import {
 
 export default function EliteBallRoom() {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedImg, setSelectedImg] = useState(null); // 👈 नया state
+  const [selectedImg, setSelectedImg] = useState(null);
 
   const gallery = [img1, img2, img3, img4, img5, img6];
 
@@ -107,7 +107,7 @@ export default function EliteBallRoom() {
               <div
                 key={idx}
                 className="overflow-hidden rounded-lg shadow cursor-pointer"
-                onClick={() => setSelectedImg(img)} // 👈 click पर setSelectedImg
+                onClick={() => setSelectedImg(img)} 
               >
                 <img
                   src={img}

@@ -45,6 +45,16 @@ router.delete("/contact/:id", async (req, res) => {
 router.post("/inquiry", submitInquiry);
 router.get("/inquiry/all", getAllInquiries);
 
+router.delete("/inquiry/:id", async (req, res) => {
+  try {
+    const deleted = await Inquiry.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ msg: "Inquiry not found" });
+    res.status(200).json({ msg: "Inquiry deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ msg: "Server error", error: err.message });
+  }
+});
+
 // // ---------------- ENGAGEMENT ROUTES ----------------
 router.get("/engagement/all", async (req, res) => {
   try {
