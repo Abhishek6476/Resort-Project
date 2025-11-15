@@ -20,8 +20,8 @@ export const sendJobMail = async (to, subject, html) => {
     };
 
     await transporter.sendMail(mailOptions);
-    console.log(`📧 Job email sent to ${to}`);
+    console.log(` Job email sent to ${to}`);
   } catch (error) {
-    console.error("❌ Error sending job email:", error);
+    console.error(" Error sending job email:", error);
   }
 };

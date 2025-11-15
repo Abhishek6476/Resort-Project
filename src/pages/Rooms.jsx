@@ -428,9 +428,9 @@ const Rooms = () => {
   const closeImage = () => setPreviewImage(null);
 
   // Function to handle "Book Now" click
-  const handleBooking = (roomTitle, price) => {
-    navigate("/booking", { state: { room: { title: roomTitle, price } } });
-  };
+ const handleBooking = (roomTitle, price) => {
+  navigate("/booking", { state: { room: { name: roomTitle, price } } });
+};
 
   return (
     <div className="w-full overflow-hidden">
@@ -526,20 +526,20 @@ const Rooms = () => {
             <div className="flex flex-col gap-4 w-full md:w-1/2">
               <img
                 src={room5}
-                alt="Superior Room"
+                alt="Luxury Room"
                 className="rounded-lg shadow-md object-cover h-[180px] cursor-pointer"
                 onClick={() => openImage(room5)}
               />
               <img
                 src={room6}
-                alt="Superior Room"
+                alt="Luxury Room"
                 className="rounded-lg shadow-md object-cover h-[180px] cursor-pointer"
                 onClick={() => openImage(room6)}
               />
             </div>
             <img
               src={room7}
-              alt="Superior Room"
+              alt="Luxury Room"
               className="rounded-lg shadow-md w-full md:w-1/2 object-cover cursor-pointer"
               onClick={() => openImage(room7)}
             />
@@ -548,7 +548,7 @@ const Rooms = () => {
           {/* Right Side Text */}
           <div className="space-y-6">
             <h2 className="text-4xl font-bold">
-              <span className="text-blue-800">Superior</span> Rooms
+              <span className="text-blue-800">Luxury</span> Rooms
             </h2>
             <p className="text-gray-700 text-lg leading-relaxed">
               Superior Rooms bring you an extra touch of elegance, with modern
@@ -572,7 +572,7 @@ const Rooms = () => {
             </ul>
 
             <button
-              onClick={() => handleBooking("Superior Room", "₹4,500 / Night")}
+              onClick={() => handleBooking("Luxury Room", "₹4,500 / Night")}
               className="bg-blue-800 hover:bg-blue-900 text-white px-6 py-3 rounded-md font-semibold transition"
             >
               Book Now

@@ -178,6 +178,7 @@ import AdminGallery from "./pages/Admin/AdminGallery";
 import AllReviews from "./pages/Admin/AllReviews";
 import AllContacts from "./pages/Admin/AllContacts";
 import AllJobApplications from "./pages/Admin/AllJobApplications";
+import AllJobs from "./pages/Admin/AllJobs";
 
 
 
@@ -260,9 +261,7 @@ function App() {
         <Route path="reviews" element={<AllReviews />} />
          <Route path="contacts" element={<AllContacts />} />
          <Route path="jobs" element={<AllJobApplications />} />
-
- 
-        
+         <Route path="career-jobs" element={<AllJobs />} />
 
 
           {/* Future admin pages */}

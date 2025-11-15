@@ -67,6 +67,7 @@ import galleryRoutes from "./routes/galleryRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import jobApplicationRoutes from "./routes/jobApplicationRoutes.js";
+import jobRoutes from "./routes/jobRoutes.js";
 
 
 // dotenv.config();
@@ -88,6 +89,9 @@ app.use(
     credentials: true,
   })
 );
+
+app.use("/invoices", express.static("invoices"));
+
 
 // ✅ All API routes
 app.use("/api", eventRoutes);
@@ -112,7 +116,7 @@ app.use("/api/gallery", galleryRoutes);
 
 app.use("/api/reviews", reviewRoutes);
 
-
+app.use("/api/jobs", jobRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
