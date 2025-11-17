@@ -1,3 +1,4 @@
+
 // src/pages/WeddingReception.jsx
 import React, { useState } from "react";
 import {
@@ -19,12 +20,14 @@ import gallery3 from "../../../assets/wedding4.jpg";
 import gallery4 from "../../../assets/wedding5.jpg";
 import gallery5 from "../../../assets/wedding6.jpg";
 import gallery6 from "../../../assets/wedding7.jpg";
-import { FiImage } from "react-icons/fi";
+
+import ModalForm from "../../../components/ModalForm"; // ⭐ ADD THIS
 
 export default function WeddingReception() {
-  // State for Modal
   const gallery = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6];
   const [selectedImage, setSelectedImage] = useState(null);
+
+  const [isOpen, setIsOpen] = useState(false); // ⭐ ADD THIS
 
   return (
     <div className="bg-white text-gray-800">
@@ -49,33 +52,38 @@ export default function WeddingReception() {
           alt="Reception Hall"
           className="rounded-2xl shadow-lg"
         />
+
         <div>
-          <h2 className="text-3xl font-bold mb-4">
-            Your Dream Reception Venue
-          </h2>
+          <h2 className="text-3xl font-bold mb-4">Your Dream Reception Venue</h2>
           <p className="mb-6">
             Our banquet halls are designed to make your wedding reception truly
             unforgettable. From elegant décor to customized catering, we provide
             everything to make your special day memorable.
           </p>
-          <ul className="space-y-3">
+
+          {/* Facilities */}
+          <ul className="space-y-3 mb-6">
             <li className="flex items-center gap-3">
-              <MdOutlineEventAvailable className="text-blue-800 text-xl" />{" "}
-              Spacious Banquet Halls
+              <MdOutlineEventAvailable className="text-blue-800 text-xl" /> Spacious Banquet Halls
             </li>
             <li className="flex items-center gap-3">
-              <MdOutlineLocalFlorist className="text-blue-800 text-xl" />{" "}
-              Elegant Stage Decoration
+              <MdOutlineLocalFlorist className="text-blue-800 text-xl" /> Elegant Stage Decoration
             </li>
             <li className="flex items-center gap-3">
-              <FaUtensils className="text-blue-800 text-xl" /> Customized
-              Catering Menu
+              <FaUtensils className="text-blue-800 text-xl" /> Customized Catering Menu
             </li>
             <li className="flex items-center gap-3">
-              <FaMusic className="text-blue-800 text-xl" /> Live Music &
-              Entertainment
+              <FaMusic className="text-blue-800 text-xl" /> Live Music & Entertainment
             </li>
           </ul>
+
+          {/* ⭐ BUTTON EXACT YAHI CHAHIYE THA */}
+          <button
+            onClick={() => setIsOpen(true)}
+            className="bg-blue-800 hover:bg-blue-900 px-6 py-3 rounded-full text-white font-medium"
+          >
+            Get a Quote
+          </button>
         </div>
       </section>
 
@@ -85,6 +93,7 @@ export default function WeddingReception() {
           <h2 className="text-3xl font-bold text-center mb-10">
             Reception Moments
           </h2>
+
           <div className="grid md:grid-cols-3 gap-6">
             {gallery.map((img, i) => (
               <img
@@ -99,7 +108,7 @@ export default function WeddingReception() {
         </div>
       </section>
 
-      {/* Wedding Services Section */}
+      {/* Wedding Services */}
       <section className="bg-gray-50 py-16">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-12">
@@ -114,9 +123,7 @@ export default function WeddingReception() {
                 desc: "Capture every precious moment with our professional wedding photographers.",
               },
               {
-                icon: (
-                  <MdOutlineLocalFlorist className="text-2xl text-blue-800" />
-                ),
+                icon: <MdOutlineLocalFlorist className="text-2xl text-blue-800" />,
                 title: "Decoration",
                 desc: "Elegant and customized décor to match your wedding theme and style.",
               },
@@ -164,27 +171,24 @@ export default function WeddingReception() {
         </div>
       </section>
 
-      {/* Modal for Gallery */}
+      {/* Gallery Modal */}
       {selectedImage && (
         <div
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
           onClick={() => setSelectedImage(null)}
         >
-          {/* Prev Button */}
           <button
             onClick={(e) => {
               e.stopPropagation();
               const currentIndex = gallery.indexOf(selectedImage);
-              const prevIndex =
-                (currentIndex - 1 + gallery.length) % gallery.length;
+              const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
               setSelectedImage(gallery[prevIndex]);
             }}
-            className="absolute left-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full hover:bg-black/70"
+            className="absolute left-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full"
           >
             ‹
           </button>
 
-          {/* Image */}
           <img
             src={selectedImage}
             alt="Large Preview"
@@ -192,7 +196,6 @@ export default function WeddingReception() {
             onClick={(e) => e.stopPropagation()}
           />
 
-          {/* Next Button */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -200,12 +203,11 @@ export default function WeddingReception() {
               const nextIndex = (currentIndex + 1) % gallery.length;
               setSelectedImage(gallery[nextIndex]);
             }}
-            className="absolute right-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full hover:bg-black/70"
+            className="absolute right-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full"
           >
             ›
           </button>
 
-          {/* Close Button */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -217,49 +219,6 @@ export default function WeddingReception() {
           </button>
         </div>
       )}
-
-      {/* Packages Section */}
-      {/* <section className="container mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold text-center mb-10">Our Packages</h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          {[
-            {
-              title: "Basic",
-              price: "₹50,000",
-              features: ["Up to 100 Guests", "Standard Decoration", "Buffet Menu"],
-            },
-            {
-              title: "Premium",
-              price: "₹1,20,000",
-              features: ["Up to 300 Guests", "Premium Decoration", "Live Music", "Multi-cuisine Menu"],
-            },
-            {
-              title: "Luxury",
-              price: "₹2,50,000",
-              features: ["Up to 500 Guests", "Luxury Theme Décor", "DJ + Live Band", "Unlimited Menu"],
-            },
-          ].map((pkg, i) => (
-            <div
-              key={i}
-              className="bg-white border rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition"
-            >
-              <h3 className="text-2xl font-bold mb-2">{pkg.title}</h3>
-              <p className="text-blue-800 text-xl font-semibold mb-4">{pkg.price}</p>
-              <ul className="space-y-2 mb-6">
-                {pkg.features.map((f, j) => (
-                  <li key={j} className="text-gray-600">• {f}</li>
-                ))}
-              </ul>
-              <a
-                href="/booking"
-                className="bg-blue-800 hover:bg-blue-900 px-5 py-2 rounded-full text-white"
-              >
-                Book Now
-              </a>
-            </div>
-          ))}
-        </div>
-      </section> */}
 
       {/* FAQ Section */}
       <section className="bg-gray-50 py-16">
@@ -303,14 +262,18 @@ export default function WeddingReception() {
           <h2 className="text-4xl font-bold mb-4">
             Ready to Host Your Dream Reception?
           </h2>
+
           <a
             href="/contact"
             className="bg-blue-800 hover:bg-blue-900 px-6 py-3 rounded-full text-white font-medium"
           >
-            Get a Quote
+            Contact
           </a>
         </div>
       </section>
+
+      {/* ⭐ MODAL OPEN HOGA YAHAN */}
+      {isOpen && <ModalForm onClose={() => setIsOpen(false)} />}
     </div>
   );
 }

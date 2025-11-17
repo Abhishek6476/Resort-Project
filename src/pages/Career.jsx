@@ -1216,21 +1216,20 @@ const Career = () => {
       </div>
 
       {/* Intro Section */}
-      <section className="pt-12 px-8 max-w-full mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-          Work With Us
-        </h2>
-        <p className="text-gray-700 text-justify max-w-full mx-auto text-[16px] leading-[28px]">
-          We believe in teamwork, creativity, and hospitality excellence.
-          Whether it’s a grand wedding, a corporate meeting, or a private event,
-          our staff plays a key role in delivering memorable experiences. At our
-          resort, every team member contributes to a welcoming environment that
-          exceeds guest expectations. We invest in training and professional
-          development to help you grow in your career. Joining our team means
-          becoming part of a community that values respect, integrity, and
-          innovation. We encourage diversity and inclusion to create a workplace
-          where everyone can thrive.
-        </p>
+      <section className="py-12 container mx-auto px-12">
+        <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h2 className="text-3xl font-serif font-semibold text-gray-900 mb-4">Work With Us</h2>
+            <p className="text-gray-700 leading-relaxed">We believe in teamwork, creativity, and hospitality excellence. Whether it's a grand wedding, a corporate meeting, or a private event, our staff plays a key role in delivering memorable experiences. We invest in training and professional development to help you grow in your career.</p>
+            <div className="mt-6 flex gap-3">
+              <button onClick={() => window.scrollTo({ top: 700, behavior: 'smooth' })} className="bg-blue-800 hover:bg-blue-900 text-white px-5 py-2 rounded-lg shadow">Explore Openings</button>
+              <button onClick={() => fileInputRef.current.click()} className="bg-white text-blue-800 border border-gray-200 px-5 py-2 rounded-lg shadow">Send Resume</button>
+            </div>
+          </div>
+          <div className="hidden md:block">
+            <img src={carrier} alt="team" className="rounded-2xl shadow-lg object-cover w-full h-80" />
+          </div>
+        </div>
       </section>
 
       {/* Job Listings */}
