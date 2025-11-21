@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash, FaSearch } from "react-icons/fa";
@@ -10,7 +11,7 @@ export default function AllJobs() {
 
   const [formData, setFormData] = useState({
     title: "",
-    department: "",
+    jobType: "",
     location: "",
     salary: "",
     description: "",
@@ -50,73 +51,70 @@ export default function AllJobs() {
     }
   };
 
+  // Add / Update Job
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
- // Add / Update Job
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  if (
-    !formData.title ||
-    !formData.department ||
-    !formData.location ||
-    !formData.description
-  ) {
-    return alert("Please fill all fields");
-  }
-
-  try {
-    const data = new FormData();
-
-    data.append("title", formData.title);
-    data.append("department", formData.department);
-    data.append("location", formData.location);
-    data.append("salary", formData.salary);
-    data.append("description", formData.description);
-
-    // Only append image if selected
-    if (formData.image instanceof File) {
-      data.append("image", formData.image);
+    if (
+      !formData.title ||
+      !formData.jobType ||
+      !formData.location ||
+      !formData.description
+    ) {
+      return alert("Please fill all fields");
     }
 
-    let res;
+    try {
+      const data = new FormData();
 
-    if (formData._id) {
-      // UPDATE (PUT)
-      res = await axios.put(
-        `http://localhost:5000/api/jobs/${formData._id}`,
-        data,
-        {
+      data.append("title", formData.title);
+      data.append("jobType", formData.jobType);
+      data.append("location", formData.location);
+      data.append("salary", formData.salary);
+      data.append("description", formData.description);
+
+      // Only append image if selected
+      if (formData.image instanceof File) {
+        data.append("image", formData.image);
+      }
+
+      let res;
+
+      if (formData._id) {
+        // UPDATE JOB
+        res = await axios.put(
+          `http://localhost:5000/api/jobs/${formData._id}`,
+          data,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+
+        setJobs(jobs.map((j) => (j._id === formData._id ? res.data : j)));
+      } else {
+        // CREATE JOB
+        res = await axios.post("http://localhost:5000/api/jobs", data, {
           headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+        });
 
-      setJobs(jobs.map((j) => (j._id === formData._id ? res.data : j)));
-    } else {
-      // CREATE (POST)
-      res = await axios.post("http://localhost:5000/api/jobs", data, {
-        headers: { "Content-Type": "multipart/form-data" },
+        setJobs([...jobs, res.data]);
+      }
+
+      // Reset form + close
+      setIsSidebarOpen(false);
+      setFormData({
+        title: "",
+        jobType: "",
+        location: "",
+        salary: "",
+        description: "",
+        image: null,
+        _id: null,
       });
-
-      setJobs([...jobs, res.data]);
+    } catch (err) {
+      console.log("Error submitting job", err);
     }
-
-    // Reset form + close
-    setIsSidebarOpen(false);
-    setFormData({
-      title: "",
-      department: "",
-      location: "",
-      salary: "",
-      description: "",
-      image: null,
-      _id: null,
-    });
-
-  } catch (err) {
-    console.log("Error submitting job", err);
-  }
-};
-
+  };
 
   const filteredJobs = jobs.filter((j) =>
     j.title.toLowerCase().includes(search.toLowerCase())
@@ -141,7 +139,7 @@ const handleSubmit = async (e) => {
           onClick={() => {
             setFormData({
               title: "",
-              jobtype: "",
+              jobType: "",
               location: "",
               salary: "",
               description: "",
@@ -161,7 +159,7 @@ const handleSubmit = async (e) => {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-100">
             <tr>
-              {["Title", "Department", "Location", "Salary", "Actions"].map(
+              {["Title", "Job Type", "Location", "Salary", "Actions"].map(
                 (head) => (
                   <th
                     key={head}
@@ -186,7 +184,7 @@ const handleSubmit = async (e) => {
                   }
                 >
                   <td className="px-6 py-3">{job.title}</td>
-                  <td className="px-6 py-3">{job.department}</td>
+                  <td className="px-6 py-3">{job.jobType}</td>
                   <td className="px-6 py-3">{job.location}</td>
                   <td className="px-6 py-3">{job.salary || "N/A"}</td>
 

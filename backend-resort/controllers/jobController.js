@@ -6,12 +6,13 @@ export const createJob = async (req, res) => {
   try {
     const newJob = new Job({
       title: req.body.title,
-      department: req.body.department,
+      jobType: req.body.jobType,   //  updated
       location: req.body.location,
       salary: req.body.salary,
       description: req.body.description,
       image: req.file ? req.file.filename : null,
     });
+
     await newJob.save();
     res.status(201).json(newJob);
   } catch (error) {
@@ -27,12 +28,13 @@ export const updateJob = async (req, res) => {
     if (!job) return res.status(404).json({ message: "Job not found" });
 
     job.title = req.body.title;
-    job.department = req.body.department;
+    job.jobType = req.body.jobType;   //  updated
     job.location = req.body.location;
     job.salary = req.body.salary;
     job.description = req.body.description;
 
     if (req.file) {
+      // delete old image
       if (job.image) fs.unlink(`uploads/${job.image}`, () => {});
       job.image = req.file.filename;
     }
@@ -56,13 +58,12 @@ export const getJobs = async (req, res) => {
   }
 };
 
-// ✅ DELETE JOB
+// DELETE JOB
 export const deleteJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
     if (!job) return res.status(404).json({ message: "Job not found" });
 
-    // delete image if exists
     if (job.image) fs.unlink(`uploads/${job.image}`, () => {});
 
     await Job.findByIdAndDelete(req.params.id);

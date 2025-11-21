@@ -393,7 +393,7 @@ export default function AdminDashboard() {
 
         {/* Latest Inquiries */}
         <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-2xl shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Latest Inquiries</h3>
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Latest Enquiries</h3>
           <div className="space-y-3">
             {recentInquiries.length > 0 ? (
               recentInquiries.map((inq, idx) => (
@@ -408,7 +408,7 @@ export default function AdminDashboard() {
                 </div>
               ))
             ) : (
-              <div className="text-gray-500">No inquiries</div>
+              <div className="text-gray-500">No Enquiries</div>
             )}
           </div>
         </motion.div>

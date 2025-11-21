@@ -299,7 +299,7 @@ export default function Mehndi() {
       {/* Timeline */}
       <section className="pt-16 pb-4 bg-gradient-to-b from-blue-50 via-white to-blue-50">
         <div className="container mx-auto px-6 max-w-6xl">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-center text-grey-800 mb-16 tracking-widest drop-shadow-md">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-center text-grey-800 mb-16 tracking-widest drop-shadow-md">
             Mehndi Ceremony Timeline
           </h2>
 

@@ -116,7 +116,7 @@ router.get("/fully-booked/:roomId", async (req, res) => {
       let current = new Date(b.checkIn);
       let end = new Date(b.checkOut);
 
-      while (current <= end) {
+      while (current < end) {
         const key = current.toISOString().split("T")[0];
         dateCount[key] = (dateCount[key] || 0) + b.roomsBooked;
         current.setDate(current.getDate() + 1);

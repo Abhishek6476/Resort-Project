@@ -59,16 +59,19 @@ export default function JobSidebar({
             }
           />
 
-          {/* Department */}
-          <input
-            type="text"
-            placeholder="Department"
+          {/* Job Type */}
+          <select
             className="w-full p-2 border rounded"
-            value={formData.department}
+            value={formData.jobType}
             onChange={(e) =>
-              setFormData({ ...formData, department: e.target.value })
+              setFormData({ ...formData, jobType: e.target.value })
             }
-          />
+          >
+            <option value="">Select Job Type</option>
+            <option value="Full Time">Full Time</option>
+            <option value="Part Time">Part Time</option>
+            <option value="Internship">Internship</option>
+          </select>
 
           {/* Location */}
           <input

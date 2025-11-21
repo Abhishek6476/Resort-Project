@@ -180,8 +180,6 @@ import AllContacts from "./pages/Admin/AllContacts";
 import AllJobApplications from "./pages/Admin/AllJobApplications";
 import AllJobs from "./pages/Admin/AllJobs";
 
-
-
 function App() {
   return (
     <Router>
@@ -235,7 +233,11 @@ function App() {
                 />
                 <Route path="/Services/social/Mehndi" element={<Mehndi />} />
                 <Route path="/booking" element={<BookingPage />} />
-                <Route path="/confirmation" element={<BookingConfirmation />} />
+                {/* <Route path="/confirmation" element={<BookingConfirmation />} /> */}
+                <Route
+                  path="/booking-success"
+                  element={<BookingConfirmation />}
+                />
               </Routes>
             </MainLayout>
           }
@@ -257,12 +259,11 @@ function App() {
           <Route path="rooms/all" element={<AllRooms />} />
           <Route path="rooms/booking" element={<AllBookings />} />
           <Route path="events" element={<AllEvents />} />
-        <Route path="gallery" element={<AdminGallery />} />
-        <Route path="reviews" element={<AllReviews />} />
-         <Route path="contacts" element={<AllContacts />} />
-         <Route path="jobs" element={<AllJobApplications />} />
-         <Route path="career-jobs" element={<AllJobs />} />
-
+          <Route path="gallery" element={<AdminGallery />} />
+          <Route path="reviews" element={<AllReviews />} />
+          <Route path="contacts" element={<AllContacts />} />
+          <Route path="jobs" element={<AllJobApplications />} />
+          <Route path="career-jobs" element={<AllJobs />} />
 
           {/* Future admin pages */}
           {/* <Route path="bookings" element={<BookingsPage />} /> */}
@@ -275,4 +276,3 @@ function App() {
 }
 
 export default App;
-

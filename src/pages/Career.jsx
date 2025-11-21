@@ -738,7 +738,6 @@
 
 // export default Career;
 
-
 // import React, { useState, useEffect, useRef } from "react";
 // import carrier from "../assets/carrier.jpg";
 // import resume from "../assets/job_apply1.jpg";
@@ -1053,9 +1052,6 @@
 
 // export default Career;
 
-
-
-
 import React, { useState, useEffect, useRef } from "react";
 import carrier from "../assets/carrier.jpg";
 import resume from "../assets/job_apply1.jpg";
@@ -1219,15 +1215,34 @@ const Career = () => {
       <section className="py-12 container mx-auto px-12">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <h2 className="text-3xl font-serif font-semibold text-gray-900 mb-4">Work With Us</h2>
-            <p className="text-gray-700 leading-relaxed">We believe in teamwork, creativity, and hospitality excellence. Whether it's a grand wedding, a corporate meeting, or a private event, our staff plays a key role in delivering memorable experiences. We invest in training and professional development to help you grow in your career.</p>
+            <h2 className="text-3xl font-serif font-semibold text-gray-900 mb-4">
+              Work With Us
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              We believe in teamwork, creativity, and hospitality excellence.
+              Whether it's a grand wedding, a corporate meeting, or a private
+              event, our staff plays a key role in delivering memorable
+              experiences. We invest in training and professional development to
+              help you grow in your career.
+            </p>
             <div className="mt-6 flex gap-3">
-              <button onClick={() => window.scrollTo({ top: 700, behavior: 'smooth' })} className="bg-blue-800 hover:bg-blue-900 text-white px-5 py-2 rounded-lg shadow">Explore Openings</button>
-              <button onClick={() => fileInputRef.current.click()} className="bg-white text-blue-800 border border-gray-200 px-5 py-2 rounded-lg shadow">Send Resume</button>
+              <button
+                onClick={() =>
+                  window.scrollTo({ top: 700, behavior: "smooth" })
+                }
+                className="bg-blue-800 hover:bg-blue-900 text-white px-5 py-2 rounded-lg shadow"
+              >
+                Explore Openings
+              </button>
+              {/* <button onClick={() => fileInputRef.current.click()} className="bg-white text-blue-800 border border-gray-200 px-5 py-2 rounded-lg shadow">Send Resume</button> */}
             </div>
           </div>
           <div className="hidden md:block">
-            <img src={carrier} alt="team" className="rounded-2xl shadow-lg object-cover w-full h-80" />
+            <img
+              src={carrier}
+              alt="team"
+              className="rounded-2xl shadow-lg object-cover w-full h-80"
+            />
           </div>
         </div>
       </section>
@@ -1257,9 +1272,9 @@ const Career = () => {
                   {job.title}
                 </h3>
                 <p className="text-sm text-gray-500 mb-3">
-                  📍 {job.location} • 💼 {job.type || "Full-Time"}
+                  📍 {job.location} • 💼 {job.jobType || "Full-Time"}
                 </p>
-                <p className="text-gray-600 mb-4">{job.description}</p>
+                <p className="text-gray-600 mb-4">{job.type}</p>
                 <button
                   onClick={() => handleApplyClick(job.title)}
                   className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900"
@@ -1392,7 +1407,7 @@ const Career = () => {
       )}
 
       {/* Application CTA */}
-      <section
+      {/* <section
         className="relative py-16 px-8 text-center bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${carrier})` }}
       >
@@ -1449,6 +1464,34 @@ const Career = () => {
           >
             Send Resume
           </button>
+        </div>
+      </section> */}
+
+      <section
+        className="relative py-20 px-6 text-center bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${carrier})` }}
+      >
+        <div className="absolute inset-0 bg-black/50"></div>
+
+        <div className="relative z-10 max-w-2xl mx-auto">
+          <h3 className="text-3xl font-semibold text-white mb-3">
+            Didn’t find a suitable role?
+          </h3>
+
+          <p className="text-gray-200 text-lg mb-4">
+            We are always looking for passionate individuals to join our family.
+          </p>
+
+          <p className="text-white text-xl font-medium">
+            Send your resume directly to:
+            <br />
+            <a
+              href="mailto:hr@yourhotel.com"
+              className="text-blue-400 underline hover:text-blue-300 transition"
+            >
+              hr@yourhotel.com
+            </a>
+          </p>
         </div>
       </section>
     </div>
