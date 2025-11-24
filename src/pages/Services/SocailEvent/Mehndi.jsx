@@ -304,8 +304,8 @@ export default function Mehndi() {
           </h2>
 
           <div className="relative">
-            {/* Vertical timeline line */}
-            <div className="absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-blue-400 via-blue-300 to-blue-500 rounded-full shadow-lg -translate-x-1/2"></div>
+            {/* Vertical timeline line (mobile hidden) */}
+            <div className="absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-blue-400 via-blue-300 to-blue-500 rounded-full shadow-lg -translate-x-1/2 hidden md:block"></div>
 
             <div className="space-y-12">
               {mehndiTimeline.map((item, idx) => {
@@ -330,32 +330,27 @@ export default function Mehndi() {
                     Icon = FaGlassCheers;
                 }
 
-                // Determine side for large screens
                 const isLeft = idx % 2 === 0;
 
                 return (
                   <div
                     key={idx}
-                    className={`flex flex-col md:flex-row items-center justify-center md:justify-${
+                    className={`flex flex-col md:flex-row items-center md:items-start justify-center md:justify-${
                       isLeft ? "start" : "end"
-                    } md:space-x-0`}
+                    }`}
                   >
-                    {/* Timeline Dot with pulse */}
+                    {/* Dot */}
                     <div className="relative z-10 mb-4 md:mb-0">
-                      <div
-                        className="w-14 h-14 bg-blue-700 rounded-full shadow-lg border-4 border-white
-                    flex items-center justify-center text-white text-2xl
-                    hover:scale-110 hover:shadow-blue-400 transition-transform duration-300
-                    before:absolute before:inset-0 before:rounded-full before:bg-blue-300 before:opacity-50 before:animate-ping"
-                      >
+                      <div className="w-14 h-14 bg-blue-700 rounded-full shadow-lg border-4 border-white flex items-center justify-center text-white text-2xl before:absolute before:inset-0 before:rounded-full before:bg-blue-300 before:opacity-50 before:animate-ping">
                         <Icon />
                       </div>
                     </div>
 
                     {/* Content Card */}
                     <div
-                      className={`bg-white border border-blue-200 shadow-xl rounded-2xl p-6 md:p-8 max-w-md w-full text-center hover:shadow-blue-400 transition-shadow duration-300
-                    ${isLeft ? "md:ml-12 md:mr-0" : "md:mr-12 md:ml-0"}`}
+                      className={`bg-white border border-blue-200 shadow-xl rounded-2xl p-6 md:p-8 max-w-md w-full text-center hover:shadow-blue-400 transition-shadow duration-300 ${
+                        isLeft ? "md:ml-12" : "md:mr-12"
+                      }`}
                     >
                       <h3 className="flex items-center justify-center gap-3 text-2xl font-bold text-gray-900 mb-2 tracking-wide">
                         <Icon className="text-blue-700" />
