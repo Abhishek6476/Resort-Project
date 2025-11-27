@@ -21,6 +21,7 @@ export default function AboutHero() {
             >
               Home
             </a>
+            
           </li>
           <li> &gt;</li>
           <li className="text-gray-200">About Us</li>
@@ -29,5 +30,3 @@ export default function AboutHero() {
     </section>
   );
 }
-
-

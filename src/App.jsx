@@ -2,6 +2,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
+import About from "./pages/About";
 import Rooms from "./pages/Rooms";
 import Contact from "./pages/Contact";
 import Dining from "./pages/Dining";
@@ -43,7 +44,7 @@ function App() {
             <MainLayout>
               <Routes>
                 <Route path="/" element={<Home />} />
-                {/* <Route path="/about" element={<About />} /> */}
+                 <Route path="/about" element={<About />} />
                 <Route path="/rooms" element={<Rooms />} />
                 <Route path="/dining" element={<Dining />} />
                 <Route path="/career" element={<Career />} />

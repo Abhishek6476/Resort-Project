@@ -38,7 +38,9 @@ export default function HighlightSection() {
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-8 text-center">
         {/* Heading */}
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Highlights</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Our <span className="text-blue-800">Highlights</span>
+          </h2>
         <p className="text-gray-600 mb-12">
           Discover what makes our resort the preferred choice for travelers, families, and businesses.
         </p>
