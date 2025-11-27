@@ -59,11 +59,18 @@ const ContactUs = () => {
         <div className="absolute inset-0 flex items-center justify-center px-6 sm:px-16 z-10">
           <div className="text-center">
             <h1 className="text-5xl font-bold mb-3 text-white">Contact Us</h1>
-            <p className="text-lg flex items-center justify-center gap-2">
-              <span className="text-white">Home</span>
-              <span className="text-white">&gt;</span>
-              <span className="text-white">Contact Us</span>
-            </p>
+           <ul className="flex justify-center space-x-3 text-sm md:text-base">
+              <li>
+                <a
+                  href="/"
+                  className="hover:underline hover:text-gray-200 transition text-white"
+                >
+                  Home
+                </a>
+              </li>
+              <li className="text-white"> &gt;</li>
+              <li className="text-gray-200">Career</li>
+            </ul>
           </div>
         </div>
       </div>

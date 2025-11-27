@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -46,9 +45,18 @@ const Gallery = () => {
         <div className="absolute inset-0 flex items-center justify-center text-center px-6 sm:px-16">
           <div className="text-white">
             <h1 className="text-5xl font-bold mb-2">Gallery</h1>
-            <p className="text-lg">
-              <span className="text-white text-xl">Home</span> &gt; Gallery
-            </p>
+            <ul className="flex justify-center space-x-3 text-sm md:text-base">
+              <li>
+                <a
+                  href="/"
+                  className="hover:underline hover:text-gray-200 transition"
+                >
+                  Home
+                </a>
+              </li>
+              <li>&gt;</li>
+              <li className="text-gray-200">Gallery</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -98,7 +106,7 @@ const Gallery = () => {
           <img
             src={`http://localhost:5000${galleryImages[selectedIndex].image}`}
             alt="Full View"
-            className="max-w-[90%] max-h-[90%] rounded-lg shadow-lg"
+            className="w-[800px] h-[500px] object-cover rounded-lg shadow-lg"
           />
 
           {/* Next Button */}
@@ -126,6 +134,3 @@ const Gallery = () => {
 };
 
 export default Gallery;
-
-
-

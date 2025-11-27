@@ -447,9 +447,22 @@ const Rooms = () => {
         <div className="absolute inset-0 flex items-center justify-center text-center px-8 sm:px-16 z-10">
           <div className="text-white">
             <h1 className="text-5xl font-bold mb-4">Rooms</h1>
-            <p className="text-lg">
+            {/* <p className="text-lg">
               <span className="text-white">Home</span> &gt; Rooms
-            </p>
+            </p> */}
+            <ul className="flex justify-center space-x-3 text-sm md:text-base">
+          <li>
+            <a
+              href="/"
+              className="hover:underline hover:text-gray-200 transition"
+            >
+              Home
+            </a>
+            
+          </li>
+          <li> &gt;</li>
+          <li className="text-gray-200">Rooms</li>
+        </ul>
           </div>
         </div>
       </div>

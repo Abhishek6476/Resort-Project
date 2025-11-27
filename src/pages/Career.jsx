@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import carrier from "../assets/carrier.jpg";
 import resume from "../assets/job_apply1.jpg";
@@ -151,9 +150,18 @@ const Career = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-black/20 flex items-center justify-center px-8">
           <div className="text-white max-w-2xl text-center">
             <h1 className="text-5xl font-bold mb-3">Career Opportunities</h1>
-            <p className="text-lg text-gray-200">
-              <span className="text-white">Home</span> &gt; Career
-            </p>
+            <ul className="flex justify-center space-x-3 text-sm md:text-base">
+              <li>
+                <a
+                  href="/"
+                  className="hover:underline hover:text-gray-200 transition"
+                >
+                  Home
+                </a>
+              </li>
+              <li> &gt;</li>
+              <li className="text-gray-200">Career</li>
+            </ul>
           </div>
         </div>
       </div>
