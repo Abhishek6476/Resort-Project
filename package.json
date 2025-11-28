@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
+    "axios": "^1.13.2",
+    "date-fns": "^4.1.0",
     "framer-motion": "^12.23.22",
     "jspdf": "^2.5.2",
-    "jspdf-autotable": "^3.5.28",
+    "jspdf-autotable": "^3.8.4",
     "lucide-react": "^0.544.0",
     "nodemailer": "^7.0.10",
     "react": "^19.1.1",
