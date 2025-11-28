@@ -100,7 +100,11 @@ const handleSubmit = async (e) => {
       {/* Form Section */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 px-6 md:px-12 py-16">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Get In Touch</h2>
+          <h2 className="text-3xl sm:text-3xl md:text-3xl font-bold mb-6">
+            <span className="text-gray-800">Get In</span>{" "}
+            <span className="text-blue-800">Touch</span>
+          </h2>
+
 
            <p className="text-gray-600 mb-8 leading-relaxed">
              Have any questions or concerns? Fill out the form below and we’ll
@@ -162,7 +166,11 @@ const handleSubmit = async (e) => {
 
         {/* Right: Contact Info */}
         <div className="px-4 border-t md:border-t-0 md:border-l border-gray-300 md:pl-10">
-          <h3 className="text-2xl font-bold mb-6">Contact Info</h3>
+          
+            <h2 className="text-3xl sm:text-3xl md:text-3xl font-bold mb-6">
+            <span className="text-gray-800">Contact</span>{" "}
+            <span className="text-blue-800">Info</span>
+          </h2>
           <p className="text-gray-600 mb-8 leading-relaxed">
             Whatever your query is, we’re here to resolve it quickly and clearly.
           </p>

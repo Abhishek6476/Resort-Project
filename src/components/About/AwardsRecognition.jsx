@@ -31,6 +31,8 @@ export default function AwardsRecognition() {
   );
 }
 
+
+// working award image background 
 // import React from "react";
 // import { FaAward, FaTrophy, FaMedal } from "react-icons/fa";
 
