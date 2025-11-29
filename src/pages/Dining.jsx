@@ -1,6 +1,18 @@
 
 
 import React from "react";
+import res1 from "../assets/mehndi6.jpg";
+import res  from  "../assets/mehndip2.jpg";
+import food1 from "../assets/food1.jpg";
+import food2 from "../assets/food2.jpg";
+import food3 from "../assets/food3.jpg";
+import food4 from "../assets/food4.jpg";
+import food5 from "../assets/food5.jpg";
+import food6 from "../assets/food6.jpg";
+import food7 from "../assets/food7.jpg";
+import food8 from "../assets/food8.jpg";
+import food9 from "../assets/food9.jpg";
+
 import {
   FaUtensils,
   FaConciergeBell,
@@ -92,12 +104,12 @@ const Dining = () => {
           {[
             {
               title: "Main Restaurant",
-              img: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800",
+              img: res,
               desc: "Fine dining experience with a curated multi-cuisine menu.",
             },
             {
               title: "Rooftop Bar & Grill",
-              img: "https://images.unsplash.com/photo-1758551909205-fae9cb75cc2e?w=600&auto=format&fit=crop&q=60",
+              img: res1,
               desc: "Enjoy cocktails, grills & BBQ with a panoramic rooftop view.",
             },
             {
@@ -201,29 +213,23 @@ const Dining = () => {
       </section>
 
       {/* ✅ Food Gallery */}
-      <section className="py-12 px-8">
+      <section className="py-6 px-12">
         <h2 className="text-3xl font-bold text-center mb-10">Food Gallery</h2>
-        <div className="grid md:grid-cols-4 gap-4">
-          {[
-            "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800",
-            "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800",
-            "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=800",
-            "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=800",
-            "https://images.unsplash.com/photo-1525755662778-989d0524087e?w=800",
-            "https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?w=800",
-                "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800",
-            "https://images.unsplash.com/photo-1756521975279-872c96f60f8b?w=600&auto=format&fit=crop&q=60",
-            
-          ].map((img, i) => (
-            <img
-              key={i}
-              src={img}
-              alt="Food"
-              className="w-full h-48 object-cover rounded-lg shadow-md hover:scale-105 transition-transform"
-            />
-          ))}
-        </div>
-      </section>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+    {[
+      food1, food2, food3,food4,food5,food6, food7, food8, food9,
+    ].map((img, i) => (
+      <img
+        key={i}
+        src={img}
+        alt="Food"
+        className="w-full h-60 object-cover rounded-lg shadow-md hover:scale-105 transition-transform"
+      />
+    ))}
+  </div>
+</section>
 
       {/* ✅ Menu Highlights */}
       <section className="py-16 px-8 bg-gradient-to-b from-gray-50 to-white">
@@ -318,10 +324,218 @@ const Dining = () => {
 export default Dining;
 
 
-// // 100 work and latest code
-// import React from "react";
+
+// new img code
+// import React, { useState } from "react";
+// import {
+//   FaUtensils,
+//   FaConciergeBell,
+//   FaCoffee,
+//   FaMusic,
+//   FaDoorClosed,
+//   FaGlassCheers,
+//   FaCocktail,
+//   FaStar,
+//   FaDrumstickBite,
+//   FaIceCream,
+//   FaWineGlassAlt,
+// } from "react-icons/fa";
+
+// /* =======================
+//     FOOD IMAGES (LOCAL)
+// ======================= */
+// const foodImages = [
+//   { src: "/src/assets/food1.jpg"},
+//   "/src/assets/food/food2.jpg",
+//   "/src/assets/food/food3.jpg",
+//   "/src/assets/food/food4.jpg",
+//   "/src/assets/food/food5.jpg",
+//   "/src/assets/food/food6.jpg",
+//   "/src/assets/food/food7.jpg",
+//   "/src/assets/food/food8.jpg",
+//   "/src/assets/food/food9.jpg",
+// ];
 
 // const Dining = () => {
+//   /* =====================
+//       LIGHTBOX STATES
+//   ===================== */
+//   const [selectedIndex, setSelectedIndex] = useState(null);
+
+//   const openLightbox = (index) => setSelectedIndex(index);
+//   const closeLightbox = () => setSelectedIndex(null);
+
+//   const showNext = () =>
+//     setSelectedIndex((prev) => (prev + 1) % foodImages.length);
+
+//   const showPrev = () =>
+//     setSelectedIndex((prev) => (prev - 1 + foodImages.length) % foodImages.length);
+
+//   /* ======================
+//       DINING HOURS
+//   ======================= */
+//   const hours = [
+//     {
+//       icon: <FaCoffee className="text-gray-600 text-3xl" />,
+//       title: "Breakfast",
+//       time: "7:00 AM – 10:30 AM",
+//       place: "Main Restaurant & Buffet Hall",
+//     },
+//     {
+//       icon: <FaUtensils className="text-gray-600 text-3xl" />,
+//       title: "Lunch",
+//       time: "12:00 PM – 3:00 PM",
+//       place: "Main Restaurant",
+//     },
+//     {
+//       icon: <FaWineGlassAlt className="text-gray-600 text-3xl" />,
+//       title: "Rooftop Bar & Grill",
+//       time: "6:00 PM – 12:00 AM",
+//       place: "Rooftop",
+//     },
+//     {
+//       icon: <FaUtensils className="text-gray-600 text-3xl" />,
+//       title: "Dinner",
+//       time: "7:00 PM – 11:00 PM",
+//       place: "All Restaurants",
+//     },
+//     {
+//       icon: <FaConciergeBell className="text-gray-600 text-3xl" />,
+//       title: "In-Room Dining",
+//       time: "Available 24/7",
+//       place: "Room Service",
+//     },
+//   ];
+
+//   return (
+//     <div className="w-full bg-white text-gray-900">
+
+//       {/* HERO BANNER */}
+//       <div
+//         className="relative h-[60vh] bg-cover bg-center"
+//         style={{
+//           backgroundImage:
+//             "url('https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1600')",
+//         }}
+//       >
+//         <div className="absolute inset-0 bg-black/30"></div>
+
+//         <div className="absolute inset-0 flex items-center justify-center text-center px-8 z-10">
+//           <div className="text-white">
+//             <h1 className="text-5xl font-bold mb-4">Dining Experience</h1>
+//             <p className="text-lg">
+//               <span className="text-white">Home</span> &gt; Dining
+//             </p>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* ABOUT SECTION */}
+//       <section className="py-12 px-8 text-justify max-w-full mx-auto">
+//         <h2 className="text-3xl text-center font-bold mb-4">Welcome to Our Dining</h2>
+//         <p className="text-lg text-gray-700 leading-relaxed">
+//           Savor an extraordinary culinary journey with our range of dining
+//           options. Whether you're enjoying an intimate dinner under the stars,
+//           relaxing with freshly brewed coffee, or indulging in a lavish buffet,
+//           our chefs promise to deliver flavors from around the world.
+//         </p>
+//       </section>
+
+//       {/* FOOD GALLERY UPDATED */}
+//       <section className="py-12 px-8">
+//         <h2 className="text-3xl font-bold text-center mb-10">Food Gallery</h2>
+
+//         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+//           {foodImages.map((img, i) => (
+//             <div
+//               key={i}
+//               className="relative group cursor-pointer overflow-hidden rounded-lg shadow-md"
+//               onClick={() => openLightbox(i)}
+//             >
+//               <img
+//                 src={img}
+//                 alt={`Food ${i + 1}`}
+//                 className="w-full h-48 object-cover rounded-lg group-hover:scale-110 transition-transform duration-300"
+//               />
+
+//               {/* Hover Overlay */}
+//               <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center text-white text-lg">
+//                 View
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+//       </section>
+
+//       {/* LIGHTBOX POPUP */}
+//       {selectedIndex !== null && (
+//         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+//           {/* CLOSE BUTTON */}
+//           <button
+//             onClick={closeLightbox}
+//             className="absolute top-4 right-4 text-white text-3xl font-bold"
+//           >
+//             ✕
+//           </button>
+
+//           {/* PREV BUTTON */}
+//           <button
+//             onClick={showPrev}
+//             className="absolute left-4 text-white text-4xl px-4"
+//           >
+//             ❮
+//           </button>
+
+//           {/* MAIN IMAGE */}
+//           <img
+//             src={foodImages[selectedIndex]}
+//             className="max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg"
+//             alt="Full View"
+//           />
+
+//           {/* NEXT BUTTON */}
+//           <button
+//             onClick={showNext}
+//             className="absolute right-4 text-white text-4xl px-4"
+//           >
+//             ❯
+//           </button>
+//         </div>
+//       )}
+
+//       {/* DINING HOURS */}
+//       <section className="py-16 px-8 bg-gray-50">
+//         <h2 className="text-3xl font-bold text-center mb-10">Dining Hours</h2>
+
+//         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+//           {hours.map((item, i) => (
+//             <div
+//               key={i}
+//               className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center hover:shadow-xl transition"
+//             >
+//               <div className="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full mb-4">
+//                 {item.icon}
+//               </div>
+//               <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+//               <p className="text-blue-800 font-medium">{item.time}</p>
+//               <p className="text-gray-600 text-sm">{item.place}</p>
+//             </div>
+//           ))}
+//         </div>
+//       </section>
+
+//     </div>
+//   );
+// };
+
+// export default Dining;
+
+
+
+ // // 100 work and latest code
+// import React from "react";
+
+//   const Dining = () => {
 //   return (
 //     <div className="w-full bg-white text-gray-900">
 //       {/* ✅ Hero Banner */}
