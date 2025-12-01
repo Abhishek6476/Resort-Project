@@ -278,7 +278,7 @@ export default function AllBookings() {
     const fetchBookings = async () => {
       try {
         const res = await axios.get("http://localhost:5000/api/bookings");
-        setBookings(res.data);
+        setBookings([...res.data].reverse());
       } catch (err) {
         console.error("Error fetching bookings:", err);
       }
