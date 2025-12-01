@@ -741,7 +741,7 @@ export default function Engagement() {
               {/* Modal */}
               {selectedIndex !== null && (
                 <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
-                  <div className="relative w-full max-w-[90%] mx-auto px-2 sm:px-4">
+                  {/* <div className="relative w-full max-w-[90%] mx-auto px-2 sm:px-4"> */}
                     <button
                       onClick={handleClose}
                       className="absolute top-2 right-6 text-white text-3xl"
@@ -751,7 +751,7 @@ export default function Engagement() {
                     <img
                       src={gallery[selectedIndex]}
                       alt="Selected"
-                      className="w-full max-h-[80vh] object-contain rounded-lg shadow-lg"
+                      className="w-[800px] h-[500px] object-cover rounded-lg shadow-lg "
                     />
                     <button
                       onClick={handlePrev}
@@ -765,7 +765,7 @@ export default function Engagement() {
                     >
                       ›
                     </button>
-                  </div>
+                  {/* </div> */}
                 </div>
               )}
             </div>

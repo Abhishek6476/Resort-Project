@@ -105,78 +105,6 @@ export default function CorporateMeetings() {
         </div>
       </section>
 
-      {/* Packages Section */}
-     {/* <section className="py-20 bg-gray-50">
-  <div className="container mx-auto px-6 lg:px-12 text-center">
-   
-    <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
-      Meeting <span className="text-blue-800">Packages</span>
-    </h2>
-    <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
-      Choose from our tailored packages designed for every business need.
-    </p>
-
-   
-    <div className="grid md:grid-cols-3 gap-8 mt-16">
-      {[
-        {
-          title: "Half-Day Package",
-          price: "₹15,000",
-          desc: ["4 hours use", "AV Equipment", "Tea/Coffee Service"],
-        },
-        {
-          title: "Full-Day Package",
-          price: "₹25,000",
-          desc: [
-            "8 hours use",
-            "Lunch Included",
-            "AV Equipment",
-            "Event Support Staff",
-          ],
-        },
-        {
-          title: "Custom Events",
-          price: "On Request",
-          desc: ["Flexible timing", "Tailored menu", "Decor Options"],
-        },
-      ].map((pkg, idx) => (
-        <div
-          key={idx}
-          className="flex flex-col justify-between bg-white shadow-lg rounded-2xl p-8 hover:shadow-xl transition duration-300"
-        >
-          
-          <div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              {pkg.title}
-            </h3>
-            <p className="text-2xl font-bold text-blue-800 mb-6">
-              {pkg.price}
-            </p>
-
-           
-            <ul className="text-gray-600 space-y-2 mb-8">
-              {pkg.desc.map((d, i) => (
-                <li key={i} className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-blue-800 rounded-full"></span>
-                  {d}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          
-          <button
-            onClick={() => setIsOpen(true)}
-            className="w-full bg-blue-800 hover:bg-blue-900 text-white py-3 rounded-lg font-medium transition"
-          >
-            Get a Quote
-          </button>
-        </div>
-      ))}
-    </div>
-  </div>
-</section> */}
-
       {/* Gallery Section */}
       <section className="py-16 bg-gray-100">
         <div className="container mx-auto px-6 lg:px-12">
@@ -271,7 +199,7 @@ export default function CorporateMeetings() {
     <img
       src={selectedImg}
       alt="Enlarged"
-      className="max-w-3xl max-h-[80vh] rounded-lg shadow-lg"
+      className="w-[800px] h-[500px] object-cover rounded-lg shadow-lg"
       onClick={(e) => e.stopPropagation()}
     />
 

@@ -685,7 +685,7 @@ const Rooms = () => {
           <img
             src={previewImage}
             alt="Preview"
-            className="max-h-[90%] max-w-[90%] rounded-lg shadow-lg"
+            className="w-[800px] h-[500px] object-cover rounded-lg shadow-lg"
           />
 
           <button

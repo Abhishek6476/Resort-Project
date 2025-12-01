@@ -382,7 +382,7 @@ const Footer = () => {
             </div>
 
             {/* Common Links */}
-            <div>
+            <div className="px-10">
               <h3 className="text-white font-semibold mb-4 border-blue-800 inline-block pb-1">
                 COMMON LINKS
               </h3>
@@ -396,7 +396,7 @@ const Footer = () => {
             </div>
 
             {/* Events */}
-            <div>
+            <div className="px-10">
               <h3 className="text-white font-semibold mb-4 border-blue-800 inline-block pb-1">
                 EVENTS
               </h3>
@@ -410,7 +410,7 @@ const Footer = () => {
             </div>
 
             {/* Contact */}
-            <div>
+            <div className="px-10">
               <h3 className="text-white font-semibold mb-4 border-blue-800 inline-block pb-1">
                 CONTACT US
               </h3>

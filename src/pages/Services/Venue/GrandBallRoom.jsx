@@ -252,7 +252,7 @@ export default function GrandBallRoom() {
           <img
             src={selectedImg}
             alt="Preview"
-            className="max-h-[90%] max-w-[90%] rounded-lg shadow-lg"
+            className="w-[800px] h-[500px] object-cover rounded-lg shadow-lg"
           />
 
           {/* Next Button */}

@@ -243,7 +243,7 @@ export default function Mehndi() {
             <img
               src={gallery[selectedIndex]}
               alt="Selected"
-              className="max-h-[80vh] max-w-[90vw] rounded-lg shadow-lg transition-transform duration-500"
+              className="w-[800px] h-[500px] object-cover rounded-lg shadow-lg"
             />
 
             {/* Next */}

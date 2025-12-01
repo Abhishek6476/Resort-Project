@@ -192,7 +192,7 @@ export default function WeddingReception() {
           <img
             src={selectedImage}
             alt="Large Preview"
-            className="max-w-4xl max-h-[80vh] w-full object-contain rounded-lg shadow-lg"
+            className="w-[800px] h-[500px] object-cover rounded-lg shadow-lg"
             onClick={(e) => e.stopPropagation()}
           />
 

@@ -251,7 +251,7 @@ export default function EliteBallRoom() {
     <img
       src={selectedImg}
       alt="Enlarged"
-      className="max-w-3xl max-h-[80vh] rounded-lg shadow-lg"
+      className="w-[800px] h-[500px] object-cover rounded-lg shadow-lg"
     />
 
     {/* Next Button */}

@@ -361,67 +361,6 @@ const Career = () => {
         </div>
       )}
 
-      {/* Application CTA */}
-      {/* <section
-        className="relative py-16 px-8 text-center bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${carrier})` }}
-      >
-        <div className="absolute inset-0 bg-black/40"></div>
-        <div className="relative z-10">
-          <h3 className="text-2xl font-semibold text-white mb-4">
-            Didn’t find your role?
-          </h3>
-          <p className="text-gray-200 mb-6">
-            We’re always looking for passionate individuals. Send us your resume
-            and we’ll be in touch!
-          </p>
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={async (e) => {
-              const file = e.target.files[0];
-              if (!file) return;
-
-              const allowedTypes = [
-                "application/pdf",
-                "application/msword",
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                "image/jpeg",
-                "image/png",
-              ];
-              if (!allowedTypes.includes(file.type)) {
-                alert(" Only PDF, DOC, DOCX, JPG, PNG files are allowed!");
-                return;
-              }
-
-              const formData = new FormData();
-              formData.append("resume", file);
-
-              try {
-                const res = await fetch(
-                  "http://localhost:5000/api/job-application/upload-resume",
-                  { method: "POST", body: formData }
-                );
-                const data = await res.json();
-                if (res.ok) alert(" Resume sent successfully!");
-                else alert(" Upload failed: " + data.error);
-              } catch (err) {
-                console.error(err);
-                alert(" Server error. Try again later.");
-              }
-            }}
-            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-            className="hidden"
-          />
-          <button
-            onClick={() => fileInputRef.current.click()}
-            className="inline-block bg-blue-800 text-white px-6 py-3 rounded hover:bg-blue-700 transition"
-          >
-            Send Resume
-          </button>
-        </div>
-      </section> */}
-
       <section
         className="relative py-20 px-6 text-center bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${carrier})` }}
