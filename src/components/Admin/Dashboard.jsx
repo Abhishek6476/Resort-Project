@@ -1,150 +1,230 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { motion } from "framer-motion";
+import {
+  FaBed,
+  FaClipboardList,
+  FaSignInAlt,
+  FaSignOutAlt,
+} from "react-icons/fa";
 
-// import React, { useEffect, useState } from "react";
+export default function AdminDashboard() {
+  const [totalRooms, setTotalRooms] = useState(0);
+  const [totalBookings, setTotalBookings] = useState(0);
+  const [todaysCheckIns, setTodaysCheckIns] = useState(0);
+  const [todaysCheckOuts, setTodaysCheckOuts] = useState(0);
+  const [recentBookings, setRecentBookings] = useState([]);
+  const [recentInquiries, setRecentInquiries] = useState([]);
 
-// const Dashboard = () => {
-//   const [contacts, setContacts] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [search, setSearch] = useState("" );
+  const today = new Date().toISOString().split("T")[0];
 
-//   // Pagination
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const itemsPerPage = 10;
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
 
-//   // Fetch all contacts from backend
-//   const fetchContacts = async () => {
-//     try {
-//       const res = await fetch("http://localhost:5000/api/contact/all");
-//       const data = await res.json();
-//       setContacts(data);
-//       setLoading(false);
-//     } catch (err) {
-//       console.error("Error fetching contacts:", err);
-//       setLoading(false);
-//     }
-//   };
+  const fetchDashboardData = async () => {
+    try {
+      // Rooms
+      const roomRes = await axios.get("http://localhost:5000/api/rooms");
+      const rooms = roomRes.data || [];
+      const totalRoomsCount = rooms.reduce(
+        (sum, r) => sum + (r.totalRooms || 0),
+        0
+      );
+      setTotalRooms(totalRoomsCount);
 
-//   useEffect(() => {
-//     fetchContacts();
+      // Bookings
+      const bookingRes = await axios.get("http://localhost:5000/api/bookings");
+      const bookings = bookingRes.data || [];
 
-//     // Optional: Polling every 5 seconds for real-time updates
-//     const interval = setInterval(fetchContacts, 5000);
-//     return () => clearInterval(interval);
-//   }, []);
+      const totalRoomBookings = bookings.reduce(
+        (sum, b) => sum + (b.roomsBooked || 1),
+        0
+      );
+      setTotalBookings(totalRoomBookings);
 
-//   // Filter contacts based on search
-//   const filteredContacts = contacts.filter(
-//     (c) =>
-//       c.name.toLowerCase().includes(search.toLowerCase()) ||
-//       c.email.toLowerCase().includes(search.toLowerCase()) ||
-//       c.phone.includes(search) ||
-//       c.message.toLowerCase().includes(search.toLowerCase())
-//   );
+      // Today stats
+      setTodaysCheckIns(
+        bookings.filter((b) => b.checkIn?.split("T")[0] === today).length
+      );
+      setTodaysCheckOuts(
+        bookings.filter((b) => b.checkOut?.split("T")[0] === today).length
+      );
 
-//   // Pagination calculations
-//   const totalPages = Math.ceil(filteredContacts.length / itemsPerPage);
-//   const startIndex = (currentPage - 1) * itemsPerPage;
-//   const currentContacts = filteredContacts.slice(startIndex, startIndex + itemsPerPage);
+      // Recent bookings (latest 3)
+      const recent = [...bookings]
+        .reverse()
+        .slice(0, 3)
+        .map((b) => ({
+          user: b.name,
+          room: b.roomId?.name || "N/A",
+          date: b.createdAt?.split("T")[0],
+        }));
+      setRecentBookings(recent);
 
-//   // Pagination handlers
-//   const handlePrev = () => currentPage > 1 && setCurrentPage(currentPage - 1);
-//   const handleNext = () => currentPage < totalPages && setCurrentPage(currentPage + 1);
+      // Inquiries (latest 3)
+      try {
+        const inquiryRes = await axios.get("http://localhost:5000/api/all");
+        const latestInquiries = (inquiryRes.data || []).slice(0, 3);
+        setRecentInquiries(latestInquiries);
+      } catch (e) {
+        setRecentInquiries([]);
+      }
+    } catch (err) {
+      console.error("Dashboard fetch error:", err);
+    }
+  };
 
-//   // Delete contact
-//   const handleDelete = async (id) => {
-//     if (!window.confirm("Are you sure you want to delete this contact?")) return;
-//     try {
-//       const res = await fetch(`http://localhost:5000/api/contact/${id}`, { method: "DELETE" });
-//       if (res.ok) {
-//         setContacts(contacts.filter((c) => c._id !== id));
-//       }
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   };
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 p-8 font-sans">
+      {/* Header */}
+      <header className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-3xl font-serif text-[#0b2447]">
+            Admin Dashboard
+          </h1>
+          <p className="text-sm text-gray-600 mt-1">
+            Overview of rooms, bookings & enquiries
+          </p>
+        </div>
+        {/* <div className="flex items-center gap-3">
+          <button className="bg-blue-800 hover:bg-blue-900 text-white px-4 py-2 rounded-full shadow">Create Report</button>
+          <button className="bg-white border border-gray-200 px-4 py-2 rounded-full text-gray-700">Settings</button>
+        </div> */}
+      </header>
 
-//   if (loading) return <p>Loading...</p>;
+      {/* Widgets */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {[
+          {
+            title: "Total Rooms",
+            value: totalRooms,
+            color: "bg-blue-100",
+            textColor: "text-blue-800",
+            icon: <FaBed className="text-3xl text-blue-800" />,
+          },
+          {
+            title: "Total Bookings",
+            value: totalBookings,
+            color: "bg-green-100",
+            textColor: "text-green-800",
+            icon: <FaClipboardList className="text-3xl text-green-800" />,
+          },
+          {
+            title: "Today's Check-ins",
+            value: todaysCheckIns,
+            color: "bg-yellow-100",
+            textColor: "text-yellow-800",
+            icon: <FaSignInAlt className="text-3xl text-yellow-800" />,
+          },
+          {
+            title: "Today's Check-outs",
+            value: todaysCheckOuts,
+            color: "bg-purple-100",
+            textColor: "text-purple-800",
+            icon: <FaSignOutAlt className="text-3xl text-purple-800" />,
+          },
+        ].map((widget, idx) => (
+          <div
+            key={idx}
+            className={`rounded-lg shadow p-5 hover:shadow-lg transition cursor-pointer ${widget.color}`}
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className={`text-sm font-medium ${widget.textColor}`}>
+                  {widget.title}
+                </h3>
+                <p className={`text-2xl font-bold mt-2 ${widget.textColor}`}>
+                  {widget.value}
+                </p>
+              </div>
 
-//   return (
-//     <div className="max-w-6xl mx-auto px-4 py-8">
-//       <h1 className="text-3xl font-bold mb-6">Contact Submissions Dashboard</h1>
+              {/* Icon */}
+              <div className="opacity-80">{widget.icon}</div>
+            </div>
+          </div>
+        ))}
+      </div>
 
-//       {/* Search */}
-//       <input
-//         type="text"
-//         value={search}
-//         onChange={(e) => { setSearch(e.target.value); setCurrentPage(1); }}
-//         placeholder="Search by name, email, phone, or message"
-//         className="mb-4 w-full border border-gray-300 rounded-lg px-4 py-2"
-//       />
+      {/* Content area */}
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Recent Bookings */}
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white rounded-2xl shadow p-6"
+        >
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">
+            Recent Bookings
+          </h3>
+          <div className="space-y-3">
+            {recentBookings.length > 0 ? (
+              recentBookings.map((b, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center justify-between p-3 rounded-lg border border-gray-100 hover:shadow-sm transition"
+                >
+                  <div>
+                    <div className="text-sm text-gray-500">{b.user}</div>
+                    <div className="font-medium text-gray-800">{b.room}</div>
+                  </div>
+                  <div className="text-xs text-gray-500">{b.date}</div>
+                </div>
+              ))
+            ) : (
+              <div className="text-gray-500">No recent bookings</div>
+            )}
+          </div>
+        </motion.div>
 
-//       {currentContacts.length === 0 ? (
-//         <p>No submissions found.</p>
-//       ) : (
-//         <>
-//           {/* Table */}
-//           <table className="w-full table-auto border-collapse border border-gray-300">
-//             <thead>
-//               <tr className="bg-gray-200">
-//                 <th className="border px-4 py-2">Name</th>
-//                 <th className="border px-4 py-2">Email</th>
-//                 <th className="border px-4 py-2">Phone</th>
-//                 <th className="border px-4 py-2">Message</th>
-//                 <th className="border px-4 py-2">Submitted At</th>
-//                 <th className="border px-4 py-2">Actions</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {currentContacts.map((c) => (
-//                 <tr key={c._id} className="hover:bg-gray-100">
-//                   <td className="border px-4 py-2">{c.name}</td>
-//                   <td className="border px-4 py-2">{c.email}</td>
-//                   <td className="border px-4 py-2">{c.phone}</td>
-//                   <td className="border px-4 py-2">{c.message}</td>
-//                   <td className="border px-4 py-2">{new Date(c.createdAt).toLocaleString()}</td>
-//                   <td className="border px-4 py-2">
-//                     <button
-//                       onClick={() => handleDelete(c._id)}
-//                       className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-//                     >
-//                       Delete
-//                     </button>
-//                   </td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
+        {/* Latest Inquiries */}
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white rounded-2xl shadow p-6"
+        >
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">
+            Latest Enquiries
+          </h3>
+          <div className="space-y-3">
+            {recentInquiries.length > 0 ? (
+              recentInquiries.map((inq, idx) => (
+                <div
+                  key={idx}
+                  className="p-3 rounded-lg border border-gray-100 hover:shadow-sm transition"
+                >
+                  <div className="flex justify-between items-start gap-4">
+                    <div>
+                      <div className="text-sm text-gray-500">
+                        {inq.occasion}
+                      </div>
+                      <div className="font-medium text-gray-800">
+                        {inq.name}
+                      </div>
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {inq.createdAt?.split("T")[0]}
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-gray-500">No Enquiries</div>
+            )}
+          </div>
+        </motion.div>
+      </section>
 
-//           {/* Pagination */}
-//           <div className="flex justify-between items-center mt-4">
-//             <button
-//               onClick={handlePrev}
-//               disabled={currentPage === 1}
-//               className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
-//             >
-//               Prev
-//             </button>
-//             <span>
-//               Page {currentPage} of {totalPages}
-//             </span>
-//             <button
-//               onClick={handleNext}
-//               disabled={currentPage === totalPages}
-//               className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
-//             >
-//               Next
-//             </button>
-//           </div>
-//         </>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
+      {/* Footer */}
+      <footer className="mt-8 text-center text-xs text-gray-600">
+        © {new Date().getFullYear()} Resort — Admin Panel
+      </footer>
+    </div>
+  );
+}
 
 
-
-// 100
+// // 100
 // import React, { useEffect, useState } from "react";
 
 // const Dashboard = () => {

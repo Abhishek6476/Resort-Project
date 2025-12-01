@@ -114,7 +114,8 @@ export default function Engagement() {
     <div className="w-full">
 
       {/* Hero Section */}
-      <section className="relative w-full h-[60vh] overflow-hidden">
+      <section className="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] overflow-hidden">
+
         <img
           src={heroImg}
           alt="Engagement Hall"
@@ -130,9 +131,9 @@ export default function Engagement() {
       </section>
 
 {/* About + Gallery Section */} 
-<section className="pt-16 px-8 bg-gray-50">
-  <div className="container mx-auto px-6">
-    <div className="flex flex-col lg:flex-row items-stretch gap-20">
+<section className="pt-16 px-6 bg-gray-50">
+  <div className="container mx-auto ">
+    <div className="flex flex-col lg:flex-row items-stretch gap-10 md:gap-14 lg:gap-20">
 
       {/* About Section - narrower, clean */}
       <div className="lg:w-5/12 flex flex-col justify-between h-full">
@@ -220,16 +221,16 @@ export default function Engagement() {
 
 {/* Our Engagement Packages*/}
       
-<section className="pt-16 px-8 bg-gray-50">
-      <div className="container mx-auto px-6 text-center">
+<section className="pt-16 px-6 bg-gray-50">
+      <div className="container mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-          Our Engagement Packages
+          Our Engagement<span className="text-blue-800"> Packages</span>
         </h2>
         <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
           Choose a package that fits your dream engagement.
         </p>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {packages.map((pkg, idx) => (
             <div
               key={idx}
@@ -263,10 +264,11 @@ export default function Engagement() {
     </section> 
 
  {/* Event Timeline / Itinerary */}
-<section className="pt-16 pb-4 bg-gradient-to-b from-gray-50 via-white to-gray-50">
+<section className="pt-16 pb-8 bg-gradient-to-b from-gray-50 via-white to-gray-50">
       <div className="container mx-auto px-6 max-w-6xl">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-grey-800 mb-16 tracking-widest drop-shadow-md">
-          Engagement Event Timeline
+        <h2 className="text-3xl md:text-4xl font-extrabold text-center text-grey-800 mb-16 tracking-widest drop-shadow-md">
+          Engagement <span className="text-blue-800">Event Timeline</span>
+          
         </h2>
 
         <div className="relative">
@@ -496,3 +498,4 @@ export default function Engagement() {
   );
 }
 
+     

@@ -21,7 +21,7 @@ import RoyalBallRoom from "./pages/Services/Venue/RoyalBallRoom";
 
 
 import AdminLogin from "./pages/Admin/AdminLogin";
-//import Dashboard from "./components/Admin/Dashboard";
+import Dashboard from "./components/Admin/Dashboard";
 import AdminLayout from "./layouts/AdminLayout";
 
 import ContactSidebar from "./components/Admin/ContactSidebar";
@@ -94,7 +94,7 @@ function App() {
         {/*  Admin Panel */}
         <Route path="/admin/" element={<AdminLayout />} >
           {/* Default dashboard */}
-          {/* <Route index element={<Dashboard />} /> */}
+          <Route index element={<Dashboard />} />
           
           <Route path="contactus" element={<ContactSidebar />} />
 
