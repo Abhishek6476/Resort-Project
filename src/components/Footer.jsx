@@ -64,7 +64,7 @@ const Footer = () => {
               </h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="hover:text-yellow-500">
+                  <a href="Services" className="hover:text-yellow-500">
                     Services
                   </a>
                 </li>
@@ -98,17 +98,17 @@ const Footer = () => {
               </h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="hover:text-yellow-500">
+                  <a href="Meeting" className="hover:text-yellow-500">
                     Meeting
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-yellow-500">
+                  <a href="Conference" className="hover:text-yellow-500">
                     Conference
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-yellow-500">
+                  <a href="Seminar" className="hover:text-yellow-500">
                     Seminar
                   </a>
                 </li>
@@ -118,8 +118,8 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-yellow-500">
-                    Social Events
+                  <a href="Wedding" className="hover:text-yellow-500">
+                    Wedding
                   </a>
                 </li>
               </ul>

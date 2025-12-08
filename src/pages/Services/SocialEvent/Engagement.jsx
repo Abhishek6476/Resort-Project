@@ -31,8 +31,8 @@ export default function Engagement() {
 
    const handleClose = () => setSelectedIndex(null);
   const handleNext = () => setSelectedIndex((prev) => (prev + 1) % gallery.length);
-  const handlePrev = () =>
-    setSelectedIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
+  const handlePrev = () => setSelectedIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
+  
 
 
   const gallery = [img3, img4, img5, pack3,  img2, img1];
@@ -132,7 +132,7 @@ export default function Engagement() {
 
 {/* About + Gallery Section */} 
 <section className="pt-16 px-6 bg-gray-50">
-  <div className="container mx-auto ">
+  <div className="container mx-auto ">  
     <div className="flex flex-col lg:flex-row items-stretch gap-10 md:gap-14 lg:gap-20">
 
       {/* About Section - narrower, clean */}
@@ -147,12 +147,15 @@ export default function Engagement() {
           <p className="text-gray-700 text-justify leading-[28px] mb-5">
             Whether you're planning an intimate gathering or a lavish celebration, our venue offers customizable décor, seamless coordination, and a romantic atmosphere that sets the tone for your big day. From floral arrangements to curated menus, our experienced team handles every detail with care.
           </p><br/><br/>
+          
         </div>
 
         {/* Button aligned at the bottom */}
         <div className="mt-4 lg:mt-0">
           <button
-            onClick={() => setIsOpen(true)}
+            onClick={() => setIsOpen(true)
+              
+            }
             className="bg-blue-800 text-white text-base font-medium py-3 px-8 rounded-lg hover:bg-blue-900 transition duration-300"
           >
             Get Quote
@@ -264,18 +267,18 @@ export default function Engagement() {
     </section> 
 
  {/* Event Timeline / Itinerary */}
-<section className="pt-16 pb-8 bg-gradient-to-b from-gray-50 via-white to-gray-50">
+<section className="pt-16 pb-4 bg-gradient-to-b from-gray-50 via-white to-gray-50">
       <div className="container mx-auto px-6 max-w-6xl">
         <h2 className="text-3xl md:text-4xl font-extrabold text-center text-grey-800 mb-16 tracking-widest drop-shadow-md">
           Engagement <span className="text-blue-800">Event Timeline</span>
-          
         </h2>
 
         <div className="relative">
           {/* Gradient vertical timeline line */}
-          <div className="absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-blue-400 via-blue-300 to-blue-500 rounded-full shadow-lg -translate-x-1/2"></div>
 
-          <div className="space-y-1">
+           <div className="absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-blue-400 via-blue-300 to-blue-500 rounded-full shadow-lg -translate-x-1/2 hidden md:block"></div>
+
+          <div className="space-y-12">
             {timeline.map((item, idx) => {
               // Choose icon based on step
               let Icon;
@@ -438,7 +441,7 @@ export default function Engagement() {
  {/* { Review} */}
      <section className="py-16 container mx-auto px-8">
   <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
-    What Our Guests Say
+    What Our<span className="text-blue-800"> Guests Say</span> 
   </h2>
 
   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">

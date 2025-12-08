@@ -119,7 +119,7 @@ export default function Mehndi() {
       {/* Left Text Section */}
       <div className="lg:w-5/12 flex flex-col justify-start">
         <h2 className="text-4xl font-bold text-gray-700 mb-6">
-          Mehndi & Cocktail
+          Mehndi & <span className="text-blue-800"> Cocktail</span>
         </h2>
 
         <p className="text-gray-700 leading-[28px] mb-5 text-justify">
@@ -132,15 +132,15 @@ export default function Mehndi() {
 
         <p className="text-gray-700 leading-[28px] text-justify">
           At our Mehndi events, we craft an atmosphere that beautifully blends
-          cultural heritage with a modern twist — where traditional songs and
+          cultural heritage with a modern twist  where traditional songs and
           laughter fill the air, and every detail is curated to reflect your
           unique style.
           <br />
           <br />
           As the sun sets, the celebration flows seamlessly into a stylish
-          Cocktail evening — bringing together close friends and family in a
+          Cocktail evening  bringing together close friends and family in a
           festive, relaxed setting. Think upbeat music, dazzling lights,
-          signature drinks, and curated bites — all coming together to set the
+          signature drinks, and curated bites all coming together to set the
           perfect tone for the days to come.
         </p>
 
@@ -148,8 +148,7 @@ export default function Mehndi() {
         <div className="mt-8">
           <button
             onClick={() => setIsOpen(true)}
-            className="bg-blue-800 text-white text-base font-medium py-3 px-8 rounded-lg hover:bg-blue-900 transition duration-300"
-          >
+            className="bg-blue-800 text-white text-base font-medium py-3 px-8 rounded-lg hover:bg-blue-900 transition duration-300"  >
             Get Quote
           </button>
         </div>
@@ -221,7 +220,7 @@ export default function Mehndi() {
 <section className="pt-16 pb-16 bg-white">
   <div className="container mx-auto px-6 text-center">
     <h2 className="text-3xl font-bold text-gray-700 mb-12">
-      Mehndi Packages
+      Mehndi <span className="text-blue-800">Packages</span> 
     </h2>
 
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center">
@@ -262,13 +261,13 @@ export default function Mehndi() {
       {/* Timeline */}
       <section className="pt-16 pb-4 bg-gradient-to-b from-blue-50 via-white to-blue-50">
       <div className="container mx-auto px-6 max-w-6xl">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-grey-800 mb-16 tracking-widest drop-shadow-md">
-          Mehndi Ceremony  Timeline
+        <h2 className="text-3xl md:text-4xl font-extrabold text-center text-grey-800 mb-16 tracking-widest drop-shadow-md">
+          Mehndi Ceremony  <span className="text-blue-800"> Timeline</span>
         </h2>
 
         <div className="relative">
           {/* Vertical timeline line */}
-          <div className="absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-blue-400 via-blue-300 to-blue-500 rounded-full shadow-lg -translate-x-1/2"></div>
+          <div className="absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-blue-400 via-blue-300 to-blue-500 rounded-full shadow-lg -translate-x-1/2 hidden md:block"></div>
 
           <div className="space-y-12">
             {mehndiTimeline.map((item, idx) => {
