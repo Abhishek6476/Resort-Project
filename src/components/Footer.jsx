@@ -387,11 +387,11 @@ const Footer = () => {
                 COMMON LINKS
               </h3>
               <ul className="space-y-2 text-sm">
-                <li><a href="/About" className="hover:text-blue-800">About</a></li>
-                <li><a href="/Dining" className="hover:text-blue-800">Dining</a></li>
-                <li><a href="/Rooms" className="hover:text-blue-800">Rooms</a></li>
-                <li><a href="/Gallery" className="hover:text-blue-800">Gallery</a></li>
-                <li><a href="/Career" className="hover:text-blue-800">Career</a></li>
+                <li><a href="/About" className="hover:text-blue-400">About</a></li>
+                <li><a href="/Dining" className="hover:text-blue-400">Dining</a></li>
+                <li><a href="/Rooms" className="hover:text-blue-400">Rooms</a></li>
+                <li><a href="/Gallery" className="hover:text-blue-400">Gallery</a></li>
+                <li><a href="/Career" className="hover:text-blue-400">Career</a></li>
               </ul>
             </div>
 
@@ -401,11 +401,15 @@ const Footer = () => {
                 EVENTS
               </h3>
               <ul className="space-y-2 text-sm">
-                <li><a href="/Services/corporate/meeting" className="hover:text-blue-800">Meeting</a></li>
-                <li><a href="/Services/corporate/conference" className="hover:text-blue-800">Conference</a></li>
-                <li><a href="/Services/corporate/seminar" className="hover:text-blue-800">Seminar</a></li>
-                <li><a href="/venue" className="hover:text-blue-800">Venue</a></li>
-                <li><a href="/Services/social/reception" className="hover:text-blue-800">Social Events</a></li>
+                <li><a href="/Services/corporate/meeting" className="hover:text-blue-400">Meeting</a></li>
+                <li><a href="/Services/corporate/conference" className="hover:text-blue-400">Conference</a></li>
+                <li><a href="/Services/corporate/seminar" className="hover:text-blue-400">Seminar</a></li>
+                <li><a href="/venue" className="hover:text-blue-400">Venue</a></li>
+                <li>
+                  <a href="/Social" className="hover:text-blue-400">
+                    Social Event
+                  </a>
+                </li>
               </ul>
             </div>
 

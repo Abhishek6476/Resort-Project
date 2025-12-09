@@ -1,4 +1,5 @@
 
+
 // import { useState } from "react";
 // import { Link } from "react-router-dom";
 // import ModalForm from "../../components/ModalForm";
@@ -473,11 +474,11 @@ export default function Venue() {
             your perfect event.
           </p>
 
-          <button
+         <button
             onClick={() => setIsOpen(true)}
-            className="bg-blue-800 text-white py-3 px-6 rounded-full text-lg hover:bg-blue-900 transition"
+            className="bg-blue-800 hover:bg-blue-900 px-6 py-3 rounded-md text-white"
           >
-            Get Quote
+            Get a Quote
           </button>
         </div>
       </section>

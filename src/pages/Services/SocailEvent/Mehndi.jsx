@@ -222,11 +222,11 @@ export default function Mehndi() {
 
         {/* Modal Section */}
         {selectedIndex !== null && (
-          <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
             {/* Close */}
             <button
               onClick={handleClose}
-              className="absolute top-6 right-6 text-white text-3xl font-bold hover:text-blue-800"
+              className="absolute top-6 right-6 bg-black/50 px-3 py-1 rounded-full text-white text-2xl"
             >
               ✖
             </button>
@@ -234,7 +234,7 @@ export default function Mehndi() {
             {/* Prev */}
             <button
               onClick={handlePrev}
-              className="absolute left-6 text-white text-4xl font-bold hover:text-gray-400"
+              className="absolute left-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full"
             >
               ‹
             </button>
@@ -249,7 +249,7 @@ export default function Mehndi() {
             {/* Next */}
             <button
               onClick={handleNext}
-              className="absolute right-6 text-white text-4xl font-bold hover:text-gray-400"
+              className="absolute right-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full"
             >
               ›
             </button>

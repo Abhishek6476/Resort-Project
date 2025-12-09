@@ -39,6 +39,7 @@ import AllContacts from "./pages/Admin/AllContacts";
 import AllJobApplications from "./pages/Admin/AllJobApplications";
 import AllJobs from "./pages/Admin/AllJobs";
 import Venue from "./pages/Services/Venue";
+import Social from "./pages/Services/Social";
 
 function App() {
   return (
@@ -100,6 +101,7 @@ function App() {
                 />
 
                 <Route path="/venue" element={<Venue />} />
+                <Route path="/social" element={<Social />} />
               </Routes>
             </MainLayout>
           }

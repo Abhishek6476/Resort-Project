@@ -740,11 +740,11 @@ export default function Engagement() {
 
               {/* Modal */}
               {selectedIndex !== null && (
-                <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+                <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
                   {/* <div className="relative w-full max-w-[90%] mx-auto px-2 sm:px-4"> */}
                     <button
                       onClick={handleClose}
-                      className="absolute top-2 right-6 text-white text-3xl"
+                      className="absolute top-6 right-6 bg-black/50 px-3 py-1 rounded-full text-white text-2xl"
                     >
                       ✖
                     </button>
@@ -755,13 +755,13 @@ export default function Engagement() {
                     />
                     <button
                       onClick={handlePrev}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl"
+                      className="absolute left-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full"
                     >
                       ‹
                     </button>
                     <button
                       onClick={handleNext}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl"
+                      className="absolute right-6 text-white text-4xl bg-black/50 px-3 py-1 rounded-full"
                     >
                       ›
                     </button>
