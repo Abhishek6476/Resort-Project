@@ -645,10 +645,10 @@ export default function SocialEvents() {
   return (
     <div className="w-full text-gray-800">
       {/* HERO */}
-      <section className="relative w-full h-[50vh] sm:h-[60vh] md:h-[vh] overflow-hidden">
+      <section className="relative w-full h-[50vh] sm:h-[60vh] md:h-[60vh] overflow-hidden">
         <img src={weddingHero} alt="Hero" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-center px-4 sm:px-6">
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white drop-shadow-lg">Celebrate Every Moment</h2>
+          <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white drop-shadow-lg">Celebrate Every Moment</h3>
           <p className="mt-2 sm:mt-4 text-lg sm:text-xl md:text-2xl text-gray-200 max-w-3xl">Engagement, Mehndi & Cocktail Nights, and Wedding Celebrations all in one place.</p>
         </div>
       </section>
