@@ -404,7 +404,7 @@ const Footer = () => {
                 <li><a href="/Services/corporate/meeting" className="hover:text-blue-800">Meeting</a></li>
                 <li><a href="/Services/corporate/conference" className="hover:text-blue-800">Conference</a></li>
                 <li><a href="/Services/corporate/seminar" className="hover:text-blue-800">Seminar</a></li>
-                <li><a href="/Services/venue/grand" className="hover:text-blue-800">Venue</a></li>
+                <li><a href="/venue" className="hover:text-blue-800">Venue</a></li>
                 <li><a href="/Services/social/reception" className="hover:text-blue-800">Social Events</a></li>
               </ul>
             </div>

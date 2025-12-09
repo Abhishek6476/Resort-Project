@@ -38,6 +38,7 @@ import AllReviews from "./pages/Admin/AllReviews";
 import AllContacts from "./pages/Admin/AllContacts";
 import AllJobApplications from "./pages/Admin/AllJobApplications";
 import AllJobs from "./pages/Admin/AllJobs";
+import Venue from "./pages/Services/Venue";
 
 function App() {
   return (
@@ -97,6 +98,8 @@ function App() {
                   path="/booking-success"
                   element={<BookingConfirmation />}
                 />
+
+                <Route path="/venue" element={<Venue />} />
               </Routes>
             </MainLayout>
           }
