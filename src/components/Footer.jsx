@@ -118,8 +118,8 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="Wedding" className="hover:text-yellow-500">
-                    Wedding
+                  <a href="Social" className="hover:text-yellow-500">
+                    Social Event
                   </a>
                 </li>
               </ul>

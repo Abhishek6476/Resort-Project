@@ -8,7 +8,7 @@ import Contact from "./pages/Contact";
 import Dining from "./pages/Dining";
 import Career from "./pages/Career";
 import Gallery from "./pages/Gallery";
-import Wedding from "./pages/Services/Wedding";
+import Social from "./pages/Services/Social";
 import Engagement from './pages/Services/SocialEvent/Engagement';
 import Mehndi from "./pages/Services/SocialEvent/Mehndi";
 import WeddingReception from "./pages/Services/SocialEvent/WeddingReception";
@@ -51,7 +51,7 @@ function App() {
                 <Route path="/career" element={<Career />} />
                 <Route path="/gallery" element={<Gallery />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/wedding" element={<Wedding />} />
+                <Route path="/social" element={<Social />} />
 
                 
                 <Route
