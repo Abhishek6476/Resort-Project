@@ -15,7 +15,7 @@ import img12 from "../../../assets/mehndi12.jpg";
 import pack1 from "../../../assets/mehndip1.jpg";
 import pack2 from "../../../assets/mehndip2.jpg";
 import pack3 from "../../../assets/mehndip3.jpg";
-
+  
 export default function Mehndi() {
  const gallery = [img1, img2, img3, img4, img6, img12];
 
@@ -156,7 +156,7 @@ export default function Mehndi() {
 
       {/* Right Gallery Section */}
       <div className="lg:w-7/12 flex flex-col justify-start">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4">
           {gallery.map((img, i) => (
             <div
               key={i}

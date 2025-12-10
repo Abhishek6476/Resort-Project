@@ -165,7 +165,7 @@ export default function Engagement() {
 
       {/* Gallery Section - wider */}
     
-       <div className="lg:w-7/12 grid grid-cols-2 sm:grid-cols-3 gap-4">
+       <div className="lg:w-7/12 grid grid-cols-1 sm:grid-cols-3 gap-4">
       {/* Gallery Grid */}
       {gallery.map((img, idx) => (
         <div
