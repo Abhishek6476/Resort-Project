@@ -16,7 +16,7 @@ import img2 from "../../../assets/eng3.jpg";
 import img3 from "../../../assets/eng4.jpg";
 import img4 from "../../../assets/eng5.jpg";
 import img5 from "../../../assets/eng6.jpg";
-import img6 from "../../../assets/eng7.jpg";
+//import img6 from "../../../assets/eng7.jpg";
 
 // Packages Images (Placeholder)
 import pack1 from "../../../assets/pack1.jpg";
