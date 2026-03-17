@@ -359,8 +359,7 @@ export default function BookingForm() {
     phone: "",
     checkIn: null,
     checkOut: null,
-    guests: 1,
-    roomsBooked: 1,
+    
   });
 
   const [available, setAvailable] = useState(true);
@@ -368,7 +367,7 @@ export default function BookingForm() {
   const [loading, setLoading] = useState(false);
   const [fullyBookedDates, setFullyBookedDates] = useState([]);
 
-  // Fetch room by name if _id missing
+
   useEffect(() => {
     const fetchRoomByName = async () => {
       if (!room._id && room.name) {
@@ -386,7 +385,7 @@ export default function BookingForm() {
     fetchRoomByName();
   }, [room.name]);
 
-  // Fetch fully booked dates
+ 
   useEffect(() => {
     if (room._id) fetchFullyBookedDates();
   }, [room._id]);
@@ -403,12 +402,12 @@ export default function BookingForm() {
     }
   };
 
-  // Handle input changes
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Check room availability whenever relevant fields change
+  
   useEffect(() => {
     if (formData.checkIn && formData.checkOut && room._id)
       checkRoomAvailability();
@@ -434,7 +433,7 @@ export default function BookingForm() {
     }
   };
 
-  // ✅ Calculate amount + GST dynamically
+  
   const getTotalAmount = () => {
     if (!formData.checkIn || !formData.checkOut)
       return { base: 0, gst: 0, total: 0, days: 0 };
@@ -496,7 +495,7 @@ export default function BookingForm() {
           if (verifyRes.data.success) {
             navigate("/booking-success", {
               state: {
-                booking: verifyRes.data.booking, // backend se aaya hua booking object
+                booking: verifyRes.data.booking, 
                 room,
                 priceDetails: { base, gst, total, days },
               },
@@ -568,7 +567,6 @@ export default function BookingForm() {
         />
 
         {/* Calendar */}
-        {/* Calendar */}
         <div className="grid grid-cols-2 gap-4">
           {/* CHECK-IN DATE */}
           <div>
@@ -601,7 +599,7 @@ export default function BookingForm() {
                   ? new Date(formData.checkIn.getTime() + 24 * 60 * 60 * 1000)
                   : new Date()
               }
-              // ⛔ REMOVE fully booked logic from checkout
+              //  REMOVE fully booked logic from checkout
               filterDate={() => true} // always selectable
               // No red highlight for checkout
               dayClassName={() => "bg-green-100 text-green-700 rounded-full"}
@@ -636,7 +634,7 @@ export default function BookingForm() {
           </div>
         </div>
 
-        {/* ✅ Show Total Amount */}
+        {/*  Show Total Amount */}
         {total > 0 && (
           <div className="p-3 mb-4 border rounded-lg bg-gray-50 text-gray-800">
             <p>

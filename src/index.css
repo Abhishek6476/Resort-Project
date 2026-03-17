@@ -25,3 +25,19 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1rem; 
   color: #444;
 } */
+
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.3s ease-out;
+}

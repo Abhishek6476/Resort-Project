@@ -1,34 +1,22 @@
 
+
+// //remove edit button
+
 // import { useState, useEffect } from "react";
 // import axios from "axios";
-// import { FaEdit, FaTrash, FaSearch } from "react-icons/fa";
-// import BookingSidebar from "../../../components/Admin/BookingSidebar";
+// import { FaTrash, FaSearch } from "react-icons/fa";
 
 // export default function AllBookings() {
 //   const [search, setSearch] = useState("");
 //   const [statusFilter, setStatusFilter] = useState("All");
-//   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-//   const [editingBooking, setEditingBooking] = useState(null);
 //   const [bookings, setBookings] = useState([]);
-
-//   const [formData, setFormData] = useState({
-//     name: "",
-//     email: "",
-//     phone: "",
-//     roomType: "",
-//     guests: 1,
-//     checkIn: "",
-//     checkOut: "",
-//     amount: "",
-//     status: "Pending",
-//   });
 
 //   //  Fetch Bookings from Backend
 //   useEffect(() => {
 //     const fetchBookings = async () => {
 //       try {
 //         const res = await axios.get("http://localhost:5000/api/bookings");
-//         setBookings(res.data);
+//         setBookings([...res.data].reverse());
 //       } catch (err) {
 //         console.error("Error fetching bookings:", err);
 //       }
@@ -42,14 +30,7 @@
 //     0
 //   );
 
-//   //  Edit
-//   const handleEdit = (booking) => {
-//     setFormData(booking);
-//     setEditingBooking(booking);
-//     setIsSidebarOpen(true);
-//   };
-
-//   //  Delete
+//   //  Delete Booking (KEEPING THIS)
 //   const handleDelete = async (id) => {
 //     if (window.confirm("Are you sure you want to delete this booking?")) {
 //       try {
@@ -61,72 +42,21 @@
 //     }
 //   };
 
-//   //  Save
-//  const handleSave = async (e) => {
-//   e.preventDefault();
-
-//   if (
-//     !formData.name ||
-//     !formData.email ||
-//     !formData.roomType ||
-//     !formData.checkIn ||
-//     !formData.checkOut
-//   ) {
-//     return alert("Please fill all fields");
-//   }
-
-//   try {
-//     if (editingBooking) {
-//       // 🔹 Update in backend
-//       const res = await axios.put(
-//         `http://localhost:5000/api/bookings/${editingBooking._id}`,
-//         formData
-//       );
-//       // 🔹 Update in local state
-//       setBookings((prev) =>
-//         prev.map((b) => (b._id === res.data._id ? res.data : b))
-//       );
-//     } else {
-//       // Optional: Create new booking (if ever needed)
-//       const res = await axios.post(
-//         "http://localhost:5000/api/bookings",
-//         formData
-//       );
-//       setBookings((prev) => [...prev, res.data]);
-//     }
-
-//     setFormData({
-//       name: "",
-//       email: "",
-//       phone: "",
-//       roomType: "",
-//       guests: 1,
-//       checkIn: "",
-//       checkOut: "",
-//       amount: "",
-//       status: "Pending",
-//     });
-//     setEditingBooking(null);
-//     setIsSidebarOpen(false);
-//   } catch (err) {
-//     console.error("Error saving booking:", err);
-//     alert("Failed to save booking");
-//   }
-// };
-
-
 //   // 🔍 Filter Bookings
 //   const filteredBookings = bookings.filter((b) => {
 //     const matchesSearch =
 //       b.name?.toLowerCase().includes(search.toLowerCase()) ||
 //       b.roomId?.name?.toLowerCase().includes(search.toLowerCase());
+
 //     const matchesStatus =
 //       statusFilter === "All" ? true : b.paymentStatus === statusFilter;
+
 //     return matchesSearch && matchesStatus;
 //   });
 
 //   return (
 //     <div className="p-4 bg-gray-50 min-h-screen relative text-sm">
+      
 //       {/* Header */}
 //       <div className="flex justify-between items-center mb-4">
 //         <h1 className="text-lg font-semibold">
@@ -213,7 +143,7 @@
 //                   </td>
 //                   <td className="px-3 py-2">₹{b.amount}</td>
 
-//                   {/*  Payment Status fix */}
+//                   {/* Payment Status */}
 //                   <td className="px-3 py-2 font-semibold">
 //                     {b.paymentStatus === "paid" ? (
 //                       <span className="text-green-600">Confirmed</span>
@@ -222,13 +152,8 @@
 //                     )}
 //                   </td>
 
-//                   <td className="px-3 py-2 flex justify-center gap-1">
-//                     <button
-//                       onClick={() => handleEdit(b)}
-//                       className="text-gray-600 hover:text-blue-600 transition-colors"
-//                     >
-//                       <FaEdit size={12} />
-//                     </button>
+//                   {/* ONLY DELETE BUTTON - EDIT REMOVED */}
+//                   <td className="px-3 py-2 flex justify-center gap-2">
 //                     <button
 //                       onClick={() => handleDelete(b._id)}
 //                       className="text-gray-600 hover:text-red-600 transition-colors"
@@ -249,20 +174,12 @@
 //         </table>
 //       </div>
 
-//       {/* Sidebar */}
-//       <BookingSidebar
-//         isOpen={isSidebarOpen}
-//         onClose={() => setIsSidebarOpen(false)}
-//         formData={formData}
-//         setFormData={setFormData}
-//         onSubmit={handleSave}
-//       />
 //     </div>
 //   );
 // }
 
 
-//remove edit button
+//new 
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -273,7 +190,11 @@ export default function AllBookings() {
   const [statusFilter, setStatusFilter] = useState("All");
   const [bookings, setBookings] = useState([]);
 
-  //  Fetch Bookings from Backend
+  //  Delete modal states (SAME AS AdminEvents)
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+
+  //  Fetch bookings
   useEffect(() => {
     const fetchBookings = async () => {
       try {
@@ -292,19 +213,32 @@ export default function AllBookings() {
     0
   );
 
-  //  Delete Booking (KEEPING THIS)
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this booking?")) {
-      try {
-        await axios.delete(`http://localhost:5000/api/bookings/${id}`);
-        setBookings(bookings.filter((b) => b._id !== id));
-      } catch (err) {
-        console.error("Error deleting booking:", err);
-      }
+  // ✅ Open delete modal
+  const openDeleteModal = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
+
+  // ✅ Confirm delete
+  const confirmDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/api/bookings/${deleteId}`);
+      setBookings(bookings.filter((b) => b._id !== deleteId));
+    } catch (err) {
+      console.error("Error deleting booking:", err);
+    } finally {
+      setShowDeleteModal(false);
+      setDeleteId(null);
     }
   };
 
-  // 🔍 Filter Bookings
+  // ❌ Cancel delete
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
+    setDeleteId(null);
+  };
+
+  // 🔍 Filter bookings
   const filteredBookings = bookings.filter((b) => {
     const matchesSearch =
       b.name?.toLowerCase().includes(search.toLowerCase()) ||
@@ -318,7 +252,6 @@ export default function AllBookings() {
 
   return (
     <div className="p-4 bg-gray-50 min-h-screen relative text-sm">
-      
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-lg font-semibold">
@@ -337,7 +270,7 @@ export default function AllBookings() {
               placeholder="Search..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-8 pr-2 py-1.5 border border-gray-300 rounded-md text-xs focus:ring-1 focus:ring-blue-500"
+              className="w-full pl-8 pr-2 py-1.5 border border-gray-300 rounded-md text-xs"
             />
           </div>
 
@@ -345,7 +278,7 @@ export default function AllBookings() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="border px-2 py-1.5 rounded-md text-xs focus:ring-1 focus:ring-blue-500"
+            className="border px-2 py-1.5 rounded-md text-xs"
           >
             <option value="All">All</option>
             <option value="paid">Confirmed</option>
@@ -357,7 +290,7 @@ export default function AllBookings() {
       {/* Table */}
       <div className="overflow-x-auto bg-white rounded-lg shadow border border-gray-200">
         <table className="min-w-full divide-y divide-gray-200 text-xs">
-          <thead className="bg-black-100">
+          <thead>
             <tr>
               {[
                 "Name",
@@ -373,7 +306,7 @@ export default function AllBookings() {
               ].map((head) => (
                 <th
                   key={head}
-                  className="px-3 py-2 text-left text-black font-bold uppercase tracking-wider border-b border-gray-300 text-[11px]"
+                  className="px-3 py-2 text-left font-bold text-[11px]"
                 >
                   {head}
                 </th>
@@ -405,7 +338,6 @@ export default function AllBookings() {
                   </td>
                   <td className="px-3 py-2">₹{b.amount}</td>
 
-                  {/* Payment Status */}
                   <td className="px-3 py-2 font-semibold">
                     {b.paymentStatus === "paid" ? (
                       <span className="text-green-600">Confirmed</span>
@@ -414,11 +346,11 @@ export default function AllBookings() {
                     )}
                   </td>
 
-                  {/* ONLY DELETE BUTTON - EDIT REMOVED */}
-                  <td className="px-3 py-2 flex justify-center gap-2">
+                  {/* DELETE ONLY */}
+                  <td className="px-3 py-2 flex justify-center">
                     <button
-                      onClick={() => handleDelete(b._id)}
-                      className="text-gray-600 hover:text-red-600 transition-colors"
+                      onClick={() => openDeleteModal(b._id)}
+                      className="text-gray-600 hover:text-red-600"
                     >
                       <FaTrash size={12} />
                     </button>
@@ -436,6 +368,34 @@ export default function AllBookings() {
         </table>
       </div>
 
+      {/* 🧾 DELETE CONFIRM MODAL (EXACT SAME AS AdminEvents) */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-6 w-96 shadow-lg">
+            <h2 className="text-lg font-semibold text-gray-800 mb-3">
+              Delete Booking?
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete this booking?
+            </p>
+
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={cancelDelete}
+                className="px-4 py-2 border rounded-lg"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

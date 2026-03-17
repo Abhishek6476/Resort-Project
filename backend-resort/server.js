@@ -5,6 +5,7 @@ dotenv.config();
 import cors from "cors";
 import connectDB from "./config/db.js";
 import eventRoutes from "./routes/eventRoutes.js";
+import eventBookingRoutes from "./routes/eventBookingRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import roomRoutes from "./routes/roomRoutes.js";
 import path from "path";
@@ -39,6 +40,8 @@ app.use(
 
 app.use("/invoices", express.static("invoices"));
 
+// ✅ All API routes
+app.use("/api", eventBookingRoutes);
 
 // ✅ All API routes
 app.use("/api", eventRoutes);
